@@ -2,7 +2,7 @@ package com.zkboys.androiddemo.presenter.vus;
 
 import com.zkboys.sdk.httpjson.ServiceTicket;
 
-public interface SplashPresenterInteractor {
+public interface ISplashPresenter {
 
     /**
      * 检测版本更新

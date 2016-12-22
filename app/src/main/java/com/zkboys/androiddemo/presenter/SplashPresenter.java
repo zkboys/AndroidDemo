@@ -2,7 +2,7 @@ package com.zkboys.androiddemo.presenter;
 
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.common.C;
-import com.zkboys.androiddemo.presenter.vus.SplashPresenterInteractor;
+import com.zkboys.androiddemo.presenter.vus.ISplashPresenter;
 import com.zkboys.androiddemo.view.activities.SplashActivity;
 import com.zkboys.sdk.exception.NetworkException;
 import com.zkboys.sdk.exception.ServiceException;
@@ -12,7 +12,7 @@ import com.zkboys.sdk.service.AppService;
 import com.zkboys.sdk.service.DefaultCallback;
 
 
-public class SplashPresenter implements SplashPresenterInteractor {
+public class SplashPresenter implements ISplashPresenter {
 
     protected SplashActivity view;
     protected AppService appService;

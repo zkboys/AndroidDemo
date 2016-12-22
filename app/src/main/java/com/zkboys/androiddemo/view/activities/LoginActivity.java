@@ -10,14 +10,14 @@ import android.widget.EditText;
 
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.LoginPresenter;
-import com.zkboys.androiddemo.view.activities.vus.IUserLoginView;
+import com.zkboys.androiddemo.view.activities.vus.ILoginActivity;
 import com.zkboys.sdk.httpjson.ServiceTicket;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity implements IUserLoginView {
+public class LoginActivity extends BaseActivity implements ILoginActivity {
 
     @Bind(R.id.userName)
     EditText userNameText;

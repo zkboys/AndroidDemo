@@ -2,7 +2,7 @@ package com.zkboys.androiddemo.presenter;
 
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.ILoginPresenter;
-import com.zkboys.androiddemo.view.activities.vus.IUserLoginView;
+import com.zkboys.androiddemo.view.activities.vus.ILoginActivity;
 import com.zkboys.sdk.exception.NetworkException;
 import com.zkboys.sdk.exception.ServiceException;
 import com.zkboys.sdk.oauth.model.OAuthToken;
@@ -12,10 +12,10 @@ import com.zkboys.sdk.service.DefaultCallback;
 
 public class LoginPresenter implements ILoginPresenter {
 
-    protected IUserLoginView view;
+    protected ILoginActivity view;
     protected AuthorizeService authorizeService;
 
-    public LoginPresenter(IUserLoginView view) {
+    public LoginPresenter(ILoginActivity view) {
         this.view = view;
         this.authorizeService = ((ZKBoysApplication) view.getApplication()).getZKBoysSDK().getAuthorizeService();
     }

@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.zkboys.sdk.httpjson.ServiceTicket;
 
-public interface IUserLoginView {
+public interface ILoginActivity {
 
     Application getApplication();
 
@@ -25,6 +25,5 @@ public interface IUserLoginView {
     void toMainActivity();
 
     void showFailedError(String msg);
-
 
 }

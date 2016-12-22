@@ -13,14 +13,14 @@ import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.common.C;
 import com.zkboys.androiddemo.presenter.SplashPresenter;
-import com.zkboys.androiddemo.presenter.vus.SplashPresenterInteractor;
+import com.zkboys.androiddemo.presenter.vus.ISplashPresenter;
 import com.zkboys.androiddemo.utils.LogUtil;
 import com.zkboys.sdk.httpjson.ServiceTicket;
 import com.zkboys.sdk.model.ClientVersionInfo;
 import com.zkboys.sdk.oauth.model.OAuthToken;
 
 public class SplashActivity extends BaseActivity {
-    SplashPresenterInteractor presenter;
+    ISplashPresenter presenter;
     ServiceTicket checkVisionServiceTicket;
     final String TAG = "SplashActivity";
 
