@@ -36,7 +36,7 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
     @Override
     public void accessToken(String username, String password, String scope) throws ServiceException, NetworkException {
         OAuthToken oAuthToken = serviceClient.call(false, OAUTH_ACCESS_TOKEN_URL,
-                MapTool.create().put("username", username).put("validCode", password).put("scope", scope).value(),
+                MapTool.create().put("userName", username).put("passWord", password).put("scope", scope).value(),
                 null, TypeInfo.createNormalType(OAuthToken.class));
 
         // 将token存入本地，即记住用户，下次不用再登录
@@ -57,8 +57,8 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
     public ServiceTicket accessToken(String username, String password, String token, Callback<OAuthToken> callback) {
         return serviceClient.call(false, OAUTH_ACCESS_TOKEN_URL,
                 MapTool.create()
-                        .put("username", username)
-                        .put("validCode", password)
+                        .put("userName", username)
+                        .put("passWord", password)
                         .put("token", token)
                         .value(),
                 null, callback);

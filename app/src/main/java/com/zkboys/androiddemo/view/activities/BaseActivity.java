@@ -31,6 +31,7 @@ public class BaseActivity extends AppCompatActivity {
             ServiceTicket ticket = serviceTickets.get(i);
             if (null != ticket) {
                 ticket.cancel();
+                serviceTickets.remove(i);
             }
         }
     }
