@@ -62,3 +62,18 @@ private Map<String, String> sign(boolean authenticated, String url, String body)
     return signParams;
 }
 ```
+
+## MVP 模式
+
+### M：model
+1. 数据模型的定义
+1. 后端等交互，进行数据的请求，持久化等操作
+
+### V：Activity xml等视图相关
+1. 定义获取页面数据方法，供P使用
+1. 定义设置页面数据，改变页面等方法，供P使用
+
+### P: Presenter
+1. 调用V中的方法，获取数据，进行数据的处理
+1. 调用M中的方法，将数据传给后端，或者本地存储等
+1. 调用V中的方法，将处理结果返回给V，V可以做一些更新页面的操作
