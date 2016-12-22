@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
 
     @Override
     public void showLoading() {
-        proDialog = ProgressDialog.show(this, "测试", "2秒后自动消失！");
+        proDialog = ProgressDialog.show(this, "提示", "正在登录。。。");
     }
 
     @Override
@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
 
     @Override
     public void toMainActivity() {
-
+        HomeActivity.actionStart(this);
     }
 
     @Override

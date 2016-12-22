@@ -5,9 +5,12 @@ import com.zkboys.androiddemo.presenter.vus.ILoginPresenter;
 import com.zkboys.androiddemo.view.activities.vus.ILoginActivity;
 import com.zkboys.sdk.exception.NetworkException;
 import com.zkboys.sdk.exception.ServiceException;
+import com.zkboys.sdk.httpjson.ServiceTicket;
 import com.zkboys.sdk.oauth.model.OAuthToken;
 import com.zkboys.sdk.service.AuthorizeService;
 import com.zkboys.sdk.service.DefaultCallback;
+
+import java.util.Map;
 
 
 public class LoginPresenter implements ILoginPresenter {
@@ -37,6 +40,12 @@ public class LoginPresenter implements ILoginPresenter {
 
         view.addServiceTicket(authorizeService.accessToken(userName, password, "", new DefaultCallback<OAuthToken>() {
             @Override
+            public boolean onPreExecute(ServiceTicket ticket, Object object, Map<String, String> headers) {
+                view.showLoading();
+                return super.onPreExecute(ticket, object, headers);
+            }
+
+            @Override
             public void onSuccess(OAuthToken result) {
                 view.toMainActivity();
             }
@@ -49,6 +58,12 @@ public class LoginPresenter implements ILoginPresenter {
             @Override
             public void onNetworkException(NetworkException exception) {
                 view.showFailedError("网络连接错误");
+            }
+
+            @Override
+            public void onPostExecute() {
+                super.onPostExecute();
+                view.hideLoading();
             }
         }));
 
