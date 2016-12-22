@@ -16,33 +16,33 @@ public interface AuthorizeService {
      * 登录验证
      *
      * @param username
-     * @param validCode
+     * @param password
      * @param scope
      * @throws ServiceException
      * @throws NetworkException
      */
-    void accessToken(String username, String validCode, String scope) throws ServiceException, NetworkException;
+    void accessToken(String username, String password, String scope) throws ServiceException, NetworkException;
 
     /**
      * 异步登录验证
      *
      * @param username
-     * @param validCode
+     * @param password
      * @param token
      * @param callback
      * @return
      */
-    ServiceTicket accessToken(String username, String validCode, String token, Callback<OAuthToken> callback);
+    ServiceTicket accessToken(String username, String password, String token, Callback<OAuthToken> callback);
 
     /**
      * 注册
      *
      * @param username
-     * @param validCode
+     * @param password
      * @param callback
      * @return
      */
-    ServiceTicket register(String username, String validCode, Callback<OAuthToken> callback);
+    ServiceTicket register(String username, String password, Callback<OAuthToken> callback);
 
     /**
      * 退出

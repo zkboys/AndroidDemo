@@ -18,7 +18,7 @@ import com.zkboys.sdk.oauth.OAuthLifeCycleListener;
 
 public class ZKBoysApplication extends Application {
 
-    ZKBoysSDK expressSDK;
+    ZKBoysSDK zkBoysSDK;
     OAuthClient oAuthClient;
     OAuthContext oAuthContext;
     OAuthLifeCycleListener oAuthLifeCycleListener;
@@ -30,6 +30,7 @@ public class ZKBoysApplication extends Application {
         oAuthClient.appKey = "1000";
         oAuthClient.appSecret = "3b4fd56df5964909b45a2640a4317be0";
         oAuthClient.scopes = "base";
+
         oAuthContext = new DefaultOAuthContext(this);
         oAuthLifeCycleListener = new OAuthLifeCycleListener() {
             @Override
@@ -42,7 +43,6 @@ public class ZKBoysApplication extends Application {
             @Override
             public void onUserBlocked() {
                 Log.d("ZKBoysApplication", "onUserBlocked()");
-
             }
 
             @Override
@@ -51,7 +51,7 @@ public class ZKBoysApplication extends Application {
             }
         };
 
-        expressSDK = new ZKBoysSDK(getApplicationContext(), oAuthClient, oAuthContext, oAuthLifeCycleListener, false);
+        zkBoysSDK = new ZKBoysSDK(getApplicationContext(), oAuthClient, oAuthContext, oAuthLifeCycleListener, false);
 
         //创建默认的ImageLoader配置参数
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);
@@ -64,7 +64,7 @@ public class ZKBoysApplication extends Application {
     }
 
     public ZKBoysSDK getZKBoysSDK() {
-        return expressSDK;
+        return zkBoysSDK;
     }
 
     public OAuthContext getOAuthContext() {

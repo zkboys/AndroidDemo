@@ -28,15 +28,15 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
      * 同步获取access token 即：同步登录
      *
      * @param username
-     * @param validCode
+     * @param password
      * @param scope
      * @throws ServiceException
      * @throws NetworkException
      */
     @Override
-    public void accessToken(String username, String validCode, String scope) throws ServiceException, NetworkException {
+    public void accessToken(String username, String password, String scope) throws ServiceException, NetworkException {
         OAuthToken oAuthToken = serviceClient.call(false, OAUTH_ACCESS_TOKEN_URL,
-                MapTool.create().put("username", username).put("validCode", validCode).put("scope", scope).value(),
+                MapTool.create().put("username", username).put("validCode", password).put("scope", scope).value(),
                 null, TypeInfo.createNormalType(OAuthToken.class));
 
         // 将token存入本地，即记住用户，下次不用再登录
@@ -48,17 +48,17 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
      * 异步获取access token 即：异步登录，单不存储用户token
      *
      * @param username
-     * @param validCode
+     * @param password
      * @param token
      * @param callback
      * @return
      */
     @Override
-    public ServiceTicket accessToken(String username, String validCode, String token, Callback<OAuthToken> callback) {
+    public ServiceTicket accessToken(String username, String password, String token, Callback<OAuthToken> callback) {
         return serviceClient.call(false, OAUTH_ACCESS_TOKEN_URL,
                 MapTool.create()
                         .put("username", username)
-                        .put("validCode", validCode)
+                        .put("validCode", password)
                         .put("token", token)
                         .value(),
                 null, callback);
@@ -68,16 +68,16 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
      * 异步注册
      *
      * @param username
-     * @param validCode
+     * @param password
      * @param callback
      * @return
      */
     @Override
-    public ServiceTicket register(String username, String validCode, Callback<OAuthToken> callback) {
+    public ServiceTicket register(String username, String password, Callback<OAuthToken> callback) {
         return serviceClient.call(false, OAUTH_ACCESS_REGISTER_URL,
                 MapTool.create()
                         .put("username", username)
-                        .put("validCode", validCode)
+                        .put("validCode", password)
                         .value(),
                 null, callback);
     }

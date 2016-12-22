@@ -2,17 +2,19 @@ package com.zkboys.sdk;
 
 import android.content.Context;
 
-import com.zkboys.sdk.oauth.impl.DefaultOAuthProvider;
-import com.zkboys.sdk.oauth.model.OAuthClient;
+import com.zkboys.sdk.httpjson.BaseService;
+import com.zkboys.sdk.httpjson.HttpJsonServiceClient;
+import com.zkboys.sdk.httpjson.ServiceClient;
 import com.zkboys.sdk.oauth.OAuthContext;
 import com.zkboys.sdk.oauth.OAuthLifeCycleListener;
 import com.zkboys.sdk.oauth.OAuthProvider;
+import com.zkboys.sdk.oauth.impl.DefaultOAuthProvider;
+import com.zkboys.sdk.oauth.model.OAuthClient;
+import com.zkboys.sdk.service.AppService;
 import com.zkboys.sdk.service.AuthorizeService;
 import com.zkboys.sdk.service.DeliverymanService;
-import com.zkboys.sdk.httpjson.HttpJsonServiceClient;
-import com.zkboys.sdk.httpjson.ServiceClient;
+import com.zkboys.sdk.service.impl.AppServiceImpl;
 import com.zkboys.sdk.service.impl.AuthorizeServiceImpl;
-import com.zkboys.sdk.httpjson.BaseService;
 import com.zkboys.sdk.service.impl.DeliverymanServiceImp;
 
 import org.slf4j.Logger;
@@ -93,5 +95,9 @@ public class ZKBoysSDK {
 
     public DeliverymanService getDeliverymanService() {
         return getService(DeliverymanServiceImp.class);
+    }
+
+    public AppService getAppService() {
+        return getService(AppServiceImpl.class);
     }
 }

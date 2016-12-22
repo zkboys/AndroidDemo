@@ -1,61 +1,42 @@
 package com.zkboys.androiddemo.presenter;
 
+import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.SplashPresenterInteractor;
 import com.zkboys.androiddemo.view.activities.SplashActivity;
 import com.zkboys.sdk.exception.NetworkException;
 import com.zkboys.sdk.exception.ServiceException;
-import com.zkboys.sdk.model.ClientVersionInfo;
-import com.zkboys.sdk.httpjson.Callback;
-import com.zkboys.sdk.service.DeliverymanService;
 import com.zkboys.sdk.httpjson.ServiceTicket;
-
-import java.util.Map;
+import com.zkboys.sdk.model.ClientVersionInfo;
+import com.zkboys.sdk.service.AppService;
+import com.zkboys.sdk.service.DefaultCallback;
 
 
 public class SplashPresenter implements SplashPresenterInteractor {
 
     protected SplashActivity view;
-    protected DeliverymanService service;
+    protected AppService appService;
 
-    public SplashPresenter(SplashActivity view, DeliverymanService service) {
+    public SplashPresenter(SplashActivity view) {
         this.view = view;
-        this.service = service;
+        this.appService = ((ZKBoysApplication) view.getApplication()).getZKBoysSDK().getAppService();
     }
 
     @Override
     public ServiceTicket checkVision(String appType, Integer clientVersion) {
-        return service.checkVersion(appType, clientVersion, new Callback<ClientVersionInfo>() {
-            @Override
-            public boolean onPreExecute(ServiceTicket ticket, Object object, Map<String, String> headers) {
-                return true;
-            }
-
-            @Override
-            public void onPostExecute() {
-
-            }
-
-            @Override
-            public void onProgressUpdate(Integer... values) {
-
-            }
-
+        return appService.checkVersion(appType, clientVersion, new DefaultCallback<ClientVersionInfo>() {
             @Override
             public void onSuccess(ClientVersionInfo result) {
-                System.out.println(result);
                 view.checkVisionResult(true, null, result);
             }
 
             @Override
             public void onServiceException(ServiceException exception) {
-                view.checkVisionResult(false, null, null);
-
+                view.checkVisionResult(false, exception.getMessage(), null);
             }
 
             @Override
             public void onNetworkException(NetworkException exception) {
-                view.checkVisionResult(false, null, null);
-
+                view.checkVisionResult(false, "网络连接错误", null);
             }
         });
     }
