@@ -6,7 +6,8 @@ var routes = require('./routes');
 var siteRootPath = __dirname;
 var viewsPath = path.join(siteRootPath, 'src');
 var staticPath = path.join(siteRootPath, 'src');
-
+var config = require('./config');
+var getLocalIp = require('./get-ip');
 // view engine setup
 app.set('views', viewsPath);
 app.set('view engine', 'html');
@@ -24,8 +25,10 @@ app.use(express.static(staticPath, {maxAge: 60 * 60 * 24 * 365 * 10, etag: true,
 app.use('/', routes);
 
 // run the server
-var server = app.listen(3000, function () {
-  var host = server.address().address;
+
+var server = app.listen(config.port, function () {
+//  var host = server.address().address;
+var host = getLocalIp();
   var port = server.address().port;
 
   console.log('Example app listening at http://%s:%s', host, port);

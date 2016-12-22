@@ -21,7 +21,7 @@ import com.zkboys.sdk.oauth.model.OAuthToken;
 
 public class SplashActivity extends BaseActivity {
     SplashPresenterInteractor presenter;
-    ServiceTicket findDeliveryManInfoServiceTicket, checkVisionServiceTicket;
+    ServiceTicket checkVisionServiceTicket;
     final String TAG = "SplashActivity";
 
     @Override
@@ -43,73 +43,59 @@ public class SplashActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    /**
-     * 启动当前Activity
-     * 使用方法: 任何位置调用 SplashActivity.actionStart(...);即可,具体需要什么参数,根据需求确定
-     */
-    public static void actionStart(Context context, String param1, String param2) {
-        Intent intent = new Intent(context, SplashActivity.class);
-        intent.putExtra("param1", param1);
-        intent.putExtra("param2", param2);
-        context.startActivity(intent);
-    }
-
-    public void checkVisionResult(boolean success, final String msg, final ClientVersionInfo clientVersionInfo) {
-        LogUtil.d(TAG, String.valueOf(success));
-        if (!success) {
-            showShortToast(msg);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(C.SPLASH_SHOW_TIME);
-                        finish();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        } else if (clientVersionInfo.getPromote() == C.NEED_UPDATE || clientVersionInfo.getPromote() == C.FORCE_UPDATE) {
-            final Byte promote = clientVersionInfo.getPromote();
-            final String upgradePrompt = clientVersionInfo.getUpgradePrompt();
-            final String appUrl = clientVersionInfo.getAppUrl();
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-            dialogBuilder.setMessage("更新日志\n" + upgradePrompt);
-            dialogBuilder.setTitle("版本更新");
-            dialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss(); // 隐藏掉 弹框
-                    showShortToast("请在浏览器中下载安装包文件");
-                    Uri uri = Uri.parse(appUrl);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+    public void checkVisionFail(String failMassage) {
+        showShortToast(failMassage);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(C.SPLASH_SHOW_TIME);
                     finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            });
-
-            dialogBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (promote == C.FORCE_UPDATE) { // 强制更新
-                        dialog.dismiss();
-                        getActivity().finish();
-                    } else {
-                        dialog.dismiss();
-                        doNext();
-                    }
-                }
-            });
-
-            dialogBuilder.setCancelable(false);
-            dialogBuilder.create().show();
-        } else {
-            doNext();
-        }
-
+            }
+        }).start();
     }
 
-    private void doNext() {
+    public void needUpdate(ClientVersionInfo clientVersionInfo) {
+        final Byte promote = clientVersionInfo.getPromote();
+        final String upgradePrompt = clientVersionInfo.getUpgradePrompt();
+        final String appUrl = clientVersionInfo.getAppUrl();
+        
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        dialogBuilder.setMessage("更新日志\n" + upgradePrompt);
+        dialogBuilder.setTitle("版本更新");
+        dialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                showShortToast("请在浏览器中下载安装包文件");
+                Uri uri = Uri.parse(appUrl);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        dialogBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (promote == C.FORCE_UPDATE) { // 强制更新
+                    dialog.dismiss();
+                    getActivity().finish();
+                } else {
+                    dialog.dismiss();
+                    doNext();
+                }
+            }
+        });
+
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.create().show();
+    }
+
+    public void doNext() {
         OAuthToken oAuthToken = ((ZKBoysApplication) getApplication()).getOAuthContext().load();
         if (oAuthToken != null) {
             LogUtil.d("SplashActivity", "可以进行一些需要认证的查询， 比如根据token查询用户");

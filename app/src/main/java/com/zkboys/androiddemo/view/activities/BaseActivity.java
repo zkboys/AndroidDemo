@@ -38,19 +38,19 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 关闭所有activity,退出app
      */
-    protected void finishAll() {
+    public void finishAll() {
         ActivityCollector.finishAll();
     }
 
-    protected Activity getActivity() {
+    public Activity getActivity() {
         return this;
     }
 
-    protected void showShortToast(String message) {
+    public void showShortToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
-    protected void showLongToast(String message) {
+    public void showLongToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 }

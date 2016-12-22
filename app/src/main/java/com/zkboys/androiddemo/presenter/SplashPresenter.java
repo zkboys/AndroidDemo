@@ -1,6 +1,7 @@
 package com.zkboys.androiddemo.presenter;
 
 import com.zkboys.androiddemo.application.ZKBoysApplication;
+import com.zkboys.androiddemo.common.C;
 import com.zkboys.androiddemo.presenter.vus.SplashPresenterInteractor;
 import com.zkboys.androiddemo.view.activities.SplashActivity;
 import com.zkboys.sdk.exception.NetworkException;
@@ -26,17 +27,22 @@ public class SplashPresenter implements SplashPresenterInteractor {
         return appService.checkVersion(appType, clientVersion, new DefaultCallback<ClientVersionInfo>() {
             @Override
             public void onSuccess(ClientVersionInfo result) {
-                view.checkVisionResult(true, null, result);
+                Byte promote = result.getPromote();
+                if (promote == C.NEED_UPDATE || promote == C.FORCE_UPDATE) {
+                    view.needUpdate(result);
+                } else {
+                    view.doNext();
+                }
             }
 
             @Override
             public void onServiceException(ServiceException exception) {
-                view.checkVisionResult(false, exception.getMessage(), null);
+                view.checkVisionFail(exception.getMessage());
             }
 
             @Override
             public void onNetworkException(NetworkException exception) {
-                view.checkVisionResult(false, "网络连接错误", null);
+                view.checkVisionFail("网络连接错误");
             }
         });
     }
