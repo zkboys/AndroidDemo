@@ -77,3 +77,6 @@ private Map<String, String> sign(boolean authenticated, String url, String body)
 1. 调用V中的方法，获取数据，进行数据的处理
 1. 调用M中的方法，将数据传给后端，或者本地存储等
 1. 调用V中的方法，将处理结果返回给V，V可以做一些更新页面的操作
+
+## TODO
+1. 返回的数据怎么加签的？加签了吗？
