@@ -536,7 +536,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
      * @throws NetworkException
      */
     private Request getRequestByFile(boolean authenticated, String url, String fileName, String fileUrl, File file, Map<String, String> headers) throws ServiceException, NetworkException {
-        // TODO 只是发送图片？
+        // TODO 只是发送图片，有局限性，只能发png的，这里应该根据文件名的后缀，判断发送什么类型的文件，不应该只是图片，而且不应该只是png根式
         RequestBody requestBody = new MultipartBody
                 .Builder()
                 .setType(MultipartBody.FORM)
