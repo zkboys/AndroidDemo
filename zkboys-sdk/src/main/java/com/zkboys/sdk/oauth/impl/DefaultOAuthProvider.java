@@ -57,7 +57,7 @@ public class DefaultOAuthProvider extends AbstractOauthProvider {
         TypeInfo typeInfo = TypeInfo.createNormalType(OAuthToken.class);
 
         //同步请求token
-        oauthToken = serviceClient.call(authenticated, url, params, headers, typeInfo);
+        oauthToken = serviceClient.get(authenticated, url, params, headers, typeInfo);
 
         oauthToken.setExpiresIn(System.currentTimeMillis() + oauthToken.getExpiresIn() * 1000);
 

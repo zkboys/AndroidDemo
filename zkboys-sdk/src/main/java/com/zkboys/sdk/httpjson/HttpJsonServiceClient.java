@@ -40,25 +40,72 @@ import okhttp3.Response;
  * 默认的Service客户端实现
  */
 public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
-
     private static final Logger logger = LoggerFactory.getLogger(HttpJsonServiceClient.class);
-
-    public static final String CHARSET = "UTF-8";
-
-    public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
+    static final String CHARSET = "UTF-8";
+    private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-
     // 单位秒
-    public final static int CONNECT_TIMEOUT = 60;
-    public final static int READ_TIMEOUT = 100;
-    public final static int WRITE_TIMEOUT = 60;
-    public final static String VERSION = "1";
+    private final static int CONNECT_TIMEOUT = 60;
+    private final static int READ_TIMEOUT = 100;
+    private final static int WRITE_TIMEOUT = 60;
+    private final static String VERSION = "1";
+    private OkHttpClient okHttpClient;
 
-    protected OkHttpClient okHttpClient;
+    private enum REQUEST_TYPE {GET, POST, PUT, DELETE,}
 
-    // 构造函数
     public HttpJsonServiceClient(String baseUrl, Context context, OAuthProvider oauthProvider) {
         super(baseUrl, context, oauthProvider);
+    }
+
+
+    @Override
+    public <T> ServiceTicket get(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback) {
+        return call(authenticated, url, params, headers, REQUEST_TYPE.GET, callback);
+    }
+
+    @Override
+    public <T> T get(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
+        return call(authenticated, url, params, headers, typeInfo, REQUEST_TYPE.GET);
+    }
+
+    @Override
+    public <T> ServiceTicket post(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback) {
+        return call(authenticated, url, params, headers, REQUEST_TYPE.POST, callback);
+    }
+
+    @Override
+    public <T> T post(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
+        return call(authenticated, url, params, headers, typeInfo, REQUEST_TYPE.POST);
+    }
+
+    @Override
+    public <T> ServiceTicket put(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback) {
+        return call(authenticated, url, params, headers, REQUEST_TYPE.PUT, callback);
+    }
+
+    @Override
+    public <T> T put(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
+        return call(authenticated, url, params, headers, typeInfo, REQUEST_TYPE.PUT);
+    }
+
+    @Override
+    public <T> ServiceTicket delete(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback) {
+        return call(authenticated, url, params, headers, REQUEST_TYPE.DELETE, callback);
+    }
+
+    @Override
+    public <T> T delete(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
+        return call(authenticated, url, params, headers, typeInfo, REQUEST_TYPE.DELETE);
+    }
+
+    @Override
+    public <T> ServiceTicket uploadFile(boolean authenticated, String url, Map<String, Object> parameters, File file, String filename, String fileUrl, Map<String, String> headers, Callback<T> callback) {
+        return callWithFile(authenticated, url, parameters, file, filename, fileUrl, headers, callback);
+    }
+
+    @Override
+    public <T> ServiceTicket uploadFiles(boolean authenticated, String name, Map<String, Object> parameters, Map<String, File> files, Map<String, String> headers, Callback<T> callback) {
+        return null;
     }
 
     /**
@@ -103,38 +150,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         return signParams;
     }
 
-    /**
-     * 请求的一个句柄，可以对请求进行一些操作，比如取消 cancel
-     */
-    class GeneralServiceTicket implements ServiceTicket {
-
-        private boolean canceled = false;
-        private Call call;
-
-        public GeneralServiceTicket() {
-        }
-
-        public GeneralServiceTicket(Call call) {
-            this.call = call;
-        }
-
-        public void setCall(Call call) {
-            this.call = call;
-        }
-
-        public boolean isCanceled() {
-            return canceled;
-        }
-
-        public void cancel() {
-            if (this.call != null && (!this.call.isCanceled()) && (!this.call.isExecuted())) {
-                this.call.cancel();
-            }
-            canceled = true;
-        }
-    }
-
-    protected synchronized OkHttpClient getOkHttpClient() {
+    private synchronized OkHttpClient getOkHttpClient() {
         if (okHttpClient == null) {
             okHttpClient = new OkHttpClient()
                     .newBuilder()
@@ -157,7 +173,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
      * @return ServiceTicket 请求的句柄，可以取消当前请求
      */
     public <T> ServiceTicket call(final boolean authenticated, final String url, final Object params,
-                                  final Map<String, String> headers, final Callback<T> callback) {
+                                  final Map<String, String> headers, final REQUEST_TYPE requestType, final Callback<T> callback) {
 
         final GeneralServiceTicket serviceTicket = new GeneralServiceTicket();
 
@@ -175,7 +191,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
                 private T executeCall() throws NetworkException, ServiceException, IOException {
                     // 获取callback的泛型类型
                     TypeInfo typeInfo = CallbackUtil.getCallbackGenericType(callback);
-                    Call call = buildCall(authenticated, url, params, headers, typeInfo);
+                    Call call = buildCall(authenticated, url, params, headers, requestType);
 
                     if (serviceTicket.isCanceled()) {
                         return null;
@@ -251,23 +267,10 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         return serviceTicket;
     }
 
-    /**
-     * 同步请求
-     *
-     * @param authenticated 是否需要登录
-     * @param url           请求url
-     * @param params        请求参数
-     * @param headers       请求头设置
-     * @param typeInfo      返回的数据类型
-     * @return
-     * @throws NetworkException
-     * @throws ServiceException
-     */
-    @Override
     public <T> T call(boolean authenticated, String url, Object params,
-                      Map<String, String> headers, final TypeInfo typeInfo) throws NetworkException, ServiceException {
+                      Map<String, String> headers, final TypeInfo typeInfo, final REQUEST_TYPE requestType) throws NetworkException, ServiceException {
         try {
-            Call call = buildCall(authenticated, url, params, headers, typeInfo);
+            Call call = buildCall(authenticated, url, params, headers, requestType);
             Response response = call.execute();
             return HttpJsonResponseHelper.getResult(response, typeInfo);
         } catch (IOException e) {
@@ -281,7 +284,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
                 OAuthToken oAuthToken = oauthProvider.getOAuthContext().load();
                 oAuthToken.setExpiresIn(0L);
                 oauthProvider.getOAuthContext().store(oAuthToken);
-                return call(authenticated, url, params, headers, typeInfo);
+                return call(authenticated, url, params, headers, typeInfo, requestType);
             }
             dealServiceException(e);
 
@@ -289,21 +292,6 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         }
     }
 
-    /**
-     * 异步发送单个图片
-     *
-     * @param authenticated
-     * @param url
-     * @param parameters
-     * @param file
-     * @param filename
-     * @param fileUrl
-     * @param headers
-     * @param callback
-     * @param <T>
-     * @return
-     */
-    @Override
     public <T> ServiceTicket callWithFile(final boolean authenticated, final String url, Map<String, Object> parameters,
                                           final File file, final String filename, final String fileUrl, final Map<String, String> headers, final Callback<T> callback) {
 
@@ -357,7 +345,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
 
                             try {
                                 TypeInfo typeInfo = CallbackUtil.getCallbackGenericType(callback);
-                                Call call = buildCall(authenticated, url, file, headers, typeInfo);
+                                Call call = buildCall(authenticated, url, file, headers, REQUEST_TYPE.POST);
 
                                 if (serviceTicket.isCanceled()) {
                                     return null;
@@ -428,19 +416,6 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         return serviceTicket;
     }
 
-    /**
-     * 上传多个文件的请求
-     *
-     * @param authenticated
-     * @param url
-     * @param parameters
-     * @param files
-     * @param headers
-     * @param callback
-     * @param <T>
-     * @return
-     */
-    @Override
     public <T> ServiceTicket callWithFiles(boolean authenticated, String url, Map<String, Object> parameters,
                                            Map<String, File> files, Map<String, String> headers, Callback<T> callback) {
         return null;
@@ -471,8 +446,8 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
     }
 
     private Call buildCall(boolean authenticated, String url, Object params,
-                           Map<String, String> headers, final TypeInfo typeInfo) throws NetworkException, ServiceException {
-        Request request = getRequest(authenticated, url, params, headers);
+                           Map<String, String> headers, REQUEST_TYPE requestType) throws NetworkException, ServiceException {
+        Request request = getRequest(authenticated, url, params, headers, requestType);
         return getOkHttpClient().newCall(request);
     }
 
@@ -482,39 +457,63 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         return getOkHttpClient().newCall(request);
     }
 
-    /**
-     * 普通请求的request
-     *
-     * @param authenticated
-     * @param url
-     * @param params
-     * @param headers
-     * @return
-     * @throws ServiceException
-     * @throws NetworkException
-     */
-    private Request getRequest(boolean authenticated, String url, Object params, Map<String, String> headers) throws ServiceException, NetworkException {
-        String json = params == null ? "{}" : JSONObject.toJSONString(params);
-        RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, json);
-        Request.Builder builder = new Request.Builder()
-                .url(this.baseUrl + url)
-                .post(body);
-        Map<String, String> signHeader = sign(authenticated, url, json);
+    private Request getRequest(boolean authenticated, String url, Object params, Map<String, String> headers, REQUEST_TYPE requestType) throws ServiceException, NetworkException {
+        String paramsJsonString = params == null ? "{}" : JSONObject.toJSONString(params);
+        RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, paramsJsonString);
+        Request.Builder builder = new Request.Builder();
+
+        switch (requestType) {
+            case GET:
+                String paramsString = "";
+                if (null != params) {
+                    Map<String, Object> paramsMap = (Map<String, Object>) params;
+                    ArrayList<String> paramsArray = new ArrayList<>();
+                    for (String key : paramsMap.keySet()) {
+                        String value = paramsMap.get(key).toString();
+                        paramsArray.add(key + "=" + value);
+                    }
+                    for (int i = 0; i < paramsArray.size(); i++) {
+                        paramsString += paramsArray.get(i);
+                        if (i != paramsArray.size() - 1) {
+                            paramsString += "&";
+                        }
+                    }
+                }
+                if (!url.contains("?")) {
+                    url += "?" + paramsString;
+                } else {
+                    url += "&" + paramsString;
+                }
+
+                System.out.println(this.baseUrl + url);
+                builder.url(this.baseUrl + url);
+                break;
+            case POST:
+                builder.url(this.baseUrl + url).post(body);
+                break;
+
+            case PUT:
+                builder.url(this.baseUrl + url).put(body);
+                break;
+
+            case DELETE:
+                builder.url(this.baseUrl + url).delete(body);
+                break;
+        }
+
+        Map<String, String> signHeader = sign(authenticated, url, paramsJsonString);
 
         if (headers != null) {
             signHeader.putAll(headers);
         }
+        // 加签相关的内容放到headers中
+        builder.headers(Headers.of(signHeader));
 
         // 控制不需要缓存  全部走网络数据
         /*
         final CacheControl.Builder cacheBuilder = new CacheControl.Builder();
         cacheBuilder.noCache();
         CacheControl cache = cacheBuilder.build();
-        */
-
-        // 加签相关的内容放到headers中
-        builder.headers(Headers.of(signHeader));
-        /*
         builder.addHeader("Connection", "close");
         builder.cacheControl(cache);
         */

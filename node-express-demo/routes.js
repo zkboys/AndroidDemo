@@ -20,7 +20,8 @@ router.post('/oauth/sign_in.json', function (req, res, next) {
     console.log(req.query);
 });
 
-router.post('/version.json', function (req, res, next) {
+router.get('/version.json', function (req, res, next) {
+    console.log(req.query);
     res.send({
         version: 6, // 版本号
         versionCode: '1.0.5', // 版本名

@@ -12,10 +12,8 @@ import com.zkboys.sdk.oauth.impl.DefaultOAuthProvider;
 import com.zkboys.sdk.oauth.model.OAuthClient;
 import com.zkboys.sdk.service.AppService;
 import com.zkboys.sdk.service.AuthorizeService;
-import com.zkboys.sdk.service.DeliverymanService;
 import com.zkboys.sdk.service.impl.AppServiceImpl;
 import com.zkboys.sdk.service.impl.AuthorizeServiceImpl;
-import com.zkboys.sdk.service.impl.DeliverymanServiceImp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,10 +89,6 @@ public class ZKBoysSDK {
 
     public AuthorizeService getAuthorizeService() {
         return getService(AuthorizeServiceImpl.class);
-    }
-
-    public DeliverymanService getDeliverymanService() {
-        return getService(DeliverymanServiceImp.class);
     }
 
     public AppService getAppService() {

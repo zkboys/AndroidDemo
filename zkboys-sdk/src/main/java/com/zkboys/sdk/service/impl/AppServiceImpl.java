@@ -18,8 +18,14 @@ public class AppServiceImpl extends BaseService implements AppService {
 
     @Override
     public ServiceTicket checkVersion(String appType, Integer clientVersion, Callback<ClientVersionInfo> callback) {
-        return serviceClient.call(false, APP_CLIENT_CHECK_VERSION,
-                MapTool.create().put("appType", appType).put("clientVersion", clientVersion).value(),
-                null, callback);
+        return serviceClient.get(
+                false,
+                APP_CLIENT_CHECK_VERSION,
+                MapTool.create()
+                        .put("appType", appType)
+                        .put("clientVersion", clientVersion)
+                        .value(),
+                null, callback
+        );
     }
 }

@@ -35,9 +35,17 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
      */
     @Override
     public void accessToken(String username, String password, String scope) throws ServiceException, NetworkException {
-        OAuthToken oAuthToken = serviceClient.call(false, OAUTH_ACCESS_TOKEN_URL,
-                MapTool.create().put("userName", username).put("passWord", password).put("scope", scope).value(),
-                null, TypeInfo.createNormalType(OAuthToken.class));
+        OAuthToken oAuthToken = serviceClient.get(
+                false,
+                OAUTH_ACCESS_TOKEN_URL,
+                MapTool.create()
+                        .put("userName", username)
+                        .put("passWord", password)
+                        .put("scope", scope)
+                        .value(),
+                null,
+                TypeInfo.createNormalType(OAuthToken.class)
+        );
 
         // 将token存入本地，即记住用户，下次不用再登录
         oAuthToken.setExpiresIn(System.currentTimeMillis() + oAuthToken.getExpiresIn() * 1000);
@@ -55,13 +63,16 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
      */
     @Override
     public ServiceTicket accessToken(String username, String password, String token, Callback<OAuthToken> callback) {
-        return serviceClient.call(false, OAUTH_ACCESS_TOKEN_URL,
+        return serviceClient.get(
+                false,
+                OAUTH_ACCESS_TOKEN_URL,
                 MapTool.create()
                         .put("userName", username)
                         .put("passWord", password)
                         .put("token", token)
                         .value(),
-                null, callback);
+                null, callback
+        );
     }
 
     /**
@@ -74,7 +85,9 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
      */
     @Override
     public ServiceTicket register(String username, String password, Callback<OAuthToken> callback) {
-        return serviceClient.call(false, OAUTH_ACCESS_REGISTER_URL,
+        return serviceClient.post(
+                false,
+                OAUTH_ACCESS_REGISTER_URL,
                 MapTool.create()
                         .put("username", username)
                         .put("validCode", password)

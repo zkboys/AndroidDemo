@@ -17,38 +17,23 @@ public interface ServiceClient {
 
     OAuthProvider getOAuthProvider();
 
-    /**
-     * 以<b>POST+异步</b>的方式访问Open-API，（通用参数描述见带callback的'get'方法）
-     *
-     * @param object
-     * @param callback
-     */
-    <T> ServiceTicket call(boolean authenticated, String name, Object object, Map<String, String> headers, Callback<T> callback);
+    <T> ServiceTicket get(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback);
 
-    /**
-     * 以<b>同步读操作</b>的方式访问Open-API
-     *
-     * @param params
-     * @param typeInfo
-     * @return
-     * @throws NetworkException
-     * @throws ServiceException
-     */
-    <T> T call(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
+    <T> T get(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
 
-    /**
-     * 以<b>POST+Stream+异步</b>的方式访问Open-API，（通用参数描述见带callback的'get'方法）
-     *
-     * @param parameters
-     * @param callback
-     */
-    <T> ServiceTicket callWithFile(boolean authenticated, String name, Map<String, Object> parameters, File file, final String filename, String fileUrl, Map<String, String> headers, Callback<T> callback);
+    <T> ServiceTicket post(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback);
 
-    /**
-     * 以<b>POST+Stream+异步</b>的方式访问Open-API，（通用参数描述见带callback的'get'方法）
-     *
-     * @param parameters
-     * @param callback
-     */
-    <T> ServiceTicket callWithFiles(boolean authenticated, String name, Map<String, Object> parameters, Map<String, File> files, Map<String, String> headers, Callback<T> callback);
+    <T> T post(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
+
+    <T> ServiceTicket put(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback);
+
+    <T> T put(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
+
+    <T> ServiceTicket delete(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback);
+
+    <T> T delete(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
+
+    <T> ServiceTicket uploadFile(boolean authenticated, String name, Map<String, Object> parameters, File file, final String filename, String fileUrl, Map<String, String> headers, Callback<T> callback);
+
+    <T> ServiceTicket uploadFiles(boolean authenticated, String name, Map<String, Object> parameters, Map<String, File> files, Map<String, String> headers, Callback<T> callback);
 }

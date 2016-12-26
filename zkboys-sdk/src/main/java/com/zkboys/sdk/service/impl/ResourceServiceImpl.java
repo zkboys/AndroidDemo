@@ -21,6 +21,6 @@ public class ResourceServiceImpl extends BaseService implements ResourceService 
 
     @Override
     public ServiceTicket upload(File file, String fileName, String fileUrl, Callback<ResourceInfo> callback) {
-        return serviceClient.callWithFile(true, RESOURCE_UPLOAD, null, file, fileName, fileUrl, null, callback);
+        return serviceClient.uploadFile(true, RESOURCE_UPLOAD, null, file, fileName, fileUrl, null, callback);
     }
 }
