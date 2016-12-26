@@ -59,52 +59,52 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
 
 
     @Override
-    public <T> ServiceTicket get(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback) {
+    public <T> ServiceTicket get(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, Callback<T> callback) {
         return call(authenticated, url, params, headers, REQUEST_TYPE.GET, callback);
     }
 
     @Override
-    public <T> T get(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
+    public <T> T get(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
         return call(authenticated, url, params, headers, typeInfo, REQUEST_TYPE.GET);
     }
 
     @Override
-    public <T> ServiceTicket post(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback) {
+    public <T> ServiceTicket post(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, Callback<T> callback) {
         return call(authenticated, url, params, headers, REQUEST_TYPE.POST, callback);
     }
 
     @Override
-    public <T> T post(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
+    public <T> T post(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
         return call(authenticated, url, params, headers, typeInfo, REQUEST_TYPE.POST);
     }
 
     @Override
-    public <T> ServiceTicket put(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback) {
+    public <T> ServiceTicket put(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, Callback<T> callback) {
         return call(authenticated, url, params, headers, REQUEST_TYPE.PUT, callback);
     }
 
     @Override
-    public <T> T put(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
+    public <T> T put(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
         return call(authenticated, url, params, headers, typeInfo, REQUEST_TYPE.PUT);
     }
 
     @Override
-    public <T> ServiceTicket delete(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback) {
+    public <T> ServiceTicket delete(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, Callback<T> callback) {
         return call(authenticated, url, params, headers, REQUEST_TYPE.DELETE, callback);
     }
 
     @Override
-    public <T> T delete(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
+    public <T> T delete(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException {
         return call(authenticated, url, params, headers, typeInfo, REQUEST_TYPE.DELETE);
     }
 
     @Override
-    public <T> ServiceTicket uploadFile(boolean authenticated, String url, Map<String, Object> parameters, File file, String filename, String fileUrl, Map<String, String> headers, Callback<T> callback) {
-        return callWithFile(authenticated, url, parameters, file, filename, fileUrl, headers, callback);
+    public <T> ServiceTicket uploadFile(boolean authenticated, String url, Map<String, Object> params, File file, String filename, String fileUrl, Map<String, String> headers, Callback<T> callback) {
+        return callWithFile(authenticated, url, params, file, filename, fileUrl, headers, callback);
     }
 
     @Override
-    public <T> ServiceTicket uploadFiles(boolean authenticated, String name, Map<String, Object> parameters, Map<String, File> files, Map<String, String> headers, Callback<T> callback) {
+    public <T> ServiceTicket uploadFiles(boolean authenticated, String name, Map<String, Object> params, Map<String, File> files, Map<String, String> headers, Callback<T> callback) {
         return null;
     }
 
@@ -113,12 +113,12 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
      *
      * @param authenticated 是否需要登录
      * @param url           请求url
-     * @param body          请求参数
+     * @param params        请求参数
      * @return
      * @throws ServiceException
      * @throws NetworkException
      */
-    private Map<String, String> sign(boolean authenticated, String url, String body) throws ServiceException, NetworkException {
+    private Map<String, String> sign(boolean authenticated, String url, Map<String, Object> params) throws ServiceException, NetworkException {
         Map<String, String> signParams = new HashMap<>();
 
         signParams.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
@@ -130,12 +130,27 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
             signParams.put("accessToken", this.oauthProvider.getAccessToken(this));
         }
 
+        String paramsSignString = "";
+
+        if (params != null) {
+            List<String> paramsKeys = new ArrayList<>();
+
+            for (String key : params.keySet()) {
+                paramsKeys.add(key);
+            }
+            Collections.sort(paramsKeys);
+
+            for (int i = 0; i < paramsKeys.size(); i++) {
+                String key = paramsKeys.get(i);
+                String value = params.get(key).toString();
+                paramsSignString += key + value;
+            }
+        }
         List<String> list = new ArrayList<>(signParams.values());
 
         list.add(url);
-        list.add(body);
+        list.add(paramsSignString);
         list.add(this.oauthProvider.getOAuthClient().appSecret);
-
         Collections.sort(list);
         String str = "";
 
@@ -172,7 +187,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
      * @param callback      请求回调函数
      * @return ServiceTicket 请求的句柄，可以取消当前请求
      */
-    public <T> ServiceTicket call(final boolean authenticated, final String url, final Object params,
+    public <T> ServiceTicket call(final boolean authenticated, final String url, final Map<String, Object> params,
                                   final Map<String, String> headers, final REQUEST_TYPE requestType, final Callback<T> callback) {
 
         final GeneralServiceTicket serviceTicket = new GeneralServiceTicket();
@@ -212,7 +227,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
                         return executeCall();
                     } catch (ServiceException e) {
                         if (ServiceException.ACCESS_TOKEN_HAS_EXPIRED == e.getCode()) { // access token 过期异常
-                            // 将本地token设置成过期，再次发送请求，加签时，会通过OAuthProvider从新根据refresh token 获取access token
+                            // 将本地token设置成过期，再次发送请求，加签时，会通过OAuthProvider从新根据refresh_token 获取access token
                             OAuthToken oAuthToken = oauthProvider.getOAuthContext().load();
                             oAuthToken.setExpiresIn(0L);
                             oauthProvider.getOAuthContext().store(oAuthToken);
@@ -267,7 +282,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         return serviceTicket;
     }
 
-    public <T> T call(boolean authenticated, String url, Object params,
+    public <T> T call(boolean authenticated, String url, Map<String, Object> params,
                       Map<String, String> headers, final TypeInfo typeInfo, final REQUEST_TYPE requestType) throws NetworkException, ServiceException {
         try {
             Call call = buildCall(authenticated, url, params, headers, requestType);
@@ -307,36 +322,40 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
             requestTask = new AsyncTask<Object, Integer, Object>() {
                 T resultObj = null;
 
+                private T executeCall() throws NetworkException, ServiceException, IOException {
+                    // 获取callback的泛型类型
+                    TypeInfo typeInfo = CallbackUtil.getCallbackGenericType(callback);
+                    Call call = buildCallByFile(authenticated, url, filename, fileUrl, file, headers, typeInfo);
+                    if (serviceTicket.isCanceled()) {
+                        return null;
+                    }
+
+                    HttpProgressRequestBody httpProgressRequestBody = new HttpProgressRequestBody(call.request().body(), new HttpProgressRequestBody.ProgressListener() {
+                        @Override
+                        public void onProgress(long len, long size) {
+                            Log.e("size", "len = " + len + " ;size = " + size);
+
+                            double p = BigDecimal.valueOf(Long.valueOf(len)).divide(BigDecimal.valueOf(Long.valueOf(size)), 2, BigDecimal.ROUND_HALF_EVEN).doubleValue();
+
+                            int progress = (int) (p * 100);
+
+                            Log.e("size", "progress = " + progress);
+
+                            publishProgress(progress);
+                        }
+                    });
+
+                    call = getOkHttpClient().newCall(call.request().newBuilder().post(httpProgressRequestBody).build());
+                    serviceTicket.setCall(call);
+                    Response response = call.execute();
+                    resultObj = HttpJsonResponseHelper.getResult(response, typeInfo);
+                    return resultObj;
+                }
+
                 @Override
                 protected Object doInBackground(Object... params) {
                     try {
-                        // 获取callback的泛型类型
-                        TypeInfo typeInfo = CallbackUtil.getCallbackGenericType(callback);
-                        Call call = buildCallByFile(authenticated, url, filename, fileUrl, file, headers, typeInfo);
-                        if (serviceTicket.isCanceled()) {
-                            return null;
-                        }
-
-                        HttpProgressRequestBody httpProgressRequestBody = new HttpProgressRequestBody(call.request().body(), new HttpProgressRequestBody.ProgressListener() {
-                            @Override
-                            public void onProgress(long len, long size) {
-                                Log.e("size", "len = " + len + " ;size = " + size);
-
-                                double p = BigDecimal.valueOf(Long.valueOf(len)).divide(BigDecimal.valueOf(Long.valueOf(size)), 2, BigDecimal.ROUND_HALF_EVEN).doubleValue();
-
-                                int progress = (int) (p * 100);
-
-                                Log.e("size", "progress = " + progress);
-
-                                publishProgress(progress);
-                            }
-                        });
-
-                        call = getOkHttpClient().newCall(call.request().newBuilder().post(httpProgressRequestBody).build());
-                        serviceTicket.setCall(call);
-                        Response response = call.execute();
-                        resultObj = HttpJsonResponseHelper.getResult(response, typeInfo);
-                        return resultObj;
+                        return executeCall();
                     } catch (ServiceException e) {
                         if (ServiceException.ACCESS_TOKEN_HAS_EXPIRED == e.getCode()) {
                             OAuthToken oAuthToken = oauthProvider.getOAuthContext().load();
@@ -344,18 +363,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
                             oauthProvider.getOAuthContext().store(oAuthToken);
 
                             try {
-                                TypeInfo typeInfo = CallbackUtil.getCallbackGenericType(callback);
-                                Call call = buildCall(authenticated, url, file, headers, REQUEST_TYPE.POST);
-
-                                if (serviceTicket.isCanceled()) {
-                                    return null;
-                                }
-
-                                serviceTicket.setCall(call);
-                                Response response = call.execute();
-
-                                resultObj = HttpJsonResponseHelper.getResult(response, typeInfo);
-                                return resultObj;
+                                return executeCall();
                             } catch (IOException e1) {
                                 return new NetworkException(e1);
                             } catch (Exception e1) {
@@ -445,7 +453,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         }
     }
 
-    private Call buildCall(boolean authenticated, String url, Object params,
+    private Call buildCall(boolean authenticated, String url, Map<String, Object> params,
                            Map<String, String> headers, REQUEST_TYPE requestType) throws NetworkException, ServiceException {
         Request request = getRequest(authenticated, url, params, headers, requestType);
         return getOkHttpClient().newCall(request);
@@ -457,7 +465,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         return getOkHttpClient().newCall(request);
     }
 
-    private Request getRequest(boolean authenticated, String url, Object params, Map<String, String> headers, REQUEST_TYPE requestType) throws ServiceException, NetworkException {
+    private Request getRequest(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, REQUEST_TYPE requestType) throws ServiceException, NetworkException {
         String paramsJsonString = params == null ? "{}" : JSONObject.toJSONString(params);
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, paramsJsonString);
         Request.Builder builder = new Request.Builder();
@@ -466,10 +474,9 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
             case GET:
                 String paramsString = "";
                 if (null != params) {
-                    Map<String, Object> paramsMap = (Map<String, Object>) params;
                     ArrayList<String> paramsArray = new ArrayList<>();
-                    for (String key : paramsMap.keySet()) {
-                        String value = paramsMap.get(key).toString();
+                    for (String key : params.keySet()) {
+                        String value = params.get(key).toString();
                         paramsArray.add(key + "=" + value);
                     }
                     for (int i = 0; i < paramsArray.size(); i++) {
@@ -484,8 +491,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
                 } else {
                     url += "&" + paramsString;
                 }
-
-                System.out.println(this.baseUrl + url);
+                System.out.println(url);
                 builder.url(this.baseUrl + url);
                 break;
             case POST:
@@ -501,7 +507,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
                 break;
         }
 
-        Map<String, String> signHeader = sign(authenticated, url, paramsJsonString);
+        Map<String, String> signHeader = sign(authenticated, url, params);
 
         if (headers != null) {
             signHeader.putAll(headers);
@@ -546,7 +552,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
         Request.Builder builder = new Request.Builder()
                 .url(this.baseUrl + url);
 
-        Map<String, String> signHeader = sign(authenticated, url, fileName);
+        Map<String, String> signHeader = sign(authenticated, url, null);
         if (headers != null) {
             signHeader.putAll(headers);
         }

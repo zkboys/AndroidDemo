@@ -16,8 +16,35 @@ router.get('/test-ajax', function (req, res, next) {
     ]);
 });
 
-router.post('/oauth/sign_in.json', function (req, res, next) {
+router.get('/oauth/sign_in.json', function (req, res, next) {
     console.log(req.query);
+    // 根据appKey查询相应的OAuth对象
+    // 判断OAuth.appSecret 是否等于 客户端传过来的appSecret
+    // 根据用户名密码查询 用户id
+    // 根据用户id、OAuth.scope创建 token对象，存储到数据库
+    // 返回前端需要的token
+    var appKey = req.headers.appKey;
+    var timestamp = req.headers.timestamp;
+    var ticket = req.headers.ticket;
+    var sign = req.headers.sign;
+    var version = req.headers.version;
+    var accessToken = req.headers.accessToken;
+    var url = req.url;
+    var paramsSignString = "";
+    var appSecret = "3b4fd56df5964909b45a2640a4317be0";
+
+    for(var p in req.query){
+        console.log(p);
+    }
+
+    var method =  req.method;
+
+    res.send({
+        accessToken: '123456',
+        refreshToken: '654321',
+        scope: 'a,b,c',
+        expiresIn: 24 * 60 * 60 * 1000
+    });
 });
 
 router.get('/version.json', function (req, res, next) {
@@ -31,167 +58,4 @@ router.get('/version.json', function (req, res, next) {
     });
 });
 
-router.get('/data.json', function (req, res, next) {
-    var company = req.query.company;
-    var startDate = req.query.startDate;
-    var endDate = req.query.endDate;
-    var nextCursor = req.query.nextCursor;
-    // TODO 根据条件查询数据
-
-    function rn(Min, Max) {
-        var Range = Max - Min;
-        var Rand = Math.random();
-        return (Min + Math.round(Rand * Range));
-    }
-
-    function getRNData() {
-        var arr = [0, rn(0, 5), 0, rn(0, 5), rn(0, 5), 0, 0];
-        arr.sort(function () {
-            return 0.5 - Math.random()
-        })
-        return arr;
-    }
-
-    var data = {
-        nextCursor: 1, // 滚动加载，是否有下一页的标记以及后端查询下一页的开始条件, 0 表示没有下一页了。
-        result: [
-            {
-                name: startDate,
-                data: getRNData()
-            },
-            {
-                name: endDate,
-                data: getRNData()
-            },
-            {
-                name: company,
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            }, {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-            {
-                name: '张三',
-                data: getRNData()
-            },
-            {
-                name: '李四',
-                data: getRNData()
-            },
-            {
-                name: '王五',
-                data: getRNData()
-            },
-        ]
-    };
-    if (company === 'shanghai') {
-        res.send({nextCursor: 0, result: []});
-    } else {
-        res.send(data);
-    }
-});
 module.exports = router;

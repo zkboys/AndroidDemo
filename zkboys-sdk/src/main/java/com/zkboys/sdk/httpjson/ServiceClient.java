@@ -17,23 +17,23 @@ public interface ServiceClient {
 
     OAuthProvider getOAuthProvider();
 
-    <T> ServiceTicket get(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback);
+    <T> ServiceTicket get(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, Callback<T> callback);
 
-    <T> T get(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
+    <T> T get(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
 
-    <T> ServiceTicket post(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback);
+    <T> ServiceTicket post(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, Callback<T> callback);
 
-    <T> T post(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
+    <T> T post(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
 
-    <T> ServiceTicket put(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback);
+    <T> ServiceTicket put(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, Callback<T> callback);
 
-    <T> T put(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
+    <T> T put(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
 
-    <T> ServiceTicket delete(boolean authenticated, String url, Object params, Map<String, String> headers, Callback<T> callback);
+    <T> ServiceTicket delete(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, Callback<T> callback);
 
-    <T> T delete(boolean authenticated, String url, Object params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
+    <T> T delete(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, TypeInfo typeInfo) throws NetworkException, ServiceException;
 
-    <T> ServiceTicket uploadFile(boolean authenticated, String name, Map<String, Object> parameters, File file, final String filename, String fileUrl, Map<String, String> headers, Callback<T> callback);
+    <T> ServiceTicket uploadFile(boolean authenticated, String url, Map<String, Object> params, File file, final String filename, String fileUrl, Map<String, String> headers, Callback<T> callback);
 
-    <T> ServiceTicket uploadFiles(boolean authenticated, String name, Map<String, Object> parameters, Map<String, File> files, Map<String, String> headers, Callback<T> callback);
+    <T> ServiceTicket uploadFiles(boolean authenticated, String url, Map<String, Object> params, Map<String, File> files, Map<String, String> headers, Callback<T> callback);
 }

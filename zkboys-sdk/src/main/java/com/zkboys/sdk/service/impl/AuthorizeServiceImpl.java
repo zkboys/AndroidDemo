@@ -57,19 +57,19 @@ public class AuthorizeServiceImpl extends BaseService implements AuthorizeServic
      *
      * @param username
      * @param password
-     * @param token
+     * @param scope
      * @param callback
      * @return
      */
     @Override
-    public ServiceTicket accessToken(String username, String password, String token, Callback<OAuthToken> callback) {
+    public ServiceTicket accessToken(String username, String password, String scope, Callback<OAuthToken> callback) {
         return serviceClient.get(
                 false,
                 OAUTH_ACCESS_TOKEN_URL,
                 MapTool.create()
                         .put("userName", username)
                         .put("passWord", password)
-                        .put("token", token)
+                        .put("scope", scope)
                         .value(),
                 null, callback
         );

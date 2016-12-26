@@ -5,7 +5,7 @@ public class OAuthToken {
     private String accessToken;
     private Long expiresIn;
     private String refreshToken;
-    private String scope;           // 权限范围, 支持多个,以逗号分割
+    private String scopes;           // 权限范围, 支持多个,以逗号分割
 
     public OAuthToken() {
     }
@@ -40,12 +40,12 @@ public class OAuthToken {
         this.refreshToken = refreshToken;
     }
 
-    public String getScope() {
-        return scope;
+    public String getScopes() {
+        return scopes;
     }
 
-    public void setScope(String scope) {
-        this.scope = scope;
+    public void setScopes(String scope) {
+        this.scopes = scope;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class OAuthToken {
                 "accessToken='" + accessToken + '\'' +
                 ", expiresIn=" + expiresIn +
                 ", refreshToken='" + refreshToken + '\'' +
-                ", scope='" + scope + '\'' +
+                ", scope='" + scopes + '\'' +
                 '}';
     }
 }
