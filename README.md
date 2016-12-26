@@ -79,4 +79,6 @@ private Map<String, String> sign(boolean authenticated, String url, String body)
 1. 调用V中的方法，将处理结果返回给V，V可以做一些更新页面的操作
 
 ## TODO
-1. 返回的数据怎么加签的？加签了吗？
+1.[x] 返回的数据怎么加签的？加签了吗？有双向加签的，但是这个项目没用用双向加签
+1.[ ] 底层封装的请求，用的都是post，不基于RestFul进行封装，提供其他方法吗？比如常用的get post put delete
+1.[ ] OAuth 中的scope、scopes 客户端这边好像没用到，这个是用来确定，token的可访问资源，这个限制怎么能客户端传scope呢？不能根据appKey 或者 appSecret确定这个token的权限吗？
