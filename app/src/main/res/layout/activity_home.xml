@@ -1,22 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.zkboys.androiddemo.view.activities.HomeActivity">
+    android:orientation="vertical"
+    >
+
+    <com.zkboys.androiddemo.view.activities.layout.TitleLayout
+        android:id="@+id/tl_home_title"
+        title="我是标题啊"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/btn_home_show_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/select_btn_primary"
+        android:gravity="start|center_vertical"
+        android:text="Recycler View Demo"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:text="我有边框"
+        />
 
     <TextView
-        android:text="首页"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/button_border"
+        android:gravity="center"
+        android:text="我是TextView"
+        android:textColor="#ffffff"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="61dp"
-        android:id="@+id/textView2"/>
-</RelativeLayout>
+        android:orientation="horizontal"
+        >
+
+        <CheckBox
+            android:id="@+id/checkbox_meat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NB"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_cheese"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="牛逼"/>
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_table_info_group"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_table_info_M"
+            android:layout_width="75dp"
+            android:layout_height="40dp"
+            android:checked="true"
+            android:gravity="center"
+            android:text="先生"
+            android:textColor="#00ff00"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_table_info_F"
+            android:layout_width="75dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="女士"
+            android:textColor="#ff0000"
+            />
+    </RadioGroup>
+</LinearLayout>

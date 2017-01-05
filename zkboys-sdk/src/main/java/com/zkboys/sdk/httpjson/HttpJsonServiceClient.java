@@ -196,7 +196,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
             callback.onPostExecute();
             return serviceTicket;
         }
-        // TODO 这个判断是什么鬼？
+        // TODO 这个判断是什么鬼？ 判断用户使用的sdk版本是否大于 May 2009: Android 1.5. 如果不大于，后续没有操作了？
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.CUPCAKE) {
             final AsyncTask<Object, Integer, Object> requestTask;
 
