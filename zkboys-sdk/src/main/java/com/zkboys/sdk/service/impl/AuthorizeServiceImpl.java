@@ -17,8 +17,8 @@ import com.zkboys.sdk.httpjson.ServiceTicket;
 public class AuthorizeServiceImpl extends BaseService implements AuthorizeService {
 
 
-    public static final String OAUTH_ACCESS_TOKEN_URL = "/oauth/sign_in.json";
-    public static final String OAUTH_ACCESS_REGISTER_URL = "/oauth/register.json";
+    public static final String OAUTH_ACCESS_TOKEN_URL = "/v1/oauth/sign_in.json";
+    public static final String OAUTH_ACCESS_REGISTER_URL = "/v1/oauth/register.json";
 
     public AuthorizeServiceImpl(ServiceClient serviceClient) {
         super(serviceClient);

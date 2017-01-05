@@ -12,7 +12,7 @@ import java.io.File;
 
 public class ResourceServiceImpl extends BaseService implements ResourceService {
 
-    public static final String RESOURCE_UPLOAD = "/resource/add.json";
+    public static final String RESOURCE_UPLOAD = "/v1/resource/add.json";
 
 
     public ResourceServiceImpl(ServiceClient serviceClient) {

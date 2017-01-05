@@ -2,34 +2,26 @@ package com.zkboys.sdk.model;
 
 public class ClientVersionInfo {
 
-    private Short version;              // 版本名称
-    private String versionCode;         // 版本号
+    private String versionName;              // 版本名称
+    private Short versionCode;         // 版本号
     private Byte promote;               // 是否升级  1升级  0不升级   2强制升级
     private String appUrl;              // app下载地址
     private String upgradePrompt;       // 升级提示
 
-    public Short getVersion() {
-        return version;
+    public String getVersionName() {
+        return versionName;
     }
 
-    public void setVersion(Short version) {
-        this.version = version;
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
     }
 
-    public String getVersionCode() {
+    public Short getVersionCode() {
         return versionCode;
     }
 
-    public void setVersionCode(String versionCode) {
+    public void setVersionCode(Short versionCode) {
         this.versionCode = versionCode;
-    }
-
-    public String getAppUrl() {
-        return appUrl;
-    }
-
-    public void setAppUrl(String appUrl) {
-        this.appUrl = appUrl;
     }
 
     public Byte getPromote() {
@@ -38,6 +30,14 @@ public class ClientVersionInfo {
 
     public void setPromote(Byte promote) {
         this.promote = promote;
+    }
+
+    public String getAppUrl() {
+        return appUrl;
+    }
+
+    public void setAppUrl(String appUrl) {
+        this.appUrl = appUrl;
     }
 
     public String getUpgradePrompt() {
@@ -51,8 +51,8 @@ public class ClientVersionInfo {
     @Override
     public String toString() {
         return "ClientVersionInfo{" +
-                "version=" + version +
-                ", versionCode='" + versionCode + '\'' +
+                "versionName='" + versionName + '\'' +
+                ", versionCode=" + versionCode +
                 ", promote=" + promote +
                 ", appUrl='" + appUrl + '\'' +
                 ", upgradePrompt='" + upgradePrompt + '\'' +

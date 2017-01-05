@@ -10,7 +10,7 @@ import com.zkboys.sdk.service.AppService;
 
 public class AppServiceImpl extends BaseService implements AppService {
 
-    public static final String APP_CLIENT_CHECK_VERSION = "/version.json";
+    public static final String APP_CLIENT_CHECK_VERSION = "/v1/version.json";
 
     public AppServiceImpl(ServiceClient serviceClient) {
         super(serviceClient);

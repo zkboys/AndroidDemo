@@ -18,4 +18,9 @@ module.exports = function (schema) {
     schema.methods.update_at_ago = function () {
         return tools.formatDate(this.update_at, true);
     };
+
+    schema.pre('save', function (next) {
+        this.update_at = new Date();
+        next();
+    });
 };
