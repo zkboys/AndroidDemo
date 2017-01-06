@@ -12,8 +12,10 @@ import com.zkboys.sdk.oauth.impl.DefaultOAuthProvider;
 import com.zkboys.sdk.oauth.model.OAuthClient;
 import com.zkboys.sdk.service.AppService;
 import com.zkboys.sdk.service.AuthorizeService;
+import com.zkboys.sdk.service.UserService;
 import com.zkboys.sdk.service.impl.AppServiceImpl;
 import com.zkboys.sdk.service.impl.AuthorizeServiceImpl;
+import com.zkboys.sdk.service.impl.UserServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,15 +41,14 @@ public class ZKBoysSDK {
     private static final Logger logger = LoggerFactory.getLogger(HttpJsonServiceClient.class);
     private ServiceClient serviceClient;
 
-//    private static final String BASE_URL = "http://192.168.1.101:3001";
-//    private static final String TEST_BASE_URL = "http://192.168.0.237:8001";
+    private static final String BASE_URL = "http://192.168.1.101:3001";
+    private static final String TEST_BASE_URL = "http://192.168.0.237:8001";
 
 //    private static final String BASE_URL = "http://192.168.0.237:3001";
 //    private static final String TEST_BASE_URL = "http://192.168.0.237:8001";
 
-    private static final String BASE_URL = "http://192.168.0.239:3001";
-    private static final String TEST_BASE_URL = "http://192.168.0.239:8001";
-
+//    private static final String BASE_URL = "http://192.168.0.239:3001";
+//    private static final String TEST_BASE_URL = "http://192.168.0.239:8001";
 
 
     /**
@@ -101,5 +102,9 @@ public class ZKBoysSDK {
 
     public AppService getAppService() {
         return getService(AppServiceImpl.class);
+    }
+
+    public UserService getUserService() {
+        return getService(UserServiceImpl.class);
     }
 }

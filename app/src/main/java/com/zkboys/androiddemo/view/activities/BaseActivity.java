@@ -36,6 +36,10 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void addServiceTicket(ServiceTicket serviceTicket) {
+        serviceTickets.add(serviceTicket);
+    }
+
     /**
      * 关闭所有activity,退出app
      */

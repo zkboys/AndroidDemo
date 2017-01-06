@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.zkboys.androiddemo.R;
+import com.zkboys.androiddemo.presenter.HomePresenter;
 import com.zkboys.androiddemo.view.activities.layout.TitleLayout;
 
 import butterknife.Bind;
@@ -20,13 +21,14 @@ public class HomeActivity extends BaseActivity {
 
     @Bind(R.id.tl_home_title)
     TitleLayout mHomeTitle;
+    private HomePresenter homePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-
+        homePresenter = new HomePresenter(this);
         mHomeTitle.setTitle("首页");
         mHomeTitle.setButtonClickListener(new TitleLayout.ButtonClickListener() {
             @Override
@@ -49,11 +51,20 @@ public class HomeActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    @OnClick({R.id.btn_home_show_recycler_view})
+    @OnClick({R.id.btn_home_show_recycler_view, R.id.btn_home_get_user, R.id.btn_home_logout})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btn_home_show_recycler_view:
                 RecyclerViewDemoActivity.actionStart(this);
+                break;
+            case R.id.btn_home_get_user:
+                homePresenter.getUserById("111");
+                break;
+            case R.id.btn_home_logout:
+                homePresenter.logout();
+                showShortToast("退出登录");
+                this.finish();
+                LoginActivity.actionStart(this);
                 break;
         }
     }

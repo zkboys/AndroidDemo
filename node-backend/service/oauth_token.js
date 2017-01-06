@@ -4,7 +4,7 @@ const ServiceError = require('./service-error');
 const message = require('../properties').errorMessages;
 const uuidV4 = require('uuid/v4');
 
-const REFRESH_TOKEN_EXPIRES_ID = 90 * (24 * 60 * 60); // refresh token过期时间，单位分，90天
+const REFRESH_TOKEN_EXPIRES_IN = 90 * (24 * 60 * 60); // refresh token过期时间，单位分，90天
 
 exports.createOauthToken = async function (appKey, scope, userId) {
     const oauth = await OauthService.getOauthByAppKey(appKey);
@@ -32,7 +32,7 @@ exports.createOauthToken = async function (appKey, scope, userId) {
         expired_at: nowTime + oauth.expires_in * 1000,
         refresh_token: refreshToken,
         old_refresh_token: refreshToken,
-        refresh_token_expired_at: nowTime + REFRESH_TOKEN_EXPIRES_ID * 1000,
+        refresh_token_expired_at: nowTime + REFRESH_TOKEN_EXPIRES_IN * 1000,
     }
 
     await OauthTokenProxy.createOauthToken(oauthToken);
@@ -41,8 +41,52 @@ exports.createOauthToken = async function (appKey, scope, userId) {
         accessToken: oauthToken.access_token,
         refreshToken: oauthToken.refresh_token,
         scopes: oauthToken.scope,
-        expiresIn: oauth.expires_in,
+        expiresIn: oauth.expires_in, // 单位秒
     };
+};
+
+exports.checkAccessToken = async function (accessToken) {
+    const at = await OauthTokenProxy.getOauthTokenByAccessToken(accessToken);
+    if (!at) {
+        throw new ServiceError(message.accessTokenInvalid);
+    }
+
+    const nowTime = new Date().getTime();
+    if (nowTime > at.expired_at) {
+        throw new ServiceError(message.accessTokenExpired);
+    }
+
+    return at;
+}
+
+exports.refreshToken = async function (appKey, refreshToken) {
+    const oauth = await OauthService.getOauthByAppKey(appKey);
+    const nowTime = new Date().getTime();
+    let oauthToken = await OauthTokenProxy.getOauthTokenByAppKeyAndRefreshToken(appKey, refreshToken);
+    if (!oauthToken) {
+        oauthToken = await OauthTokenProxy.getOauthTokenByAppKeyAndOldRefreshToken(appKey, refreshToken);
+    }
+    if (!oauthToken) {
+        throw new ServiceError(message.refreshTokenInvalid);
+    }
+    if (nowTime > oauthToken.refresh_token_expired_at) {
+        await OauthTokenProxy.delete(oauthToken);
+        throw new ServiceError(message.refreshTokenInvalid);
+    }
+
+    oauthToken.old_refresh_token = oauthToken.refresh_token;
+    oauthToken.access_token = uuidV4();
+    oauthToken.expired_at = nowTime + oauth.expires_in * 1000;
+    oauthToken.refresh_token = uuidV4();
+    oauthToken.refresh_token_expired_at = nowTime + REFRESH_TOKEN_EXPIRES_IN * 1000;
+    await OauthTokenProxy.update(oauthToken);
+
+    return {
+        accessToken: oauthToken.access_token,
+        refreshToken: oauthToken.refresh_token,
+        scopes: oauthToken.scope,
+        expiresIn: oauth.expires_in, // 单位秒
+    }
 };
 
 

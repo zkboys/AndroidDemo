@@ -11,10 +11,15 @@ exports.signIn = controllerDecorator(async function (req, res) {
 
     const user = await userService.getUserByLoginNameAndPass(userName, passWord);
     const oauthToken = await oauthTokenService.createOauthToken(appKey, scope, user._id);
-    res.send({
-        accessToken: oauthToken.accessToken,
-        refreshToken: oauthToken.refreshToken,
-        scopes: oauthToken.scopes,
-        expiresIn: oauthToken.expiresIn,
-    });
+    res.send(oauthToken);
+});
+
+exports.refreshToken = controllerDecorator(async function (req, res, next) {
+
+    const appKey = req.query.appKey;
+    const refreshToken = req.query.refreshToken;
+
+    const oauthToken = await oauthTokenService.refreshToken(appKey, refreshToken);
+
+    res.send(oauthToken);
 });

@@ -239,6 +239,7 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
                                 return e1;
                             }
                         }
+                        dealServiceException(e);
                         return e;
                     } catch (IOException e) {
                         return new NetworkException(e);

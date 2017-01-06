@@ -47,7 +47,9 @@ exports.checkSignature = async function ({appKey, timestamp, ticket, sign, versi
     });
 
     str = md5(str).toUpperCase();
-    return sign === str;
+    if (sign != str) {
+        throw new ServiceError(message.signInvalid);
+    }
 };
 
 

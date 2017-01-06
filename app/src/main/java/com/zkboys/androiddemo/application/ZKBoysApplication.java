@@ -7,13 +7,12 @@ import android.util.Log;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.zkboys.androiddemo.utils.PreferenceUtil;
 import com.zkboys.androiddemo.view.activities.LoginActivity;
 import com.zkboys.sdk.ZKBoysSDK;
-import com.zkboys.sdk.oauth.impl.DefaultOAuthContext;
-import com.zkboys.sdk.oauth.model.OAuthClient;
 import com.zkboys.sdk.oauth.OAuthContext;
 import com.zkboys.sdk.oauth.OAuthLifeCycleListener;
+import com.zkboys.sdk.oauth.impl.DefaultOAuthContext;
+import com.zkboys.sdk.oauth.model.OAuthClient;
 
 
 public class ZKBoysApplication extends Application {
@@ -72,17 +71,17 @@ public class ZKBoysApplication extends Application {
     }
 
     public synchronized void reLogin() {
+        Log.d("ZKBoysApplication", "reLogin()");
+//        boolean result = PreferenceUtil.getInstance(this).getApplicationLogin();
+//        Log.d("ZKBoysApplication", String.valueOf(result));
+//        if (result) {
 
-        boolean result = PreferenceUtil.getInstance(this).getApplicationLogin();
+//            PreferenceUtil.getInstance(this).setApplicationLogin(false);
 
-        if (result) {
-
-            PreferenceUtil.getInstance(this).setApplicationLogin(false);
-
-            Intent intent = new Intent();
-            intent.setClass(getBaseContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
+        Intent intent = new Intent();
+        intent.setClass(getBaseContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+//        }
     }
 }

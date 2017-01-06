@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class DefaultOAuthProvider extends AbstractOauthProvider {
 
-    private static final String REFRESH_TOKEN_URL = "/oauth/refresh_token.json";
+    private static final String REFRESH_TOKEN_URL = "/v1/oauth/refresh_token.json";
 
     public DefaultOAuthProvider(OAuthContext oauthContext, OAuthClient oauthClient, OAuthLifeCycleListener oauthLifecycleListener) {
         super(oauthContext, oauthClient, oauthLifecycleListener);
@@ -55,12 +55,12 @@ public class DefaultOAuthProvider extends AbstractOauthProvider {
 
         Map<String, String> headers = null;
         TypeInfo typeInfo = TypeInfo.createNormalType(OAuthToken.class);
-
+        System.out.println("refresh token");
         //同步请求token
         oauthToken = serviceClient.get(authenticated, url, params, headers, typeInfo);
 
         oauthToken.setExpiresIn(System.currentTimeMillis() + oauthToken.getExpiresIn() * 1000);
-
+        System.out.println(oauthToken);
         getOAuthContext().store(oauthToken);
 
         return oauthToken.getAccessToken();
