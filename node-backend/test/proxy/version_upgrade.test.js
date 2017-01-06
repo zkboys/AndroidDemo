@@ -1,6 +1,8 @@
 require('mochawait');
 const versionUpgradeProxy = require('../../proxy/version_upgrade');
 
+const oauthProxy = require('../../proxy/oauth');
+
 describe('test/proxy/version_upgrade.test.js', function () {
     describe('#addVersionUpgrade()', function () {
         // this.slow(1);
@@ -8,7 +10,7 @@ describe('test/proxy/version_upgrade.test.js', function () {
         // it.skip(...)
         // it.only(...)
 
-        it('should return a versionUpgrade and versionUpgrade.version_code==6', async() => {
+        it.skip('should return a versionUpgrade and versionUpgrade.version_code==6', async() => {
             const vu = {
                 app_type: 'android', // 客户端设备类型(android,ios)
                 version_name: '1.0.5', // 可读性版本号，给用户看的 '1.0.5'
@@ -22,6 +24,18 @@ describe('test/proxy/version_upgrade.test.js', function () {
 
             const versionUpgrade = await versionUpgradeProxy.addVersionUpgrade(vu);
             versionUpgrade.version_code.should.equal(6);
+        });
+
+        it.skip('should return a oauth and oauth.app_key==1000', async() => {
+            const vu = {
+                app_key: '1000',
+                app_secret: '3b4fd56df5964909b45a2640a4317be0',
+                scope: 'base',
+                expires_in: 30 * 60, // 过期时间，单位秒
+            }
+
+            const oauth = await oauthProxy.addOauth(vu);
+            oauth.app_key.should.equal('1000');
         });
     });
 });

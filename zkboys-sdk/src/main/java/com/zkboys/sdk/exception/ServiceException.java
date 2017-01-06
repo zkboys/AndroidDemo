@@ -16,15 +16,15 @@ public class ServiceException extends Exception {
     public static final long CODE_10001_NOT_FOUND = 10001;
 
     // OAuth相关错误提示
-    public static final long INVALID_ACCESS_TOKEN = 2011; // access token 不合法
-    public static final long USER_NOT_FOUND = 3001; // 用户不存在
-    public static final long USER_IS_INVALID = 3000;// 用户不合法
+    public static final long INVALID_ACCESS_TOKEN = 3007; // access token 不合法
+    public static final long USER_NOT_FOUND = 3005; // 用户不存在
+    public static final long USER_IS_INVALID = 3006;// 用户不合法
     public static final String INVALID_ACCESS_TOKEN_MESSAGE = "无效的access token";
-    public static final long ACCESS_TOKEN_HAS_EXPIRED = 2006; // access token 过期
+    public static final long ACCESS_TOKEN_HAS_EXPIRED = 3008; // access token 过期
 
-    public static final long INVALID_REFRESH_TOKEN = 2005; // refresh token 不合法
+    public static final long INVALID_REFRESH_TOKEN = 3009; // refresh token 不合法
 
-    public static final long REFRESH_TOKEN_HAS_EXPIRED = 2007; // refresh token 过期
+    public static final long REFRESH_TOKEN_HAS_EXPIRED = 3010; // refresh token 过期
 
     private static final long serialVersionUID = 2866088988644477966L;
 

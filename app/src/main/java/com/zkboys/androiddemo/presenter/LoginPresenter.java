@@ -38,7 +38,7 @@ public class LoginPresenter implements ILoginPresenter {
             return false;
         }
 
-        view.addServiceTicket(authorizeService.accessToken(userName, password, "", new DefaultCallback<OAuthToken>() {
+        view.addServiceTicket(authorizeService.accessToken(userName, password, "base", new DefaultCallback<OAuthToken>() {
             @Override
             public boolean onPreExecute(ServiceTicket ticket, Object object, Map<String, String> headers) {
                 view.showLoading();
@@ -47,6 +47,8 @@ public class LoginPresenter implements ILoginPresenter {
 
             @Override
             public void onSuccess(OAuthToken result) {
+                System.out.println(result);
+                ((ZKBoysApplication) view.getApplication()).getOAuthContext().store(result);
                 view.toMainActivity();
             }
 

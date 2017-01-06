@@ -14,7 +14,6 @@ const trim = _.trim;
 exports.getUserByLoginNameAndPass = async function (loginName, pass) {
     loginName = trim(loginName);
     pass = trim(pass);
-
     if (!loginName || !pass) {
         throw new ServiceError(message.loginNamePassCanNotBeNull);
     }

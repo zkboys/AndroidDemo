@@ -15,9 +15,22 @@ exports.errorMessages = {
     loginNamePassCanNotBeNull: [3000, '用户名密码不能为空'],
     loginNamePassInvalid: [3001, '用户名或者密码错误'],
     userIsLocked: [3004, '您已经被管理员屏蔽，如有疑问，请与管理员联系'],
+    // 客户端会用到这几个code，判断是否需要重新登录、重新获取token等操作。
     userIsNotExisted: [3005, '用户不存在'],
+    userIsInvalid: [3006, '用户不合法'],
+    accessTokenInvalid: [3007, '无效的accessToken'],
+    accessTokenExpired: [3008, 'accessToken已过期'],
+    refreshTokenInvalid: [3009, '无效的refreshToken'],
+    refreshTokenExpired: [3010, 'refreshToken已过期'],
 
     roleNameCanNotBeNull: [4000, '角色名不能为空'],
 
     versionUpgradeIsNotExisted: [5000, '版本信息不存在'],
+
+    oauthIsNotExisted: [6000, '无效的客户端'],
+    scopeInvalid: [6001, '用户授权拒绝'],
+    ticketInvalid: [6002, '无效的ticket'],
+    versionInvalid: [6002, '无效的版本号'],
+    timestampInvalid: [6003, '无效的timestamp'],
+
 }

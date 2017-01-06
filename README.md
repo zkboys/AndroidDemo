@@ -78,6 +78,9 @@ private Map<String, String> sign(boolean authenticated, String url, String body)
 1. 调用M中的方法，将数据传给后端，或者本地存储等
 1. 调用V中的方法，将处理结果返回给V，V可以做一些更新页面的操作
 
+## 重新登录
+项目中通过 oAuthLifeCycleListener 判断是否需要重新登录，并跳转
+
 ## TODO
 1.[x] 返回的数据怎么加签的？加签了吗？有双向加签的，但是这个项目没用用双向加签
 1.[x] 底层封装的请求，用的都是post，不基于RestFul进行封装，提供其他方法吗？比如常用的get post put delete， 做封装时候偷懒了，用的都是post
