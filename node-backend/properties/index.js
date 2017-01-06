@@ -18,4 +18,6 @@ exports.errorMessages = {
     userIsNotExisted: [3005, '用户不存在'],
 
     roleNameCanNotBeNull: [4000, '角色名不能为空'],
+
+    versionUpgradeIsNotExisted: [5000, '版本信息不存在'],
 }

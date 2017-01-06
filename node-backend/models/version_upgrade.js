@@ -12,4 +12,4 @@ const RoleSchema = new Schema({
     state: String, //
 });
 
-mongoose.model('version_upgrade', RoleSchema);
+mongoose.model('VersionUpgrade', RoleSchema);

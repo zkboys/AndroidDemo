@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RoleSchema = new Schema({
-    appKey: String,
-    appSecret: String,
+    app_key: String,
+    app_secret: String,
     scope: {type: String},
-    expiresIn: Number,
+    expires_in: Number,
 });
 
-mongoose.model('oauth', RoleSchema);
+mongoose.model('Oauth', RoleSchema);

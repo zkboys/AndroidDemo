@@ -14,14 +14,21 @@ mongoose.connect(config.db, {
 mongoose.plugin(BaseModel);
 
 // models
-require('./user');
 require('./menu');
 require('./role');
 require('./organization');
 
+require('./user');
+require('./oauth');
+require('./oauth_token');
+require('./version_upgrade');
+
 
 exports.Menu = mongoose.model('Menu');
 exports.Role = mongoose.model('Role');
-exports.User = mongoose.model('User');
 exports.Organization = mongoose.model('Organization');
 
+exports.User = mongoose.model('User');
+exports.Oauth = mongoose.model('Oauth');
+exports.OauthToken = mongoose.model('OauthToken');
+exports.VersionUpgrade = mongoose.model('VersionUpgrade');

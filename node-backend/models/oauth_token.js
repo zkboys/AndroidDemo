@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const RoleSchema = new Schema({
     oauth_id: Schema.Types.ObjectId,
     user_id: Schema.Types.ObjectId,
-    appKey: String,
+    app_key: String,
     scope: String,
     version_id: Schema.Types.ObjectId,
     access_token: String,
@@ -14,4 +14,4 @@ const RoleSchema = new Schema({
     refresh_token_expired_at: Number,
 });
 
-mongoose.model('oauth_token', RoleSchema);
+mongoose.model('OauthToken', RoleSchema);
