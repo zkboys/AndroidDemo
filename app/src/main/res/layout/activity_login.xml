@@ -43,7 +43,7 @@
             android:layout_marginEnd="25dp"
             android:layout_marginStart="50dp"
             android:layout_weight="1"
-            android:background="@drawable/select_btn_primary"
+            android:background="@drawable/btn_primary"
             android:text="@string/login"
             android:textColor="@color/white"/>
 
@@ -54,7 +54,7 @@
             android:layout_marginEnd="50dp"
             android:layout_marginStart="25dp"
             android:layout_weight="1"
-            android:background="@drawable/select_btn_primary"
+            android:background="@drawable/btn_primary"
             android:text="@string/register"
             android:textColor="@color/white"/>
     </LinearLayout>

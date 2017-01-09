@@ -107,6 +107,10 @@ public static void actionStart(Context context) {
 ## icon 图标库
 [http://joanzapata.com/android-iconify/](http://joanzapata.com/android-iconify/)
 
+## 自定义按钮背景颜色
+[可绘制对象资源](https://developer.android.com/guide/topics/resources/drawable-resource.html#StateList)
+
+
 ## TODO
 1.[x] 返回的数据怎么加签的？加签了吗？有双向加签的，但是这个项目没用用双向加签
 1.[x] 底层封装的请求，用的都是post，不基于RestFul进行封装，提供其他方法吗？比如常用的get post put delete， 做封装时候偷懒了，用的都是post

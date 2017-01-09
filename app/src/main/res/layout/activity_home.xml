@@ -15,7 +15,7 @@
         android:id="@+id/btn_home_show_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/select_btn_primary"
+        android:background="@drawable/btn_primary"
         android:gravity="start|center_vertical"
         android:text="Recycler View Demo"
         android:textAllCaps="false"
