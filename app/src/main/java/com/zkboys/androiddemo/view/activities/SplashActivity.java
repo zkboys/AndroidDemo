@@ -62,7 +62,7 @@ public class SplashActivity extends BaseActivity {
         final Byte promote = clientVersionInfo.getPromote();
         final String upgradePrompt = clientVersionInfo.getUpgradePrompt();
         final String appUrl = clientVersionInfo.getAppUrl();
-        
+
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         dialogBuilder.setMessage("更新日志\n" + upgradePrompt);
         dialogBuilder.setTitle("版本更新");
@@ -105,7 +105,7 @@ public class SplashActivity extends BaseActivity {
                 public void run() {
                     try {
                         Thread.sleep(C.SPLASH_SHOW_TIME); // 一段时间之后跳转到首页
-                        HomeActivity.actionStart(SplashActivity.this);
+                        MainActivity.actionStart(SplashActivity.this);
                         finish();
                     } catch (InterruptedException e) {
                         e.printStackTrace();

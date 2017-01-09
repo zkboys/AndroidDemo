@@ -81,10 +81,37 @@ private Map<String, String> sign(boolean authenticated, String url, String body)
 ## 重新登录
 项目中通过 oAuthLifeCycleListener 判断是否需要重新登录，并跳转
 
+## 启动一个activity
+Activity中定义一个静态启动方法，其他Activity如果要启动另外一个Activity，调用这个方法即可
+```java
+/**
+ * 启动当前Activity，如果需要参数，在这里定义，其他Activity能够明确知道，启动这个Activity需要什么参数
+ */
+public static void actionStart(Context context) {
+    Intent intent = new Intent(context, HomeActivity.class);
+    context.startActivity(intent);
+}
+```
+
+## Activity 启动之后，设置输入框不自动获取焦点
+```xml
+    // 在 不想获取焦点的输入框父级，加入如下属性
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+```
+## android原生提供了很多图标可以使用
+```
+@android:drawable/ic_menu_send
+```
+
+## icon 图标库
+[http://joanzapata.com/android-iconify/](http://joanzapata.com/android-iconify/)
+
 ## TODO
 1.[x] 返回的数据怎么加签的？加签了吗？有双向加签的，但是这个项目没用用双向加签
 1.[x] 底层封装的请求，用的都是post，不基于RestFul进行封装，提供其他方法吗？比如常用的get post put delete， 做封装时候偷懒了，用的都是post
 1.[x] OAuth 中的scopes 客户端这边好像没用到，这个是用来确定，token的可访问资源，这个限制怎么能客户端传scope呢？不能根据appKey 或者 appSecret确定这个token的权限吗？
       这个是预留功能，典型的场景是第三方登录，用户会选几个权限，确认之后，服务端会根据这几个权限进行创建accessToken
 1.[x] 底层请求封装，按照RestFull规范进行重新封装
-1.[ ] 完整的node后端支持
+1.[x] 完整的node后端支持
+1.[ ] 颜色设置

@@ -7,7 +7,6 @@
 
     <com.zkboys.androiddemo.view.activities.layout.TitleLayout
         android:id="@+id/tl_home_title"
-        title="我是标题啊"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

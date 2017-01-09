@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zkboys.androiddemo.view.activities.LoginActivity;
@@ -25,6 +27,8 @@ public class ZKBoysApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Iconify.with(new FontAwesomeModule());
+
         oAuthClient = new OAuthClient();
         oAuthClient.appKey = "1000";
         oAuthClient.appSecret = "3b4fd56df5964909b45a2640a4317be0";

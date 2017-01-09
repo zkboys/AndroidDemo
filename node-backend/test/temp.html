@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<script>
+
+    $(document).on('change', '#demo', function (e) {
+        e.preventDefault();
+        console.log(e.target.value);
+    });
+    $('body').append(getOperatorSelect('未处理'));
+
+
+    function getOperatorSelect(handleProgress) {
+        // 存放所有的状态
+        var allOperators = {
+            undeal: '<option value="undeal">未处理</option>',
+            dealing: '<option value="dealing">正在处理</option>',
+            groundConfirm: '<option value="groundConfirm">发送地勤确认</option>',
+            groundDeal: '<option value="groundDeal">已发送地勤处理</option>',
+            groundDealing: '<option value="groundDealing">地勤处理中</option>',
+            groundDealed: '<option value="groundDealed">地勤已处理</option>',
+            dealed: '<option value="dealed">处理完成</option>',
+            remark: '<option value="remark">添加备注</option>',
+            detail: '<option value="detail">查看详情</option>',
+        }
+
+        var options = [];
+
+        if (handleProgress === '未处理') { // 根据不同的状态呢，组装不同的下拉
+            options.push(allOperators.detail);
+            options.push(allOperators.dealing);
+            options.push(allOperators.remark);
+            options.push(allOperators.dealed);
+            options.push(allOperators.groundConfirm);
+        } else if (handleProgress === '正在处理') {
+            options.push(allOperators.detail);
+            options.push(allOperators.remark);
+            options.push(allOperators.dealed);
+            options.push(allOperators.groundConfirm);
+        }
+
+        return '<div>' +
+            '<select id="demo">' +
+            options.join('')+
+        '<select>' +
+        '</div>'
+    }
+
+    var a = {
+        "columnDefs": [{
+            targets: 8,
+            render: function (data, type, row, meta) {
+                return getOperatorSelect(row.handleProgress);
+            }
+        }]
+    }
+
+</script>
+
+</body>
+</html>

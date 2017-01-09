@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
 
     @Override
     public void toMainActivity() {
-        HomeActivity.actionStart(this);
+        MainActivity.actionStart(this);
     }
 
     @Override

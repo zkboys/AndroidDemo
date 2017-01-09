@@ -11,8 +11,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.zkboys.androiddemo.view.activities.SplashActivity">
 
+    <ImageView
+        android:id="@+id/iv_splash_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/png_logo"
+        >
+    </ImageView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我是启动页面"/>
+        android:layout_below="@id/iv_splash_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:shadowColor="@color/textShadowColor"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="1"
+        android:text="@string/app_name"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="20sp"/>
 </RelativeLayout>

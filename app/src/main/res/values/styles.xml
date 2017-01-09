@@ -1,13 +1,26 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!---->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--顶部的status bar 颜色-->
+        <item name="colorPrimaryDark">@color/textColorPrimaryDark</item>
+        <!-- 输入框获得焦点、单复选框选中颜色 -->
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- 控件正常颜色 -->
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <!-- 窗口的背景颜色 -->
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <!-- 字体主色调 部分控件没有设定字体颜色，将使用这个颜色-->
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <!-- 输入框的提示信息颜色 -->
+        <item name="android:textColorHint">@color/textColorPrimaryHint</item>
 
-        <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
+
+    <!--main 中的头部导航样式-->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark"/>
 
 </resources>
