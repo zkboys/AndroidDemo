@@ -27,6 +27,11 @@
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
     <application
         android:name=".application.ZKBoysApplication"
         android:allowBackup="true"
@@ -53,6 +58,10 @@
             android:theme="@style/AppTheme">
         </activity>
         <activity android:name=".view.activities.DemoActivity">
+        </activity>
+        <activity
+            android:name=".view.activities.Login2Activity"
+            android:label="@string/title_activity_login2">
         </activity>
     </application>
 

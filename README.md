@@ -110,6 +110,10 @@ public static void actionStart(Context context) {
 ## 自定义按钮背景颜色
 [可绘制对象资源](https://developer.android.com/guide/topics/resources/drawable-resource.html#StateList)
 
+## 矢量图标生成方式（需要api level > 21）
+右键-> new -> Vector Asset 可以选择本地SVG图片进行生成，SVG图片可以在[网上](http://www.iconfont.cn/plus)下载，或者自己制作
+
+## 图片的展示方式
 
 ## TODO
 1.[x] 返回的数据怎么加签的？加签了吗？有双向加签的，但是这个项目没用用双向加签
