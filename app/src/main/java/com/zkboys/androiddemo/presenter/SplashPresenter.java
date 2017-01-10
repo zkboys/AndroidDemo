@@ -4,8 +4,6 @@ import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.common.C;
 import com.zkboys.androiddemo.presenter.vus.ISplashPresenter;
 import com.zkboys.androiddemo.view.activities.SplashActivity;
-import com.zkboys.sdk.exception.NetworkException;
-import com.zkboys.sdk.exception.ServiceException;
 import com.zkboys.sdk.httpjson.ServiceTicket;
 import com.zkboys.sdk.model.ClientVersionInfo;
 import com.zkboys.sdk.service.AppService;
@@ -36,13 +34,8 @@ public class SplashPresenter implements ISplashPresenter {
             }
 
             @Override
-            public void onServiceException(ServiceException exception) {
-                view.checkVisionFail(exception.getMessage());
-            }
-
-            @Override
-            public void onNetworkException(NetworkException exception) {
-                view.checkVisionFail("网络连接错误！");
+            public void onException(Exception exception, String message) {
+                view.checkVisionFail(message);
             }
         });
     }

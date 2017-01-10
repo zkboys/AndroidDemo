@@ -4,8 +4,6 @@ import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.ILoginPresenter;
 import com.zkboys.androiddemo.view.activities.vus.ILoginActivity;
-import com.zkboys.sdk.exception.NetworkException;
-import com.zkboys.sdk.exception.ServiceException;
 import com.zkboys.sdk.httpjson.ServiceTicket;
 import com.zkboys.sdk.oauth.model.OAuthToken;
 import com.zkboys.sdk.service.AuthorizeService;
@@ -67,16 +65,11 @@ public class LoginPresenter implements ILoginPresenter {
             }
 
             @Override
-            public void onServiceException(ServiceException exception) {
+            public void onException(Exception exception, String message) {
                 view.hideLoading();
-                view.showFailedError(exception.getMessage());
+                view.showFailedError(message);
             }
 
-            @Override
-            public void onNetworkException(NetworkException exception) {
-                view.hideLoading();
-                view.showFailedError("网络连接错误");
-            }
         });
     }
 }
