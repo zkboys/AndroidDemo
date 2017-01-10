@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/png_logo"
+        android:src="@mipmap/png_logo"
         >
     </ImageView>
 

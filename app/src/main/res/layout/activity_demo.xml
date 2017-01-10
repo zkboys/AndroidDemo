@@ -52,6 +52,15 @@
         android:textColor="@color/textColorPrimary"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_ghost"
+        android:padding="16dp"
+        android:text="幽灵按钮"
+        android:textColor="@color/colorAccent"
+        />
+
     <com.joanzapata.iconify.widget.IconTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

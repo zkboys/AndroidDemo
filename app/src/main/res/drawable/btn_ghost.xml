@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Selector主要是用来改变ListView和Button控件的默认背景-->
+<!--state_enabled  state_window_focused state_pressed state_focused-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_ghost_shape_active" android:state_pressed="true"/>
+    <item android:drawable="@drawable/btn_ghost_shape_active" android:state_focused="true"/>
+    <item android:drawable="@drawable/btn_shape_disabled" android:state_enabled="false"/>
+    <item android:drawable="@drawable/btn_ghost_shape_default"/>
+</selector>

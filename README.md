@@ -115,6 +115,8 @@ public static void actionStart(Context context) {
 
 ## 图片的展示方式
 
+## toolbar的使用
+
 ## TODO
 1.[x] 返回的数据怎么加签的？加签了吗？有双向加签的，但是这个项目没用用双向加签
 1.[x] 底层封装的请求，用的都是post，不基于RestFul进行封装，提供其他方法吗？比如常用的get post put delete， 做封装时候偷懒了，用的都是post
@@ -123,3 +125,4 @@ public static void actionStart(Context context) {
 1.[x] 底层请求封装，按照RestFull规范进行重新封装
 1.[x] 完整的node后端支持
 1.[ ] 颜色设置
+1.[ ] 数据缓存，底层封装。先显示老数据，背后请求新数据，完成之后，显示新数据，

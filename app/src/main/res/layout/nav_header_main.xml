@@ -19,7 +19,7 @@
         android:layout_height="60dp"
         android:scaleType="fitCenter"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/png_logo"/>
+        app:srcCompat="@mipmap/png_logo"/>
 
     <TextView
         android:layout_width="match_parent"

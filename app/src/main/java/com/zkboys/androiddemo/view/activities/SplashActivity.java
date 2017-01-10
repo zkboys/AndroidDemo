@@ -1,6 +1,7 @@
 package com.zkboys.androiddemo.view.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,18 +45,27 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void checkVisionFail(String failMassage) {
-        showShortToast(failMassage);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(C.SPLASH_SHOW_TIME);
-                    finish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        Dialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage(failMassage)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(C.SPLASH_SHOW_TIME);
+                                    finish();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+                    }
+                })
+                .create();
+        alertDialog.show();
     }
 
     public void needUpdate(ClientVersionInfo clientVersionInfo) {

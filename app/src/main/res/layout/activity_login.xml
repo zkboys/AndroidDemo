@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:contentDescription="@string/login"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg"/>
+        android:src="@mipmap/bg"/>
 
     <LinearLayout
         android:layout_width="400dp"

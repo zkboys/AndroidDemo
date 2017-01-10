@@ -42,7 +42,7 @@ public class SplashPresenter implements ISplashPresenter {
 
             @Override
             public void onNetworkException(NetworkException exception) {
-                view.checkVisionFail("网络连接错误");
+                view.checkVisionFail("网络连接错误！");
             }
         });
     }
