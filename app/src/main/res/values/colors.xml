@@ -15,7 +15,8 @@
     <color name="textColorPrimary">#222222</color>
     <!-- 字体颜色深色调 -->
     <color name="textColorPrimaryDark">#000000</color>
-    <color name="textShadowColor">#22000000</color>
+    <color name="textColorShadow">#22000000</color>
+    <color name="textColorError">#ed2828</color>
     <!-- 单复选框等控件的正常颜色 -->
     <color name="colorControlNormal">#a0a0a0</color>
     <!-- 白色，按钮字体颜色等 -->

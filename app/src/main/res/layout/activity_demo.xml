@@ -55,7 +55,7 @@
     <com.joanzapata.iconify.widget.IconTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:shadowColor="@color/textShadowColor"
+        android:shadowColor="@color/textColorShadow"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="1"
@@ -66,6 +66,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_switch"
         android:text="字体默认颜色"
         />
 

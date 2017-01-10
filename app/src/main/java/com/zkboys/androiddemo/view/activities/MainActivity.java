@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             DemoActivity.actionStart(this);
 
         } else if (id == R.id.nav_slideshow) {
-            Login2Activity.actionStart(this);
+            LoginActivity.actionStart(this);
 
         } else if (id == R.id.nav_manage) {
 

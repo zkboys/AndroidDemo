@@ -48,8 +48,6 @@
         </activity>
         <activity android:name=".view.activities.HomeActivity">
         </activity>
-        <activity android:name=".view.activities.LoginActivity">
-        </activity>
         <activity android:name=".view.activities.RecyclerViewDemoActivity">
         </activity>
         <activity
@@ -60,8 +58,8 @@
         <activity android:name=".view.activities.DemoActivity">
         </activity>
         <activity
-            android:name=".view.activities.Login2Activity"
-            android:label="@string/title_activity_login2">
+            android:name=".view.activities.LoginActivity"
+            android:label="@string/title_activity_login">
         </activity>
     </application>
 

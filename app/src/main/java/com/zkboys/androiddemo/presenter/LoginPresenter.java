@@ -1,5 +1,6 @@
 package com.zkboys.androiddemo.presenter;
 
+import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.ILoginPresenter;
 import com.zkboys.androiddemo.view.activities.vus.ILoginActivity;
@@ -25,20 +26,33 @@ public class LoginPresenter implements ILoginPresenter {
 
 
     @Override
-    public boolean login() {
+    public ServiceTicket login() {
+        view.clearFailedError();
+        view.clearUserNameError();
+        view.clearPasswordError();
+
         String userName = view.getUserName();
         String password = view.getPassword();
+
         if (null == userName || "".equals(userName)) {
-            view.showFailedError("用户名不能为空");
-            return false;
+            view.showUserNameError(R.string.prompt_email);
+            view.focusUserName();
+            return null;
         }
 
         if (null == password || "".equals(password)) {
-            view.showFailedError("密码不能为空");
-            return false;
+            view.showPasswordError(R.string.prompt_password);
+            view.focusPassword();
+            return null;
         }
 
-        view.addServiceTicket(authorizeService.accessToken(userName, password, "base", new DefaultCallback<OAuthToken>() {
+        if (password.length() < 4) {
+            view.showPasswordError(R.string.error_invalid_password);
+            view.focusPassword();
+            return null;
+        }
+
+        return authorizeService.accessToken(userName, password, "base", new DefaultCallback<OAuthToken>() {
             @Override
             public boolean onPreExecute(ServiceTicket ticket, Object object, Map<String, String> headers) {
                 view.showLoading();
@@ -54,21 +68,15 @@ public class LoginPresenter implements ILoginPresenter {
 
             @Override
             public void onServiceException(ServiceException exception) {
+                view.hideLoading();
                 view.showFailedError(exception.getMessage());
             }
 
             @Override
             public void onNetworkException(NetworkException exception) {
+                view.hideLoading();
                 view.showFailedError("网络连接错误");
             }
-
-            @Override
-            public void onPostExecute() {
-                super.onPostExecute();
-                view.hideLoading();
-            }
-        }));
-
-        return true;
+        });
     }
 }

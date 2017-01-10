@@ -18,6 +18,18 @@ public interface ILoginActivity {
 
     void clearPassword();
 
+    void clearUserNameError();
+
+    void clearPasswordError();
+
+    void showUserNameError(int stringId);
+
+    void showPasswordError(int stringId);
+
+    void focusUserName();
+
+    void focusPassword();
+
     void showLoading();
 
     void hideLoading();
@@ -26,4 +38,5 @@ public interface ILoginActivity {
 
     void showFailedError(String msg);
 
+    void clearFailedError();
 }

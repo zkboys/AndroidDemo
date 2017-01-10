@@ -27,7 +27,7 @@
         android:layout_below="@id/iv_splash_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:shadowColor="@color/textShadowColor"
+        android:shadowColor="@color/textColorShadow"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="1"
