@@ -34,7 +34,7 @@ public interface ILoginActivity {
 
     void hideLoading();
 
-    void toMainActivity();
+    void doNext();
 
     void showFailedError(String msg);
 

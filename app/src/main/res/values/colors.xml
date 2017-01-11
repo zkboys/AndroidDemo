@@ -9,6 +9,7 @@
     <!-- 按钮点击颜色 -->
     <color name="colorAccentDark">#e48102</color>
     <color name="colorAccentLight">#faaf4e</color>
+
     <!-- 输入框提示内容颜色 -->
     <color name="textColorPrimaryHint">#a0a0a0</color>
     <!-- 字体颜色主色调 -->
@@ -26,4 +27,7 @@
     <color name="navigationBarColor">#000000</color>
     <!-- 按钮等控件禁用时的颜色 -->
     <color name="colorDisabled">#a0a0a0</color>
+
+    <color name="borderColorPrimary">#22000000</color>
+
 </resources>

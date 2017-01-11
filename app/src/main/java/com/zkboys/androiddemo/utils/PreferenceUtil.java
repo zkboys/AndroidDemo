@@ -39,6 +39,15 @@ public class PreferenceUtil {
         return mSharedPref.getString(C.USER.USER_NAME, "");
     }
 
+    public void setLoginName(String loginName) {
+        mEditor.putString(C.USER.LOGIN_NAME, loginName);
+        mEditor.commit();
+    }
+
+    public String getLoginName() {
+        return mSharedPref.getString(C.USER.LOGIN_NAME, "");
+    }
+
     public void setApplicationLogin(boolean login) {
         mEditor.putBoolean(C.APPLICATION_LOGIN, login);
         mEditor.commit();

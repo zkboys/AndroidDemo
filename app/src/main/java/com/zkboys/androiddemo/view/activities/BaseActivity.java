@@ -3,7 +3,9 @@ package com.zkboys.androiddemo.view.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.zkboys.sdk.httpjson.ServiceTicket;
@@ -34,6 +36,18 @@ public class BaseActivity extends AppCompatActivity {
                 serviceTickets.remove(i);
             }
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (null != getCurrentFocus()) {
+            /**
+             * 点击空白位置 隐藏软键盘
+             */
+            InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            return mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.onTouchEvent(event);
     }
 
     public void addServiceTicket(ServiceTicket serviceTicket) {

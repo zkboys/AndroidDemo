@@ -10,12 +10,27 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.MainPresenter;
+import com.zkboys.androiddemo.utils.PreferenceUtil;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private MainPresenter presenter;
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+
+    @Bind(R.id.nav_view)
+    NavigationView mNavigationView;
 
     /**
      * 启动当前Activity
@@ -29,16 +44,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+
+        ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = mNavigationView.getHeaderView(0);
+
+        TextView mUserNameView = (TextView) headerView.findViewById(R.id.tv_nav_header_main_user_name);
+        TextView mLoginNameView = (TextView) headerView.findViewById(R.id.tv_nav_header_main_login_name);
+        PreferenceUtil preUtil = PreferenceUtil.getInstance(this);
+        String userName = preUtil.getUserName();
+        String loginName = preUtil.getLoginName();
+
+        mUserNameView.setText(userName);
+        mLoginNameView.setText(loginName);
 
         presenter = new MainPresenter(this);
     }
@@ -85,22 +110,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             DemoActivity.actionStart(this);
-
         } else if (id == R.id.nav_slideshow) {
             LoginActivity.actionStart(this);
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_switch) {
-
+        } else if (id == R.id.nav_setting) {
+            SettingsActivity.actionStart(this);
+        } else if (id == R.id.nav_switch_account) {
+            SwitchAccountActivity.actionStart(this);
         } else if (id == R.id.nav_logout) {
             presenter.logout();
             this.finish();
             LoginActivity.actionStart(this);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false; // false: 清除选中状态，true: 点击过后，一直是选中状态
     }
 }

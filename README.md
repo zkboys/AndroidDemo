@@ -126,3 +126,4 @@ public static void actionStart(Context context) {
 1.[x] 完整的node后端支持
 1.[ ] 颜色设置
 1.[ ] 数据缓存，底层封装。先显示老数据，背后请求新数据，完成之后，显示新数据，
+1.[ ] 自定义组件如何获取原始属性

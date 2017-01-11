@@ -5,12 +5,14 @@ import com.zkboys.sdk.httpjson.BaseService;
 import com.zkboys.sdk.httpjson.Callback;
 import com.zkboys.sdk.httpjson.ServiceClient;
 import com.zkboys.sdk.httpjson.ServiceTicket;
+import com.zkboys.sdk.model.Results;
 import com.zkboys.sdk.model.UserInfo;
 import com.zkboys.sdk.service.UserService;
 
 public class UserServiceImpl extends BaseService implements UserService {
 
-    public static final String GET_USER_INFO = "/v1/user.json";
+    private static final String GET_USER_INFO = "/v1/user.json";
+    private static final String GET_ALL_USERS = "/v1/users.json";
 
     public UserServiceImpl(ServiceClient serviceClient) {
         super(serviceClient);
@@ -23,6 +25,19 @@ public class UserServiceImpl extends BaseService implements UserService {
                 GET_USER_INFO,
                 MapTool.create()
                         .put("userId", userId)
+                        .value(),
+                null, callback
+        );
+    }
+
+    @Override
+    public ServiceTicket getAllUsers(String mchId, String storeId, Callback<Results<UserInfo>> callback) {
+        return serviceClient.get(
+                true,
+                GET_ALL_USERS,
+                MapTool.create()
+                        .put("mchId", mchId)
+                        .put("storeId", storeId)
                         .value(),
                 null, callback
         );

@@ -61,7 +61,7 @@ public class LoginPresenter implements ILoginPresenter {
             public void onSuccess(OAuthToken result) {
                 System.out.println(result);
                 ((ZKBoysApplication) view.getApplication()).getOAuthContext().store(result);
-                view.toMainActivity();
+                view.doNext();
             }
 
             @Override

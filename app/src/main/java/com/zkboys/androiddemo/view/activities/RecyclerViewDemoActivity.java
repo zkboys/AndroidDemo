@@ -34,7 +34,7 @@ public class RecyclerViewDemoActivity extends BaseActivity {
         setContentView(R.layout.activity_recycler_view_demo);
 
         initData();
-        mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerview);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_switch_account_users);
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         mRecyclerView.setAdapter(mAdapter = new HomeAdapter());

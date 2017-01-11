@@ -8,7 +8,6 @@ import android.widget.Button;
 
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.HomePresenter;
-import com.zkboys.androiddemo.view.activities.layout.TitleLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,8 +18,6 @@ public class HomeActivity extends BaseActivity {
     @Bind(R.id.btn_home_show_recycler_view)
     Button mBtnHomeShowRecyclerView;
 
-    @Bind(R.id.tl_home_title)
-    TitleLayout mHomeTitle;
     private HomePresenter homePresenter;
 
     @Override
@@ -29,18 +26,6 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         homePresenter = new HomePresenter(this);
-        mHomeTitle.setTitle("首页");
-        mHomeTitle.setButtonClickListener(new TitleLayout.ButtonClickListener() {
-            @Override
-            public void OnLeftButtonClick() {
-                showShortToast("首页中绑定左侧按钮点击事件");
-            }
-
-            @Override
-            public void OnRightButtonClick() {
-                showShortToast("首页中绑定右侧点击事件");
-            }
-        });
     }
 
     /**

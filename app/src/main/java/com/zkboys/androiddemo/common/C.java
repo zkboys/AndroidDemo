@@ -12,5 +12,6 @@ public class C {
 
     public class USER {
         public static final String USER_NAME = "user_name"; // 用户名
+        public static final String LOGIN_NAME = "login_name"; // 用户名
     }
 }

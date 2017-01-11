@@ -27,7 +27,7 @@ public class HomePresenter implements IHomePresenter {
 
             @Override
             public void onSuccess(UserInfo result) {
-                view.showShortToast(result.getUserName());
+                view.showShortToast(result.getName());
             }
         }));
     }

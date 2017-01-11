@@ -1,7 +1,5 @@
 package com.zkboys.androiddemo.view.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +8,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.LoginPresenter;
+import com.zkboys.androiddemo.utils.AnimateUtil;
 import com.zkboys.androiddemo.view.activities.vus.ILoginActivity;
 
 import butterknife.Bind;
@@ -65,6 +65,8 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
     @OnEditorAction({R.id.password})
     boolean OnEditorAction(TextView textView, int id, KeyEvent keyEvent) {
         if (id == R.id.login || id == EditorInfo.IME_NULL) {
+
+            hideKeyboard();
             loginPresenter.login();
             return true;
         }
@@ -73,7 +75,14 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
 
     @OnClick({R.id.email_sign_in_button})
     void OnClick(View view) {
+        hideKeyboard();
         loginPresenter.login();
+    }
+
+    void hideKeyboard() {
+        // 隐藏软键盘
+        InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     /**
@@ -81,35 +90,8 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        AnimateUtil.showHideWithAnimate(this, mLoginFormView, !show);
+        AnimateUtil.showHideWithAnimate(this, mProgressView, show);
     }
 
     @Override
@@ -175,7 +157,7 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
     }
 
     @Override
-    public void toMainActivity() {
+    public void doNext() {
         MainActivity.actionStart(this);
         this.finish();
     }

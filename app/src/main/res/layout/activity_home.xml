@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
-    <com.zkboys.androiddemo.view.activities.layout.TitleLayout
-        android:id="@+id/tl_home_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
     <Button
         android:id="@+id/btn_home_show_recycler_view"
         android:layout_width="match_parent"

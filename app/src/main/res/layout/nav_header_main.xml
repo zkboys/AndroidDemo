@@ -14,23 +14,24 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_nav_header_name_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:scaleType="fitCenter"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:scaleType="fitCenter"
         app:srcCompat="@mipmap/png_logo"/>
 
     <TextView
+        android:id="@+id/tv_nav_header_main_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="张三"
-        android:textSize="20sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="20sp"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_nav_header_main_login_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="zhangsan@xiaoyage.com"/>

@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.zkboys.androiddemo.view.activities.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -20,7 +20,13 @@
             android:background="?attr/colorPrimary"
             android:textAlignment="center"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>-->
+
+    <com.zkboys.androiddemo.view.components.ToolBar
+        xmlns:toolbar="http://schemas.android.com/apk/res/com.zkboys.androiddemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        toolbar:title="桌位列表"/>
 
     <include layout="@layout/content_main"/>
 
