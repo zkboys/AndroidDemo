@@ -204,6 +204,7 @@ public class SwitchAccountActivity extends BaseActivity implements ILoginActivit
         preUtil.setUserName(currentSelectedUser.getName());
         preUtil.setLoginName(currentSelectedUser.getLoginname());
         MainActivity.actionStart(this);
+        finish();
     }
 
     @Override

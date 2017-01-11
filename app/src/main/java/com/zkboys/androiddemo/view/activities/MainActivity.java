@@ -23,6 +23,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private MainPresenter presenter;
 
+    private int mBackKeyPressedTimes = 0;
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -73,6 +75,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (mBackKeyPressedTimes == 0) {
+            showShortToast("再按一次退出程序");
+            mBackKeyPressedTimes = 1;
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        mBackKeyPressedTimes = 0;
+                    }
+                }
+            }.start();
         } else {
             super.onBackPressed();
         }
