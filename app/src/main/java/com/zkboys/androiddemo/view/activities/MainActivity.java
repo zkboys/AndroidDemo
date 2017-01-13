@@ -125,6 +125,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            Demo2Activity.actionStart(this);
         } else if (id == R.id.nav_gallery) {
             DemoActivity.actionStart(this);
         } else if (id == R.id.nav_slideshow) {

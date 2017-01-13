@@ -44,11 +44,11 @@ public class ZKBoysSDK {
 //    private static final String BASE_URL = "http://192.168.1.101:3002";
 //    private static final String TEST_BASE_URL = "http://192.168.0.237:8001";
 
-//    private static final String BASE_URL = "http://192.168.0.237:3002";
-//    private static final String TEST_BASE_URL = "http://192.168.0.237:3002";
+    private static final String BASE_URL = "http://192.168.0.237:3002";
+    private static final String TEST_BASE_URL = "http://192.168.0.237:3002";
 
-    private static final String BASE_URL = "http://192.168.0.239:3002";
-    private static final String TEST_BASE_URL = "http://192.168.0.239:3002";
+//    private static final String BASE_URL = "http://192.168.0.239:3002";
+//    private static final String TEST_BASE_URL = "http://192.168.0.239:3002";
 
 
     /**
