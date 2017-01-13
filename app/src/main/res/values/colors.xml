@@ -30,4 +30,17 @@
 
     <color name="borderColorPrimary">#22000000</color>
 
+    <color name="tableGreen">#69d2aa</color>
+    <color name="tableGreenLight">#f2fff8</color>
+
+    <color name="tableBlue">#669ff9</color>
+    <color name="tableBlueLight">#f1f8ff</color>
+
+    <color name="tableGray">#aaaaaa</color>
+    <color name="tableGrayLight">#ffffff</color>
+
+
+    <color name="tableOrange">#f2794c</color>
+    <color name="tableOrangeLight">#fff8f5</color>
+
 </resources>

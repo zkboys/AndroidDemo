@@ -8,11 +8,57 @@
     android:fitsSystemWindows="true"
     tools:context="com.zkboys.androiddemo.view.activities.MainActivity">
 
-    <com.zkboys.androiddemo.view.components.ToolBar
-        xmlns:toolbar="http://schemas.android.com/apk/res/com.zkboys.androiddemo"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        toolbar:title="桌位列表"/>
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:textAlignment="center"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/tv_tool_bar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/title_activity_main"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="20sp"
+                />
+        </android.support.v7.widget.Toolbar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/borderColorPrimary"/>
+
+        <!--
+            android design library提供的TabLayout控件
+            tabIndicatorColor：菜单下方移动的横线的颜色
+            tabSelectedTextColor ：菜单被选中之后的颜色
+            tabTextColor : 菜单正常的颜色
+            app:tabTextAppearance : 字体添加样式
+        -->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_main_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabMode="fixed"
+            app:tabPaddingEnd="30dp"
+            app:tabPaddingStart="30dp"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextAppearance="@style/TabTheme"
+            app:tabTextColor="@color/textColorPrimary"
+            />
+    </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main"/>
 

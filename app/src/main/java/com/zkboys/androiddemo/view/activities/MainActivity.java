@@ -2,9 +2,13 @@ package com.zkboys.androiddemo.view.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -16,11 +20,17 @@ import android.widget.TextView;
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.MainPresenter;
 import com.zkboys.androiddemo.utils.PreferenceUtil;
+import com.zkboys.androiddemo.view.adapter.TabFragmentPagerAdapter;
+import com.zkboys.androiddemo.view.fragment.TableListFragment;
+import com.zkboys.sdk.model.TablesInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, TableListFragment.OnFragmentInteractionListener {
     private MainPresenter presenter;
 
     private int mBackKeyPressedTimes = 0;
@@ -34,6 +44,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Bind(R.id.nav_view)
     NavigationView mNavigationView;
 
+    @Bind(R.id.tl_main_tabs)
+    TabLayout mTabLayout;
+
+    @Bind(R.id.vp_main_pager)
+    ViewPager mPager;
+
+
     /**
      * 启动当前Activity
      */
@@ -46,28 +63,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
 
-        setSupportActionBar(mToolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        mNavigationView.setNavigationItemSelectedListener(this);
-
-        View headerView = mNavigationView.getHeaderView(0);
-
-        TextView mUserNameView = (TextView) headerView.findViewById(R.id.tv_nav_header_main_user_name);
-        TextView mLoginNameView = (TextView) headerView.findViewById(R.id.tv_nav_header_main_login_name);
-        PreferenceUtil preUtil = PreferenceUtil.getInstance(this);
-        String userName = preUtil.getUserName();
-        String loginName = preUtil.getLoginName();
-
-        mUserNameView.setText(userName);
-        mLoginNameView.setText(loginName);
-
         presenter = new MainPresenter(this);
+
+        initNavigation();
+
+        presenter.getTables();
     }
 
     @Override
@@ -142,5 +144,66 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return false; // false: 清除选中状态，true: 点击过后，一直是选中状态
+    }
+
+    private void initNavigation() {
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = mNavigationView.getHeaderView(0);
+
+        TextView mUserNameView = (TextView) headerView.findViewById(R.id.tv_nav_header_main_user_name);
+        TextView mLoginNameView = (TextView) headerView.findViewById(R.id.tv_nav_header_main_login_name);
+        PreferenceUtil preUtil = PreferenceUtil.getInstance(this);
+        String userName = preUtil.getUserName();
+        String loginName = preUtil.getLoginName();
+
+        mUserNameView.setText(userName);
+        mLoginNameView.setText(loginName);
+    }
+
+    /**
+     * 采用viewpager中切换fragment
+     */
+    public void initFragmentPages(List<TablesInfo> tablesInfoList) {
+        List<String> mTitles = new ArrayList<>(); // tab名称列表
+        List<Fragment> mFragments = new ArrayList<>();
+        TabFragmentPagerAdapter mFragmentAdapter; // 定义以fragment为切换的adapter
+
+        for (int i = 0; i < tablesInfoList.size(); i++) {
+            TablesInfo tablesInfo = tablesInfoList.get(i);
+            mTitles.add(tablesInfo.getTabRegionName());
+            mFragments.add(TableListFragment.newInstance(tablesInfo));
+        }
+
+
+        mFragmentAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), mFragments, mTitles);
+        mPager.setAdapter(mFragmentAdapter);
+
+        //将tabLayout与viewpager连起来
+        mTabLayout.setupWithViewPager(mPager);
+
+        //设置TabLayout的模式,这里主要是用来显示tab展示的情况的
+        //TabLayout.MODE_FIXED          各tab平分整个工具栏,如果不设置，则默认就是这个值
+        //TabLayout.MODE_SCROLLABLE     适用于多tab的，也就是有滚动条的，一行显示不下这些tab可以用这个，较少时，都会居左显示
+        //                              当然了，你要是想做点特别的，像知乎里就使用的这种效果
+
+        if (tablesInfoList.size() > 5) {
+            // TODO: 这里最好能计算一下屏幕是否展示得开。
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        } else {
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

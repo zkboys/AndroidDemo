@@ -12,9 +12,11 @@ import com.zkboys.sdk.oauth.impl.DefaultOAuthProvider;
 import com.zkboys.sdk.oauth.model.OAuthClient;
 import com.zkboys.sdk.service.AppService;
 import com.zkboys.sdk.service.AuthorizeService;
+import com.zkboys.sdk.service.TableService;
 import com.zkboys.sdk.service.UserService;
 import com.zkboys.sdk.service.impl.AppServiceImpl;
 import com.zkboys.sdk.service.impl.AuthorizeServiceImpl;
+import com.zkboys.sdk.service.impl.TableServiceImpl;
 import com.zkboys.sdk.service.impl.UserServiceImpl;
 
 import org.slf4j.Logger;
@@ -106,5 +108,9 @@ public class ZKBoysSDK {
 
     public UserService getUserService() {
         return getService(UserServiceImpl.class);
+    }
+
+    public TableService getTableService() {
+        return getService(TableServiceImpl.class);
     }
 }
