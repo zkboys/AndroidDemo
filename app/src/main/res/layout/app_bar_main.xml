@@ -21,7 +21,7 @@
             android:textAlignment="center"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_tool_bar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -30,13 +30,29 @@
                 android:text="@string/title_activity_main"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="20sp"
+                android:visibility="gone"
+                />-->
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tl_main_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                app:tabIndicatorColor="@color/colorAccent"
+                app:tabMode="fixed"
+                app:tabPaddingEnd="30dp"
+                app:tabPaddingStart="30dp"
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextAppearance="@style/TabTheme"
+                app:tabTextColor="@color/textColorPrimary"
                 />
         </android.support.v7.widget.Toolbar>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/borderColorPrimary"/>
+        <!--
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/borderColorPrimary"/>-->
 
         <!--
             android design library提供的TabLayout控件
@@ -45,7 +61,7 @@
             tabTextColor : 菜单正常的颜色
             app:tabTextAppearance : 字体添加样式
         -->
-        <android.support.design.widget.TabLayout
+        <!--<android.support.design.widget.TabLayout
             android:id="@+id/tl_main_tabs"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -57,7 +73,7 @@
             app:tabSelectedTextColor="@color/colorAccent"
             app:tabTextAppearance="@style/TabTheme"
             app:tabTextColor="@color/textColorPrimary"
-            />
+            />-->
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main"/>
