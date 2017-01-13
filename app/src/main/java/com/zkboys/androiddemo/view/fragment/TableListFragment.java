@@ -4,17 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zkboys.androiddemo.R;
+import com.zkboys.androiddemo.presenter.MainPresenter;
+import com.zkboys.androiddemo.view.activities.MainActivity;
+import com.zkboys.sdk.common.C;
 import com.zkboys.sdk.model.TableInfo;
 import com.zkboys.sdk.model.TablesInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +39,11 @@ public class TableListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     TablesInfo tables;
     private TableAdapter mAdapter;
+    private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
+    private MainPresenter mMainPresenter;
+    private SwipeRefreshLayout mSwipeRefreshWidget;
+    private int tabRegionId;
 
     public TableListFragment() {
         // Required empty public constructor
@@ -67,12 +77,23 @@ public class TableListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tables, container, false);
-
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_main_tables);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 5);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_main_tables);
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new TableAdapter(tables.getTableList(), getContext());
         recyclerView.setAdapter(mAdapter);
+
+        mMainPresenter = new MainPresenter((MainActivity) getActivity());
+        mSwipeRefreshWidget = (SwipeRefreshLayout) view.findViewById(R.id.srl_tables);
+        mSwipeRefreshWidget.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
+//        mSwipeRefreshWidget.setProgressViewOffset(true, 150, 300); //调整进度条距离屏幕顶部的距离
+        mSwipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeRefreshWidget.setRefreshing(true);
+                mMainPresenter.pullRefresh(TableListFragment.this);
+            }
+        });
         return view;
     }
 
@@ -100,6 +121,31 @@ public class TableListFragment extends Fragment {
         mListener = null;
     }
 
+    public void setTables(List<TablesInfo> tableInfoList) {
+        // 先清空再赋值
+        this.tables.setTableList(new ArrayList<TableInfo>());
+        if (tableInfoList != null && tableInfoList.size() > 0) {
+            for (int i = 0; i < tableInfoList.size(); i++) {
+                if (this.tabRegionId == tableInfoList.get(i).getTabRegionId()) {
+                    this.tables.setTableList(tableInfoList.get(i).getTableList());
+                    break;
+                }
+            }
+        }
+        mAdapter.setTables(this.tables.getTableList());
+        mSwipeRefreshWidget.setRefreshing(false);
+        Toast.makeText(getActivity(), getContext().getString(R.string.refresh_success), Toast.LENGTH_SHORT).show();
+    }
+
+    public void showRefreshError(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        mSwipeRefreshWidget.setRefreshing(false);
+    }
+
+    public void setTabRegionId(int tabRegionId) {
+        this.tabRegionId = tabRegionId;
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -124,15 +170,44 @@ public class TableListFragment extends Fragment {
             this.context = context;
         }
 
+        public void setTables(List<TableInfo> tableInfoList) {
+            this.tableInfoList = tableInfoList;
+            notifyDataSetChanged();
+        }
+
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             final MyViewHolder holder = new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_table, parent, false));
-            holder.title.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
                     TableInfo table = tableInfoList.get(position);
-                    notifyDataSetChanged();
+                    String status = table.getTabStatus();
+                    switch (status) {
+                        case C.TableStatus.STATU_FREE:
+                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            break;
+                        case C.TableStatus.STATU_OPENED:
+                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case C.TableStatus.STATU_DINING:
+                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case C.TableStatus.STATU_CLEANING:
+                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case C.TableStatus.STATU_RESERVED:
+                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            break;
+                        case C.TableStatus.STATU_LOCKING:
+                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+//                    notifyDataSetChanged();
                 }
             });
             return holder;

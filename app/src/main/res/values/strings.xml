@@ -38,6 +38,8 @@
     <string name="table_reserved">已预订</string>
     <string name="table_locking">已锁定</string>
 
+    <string name="refresh_success">刷新成功</string>
+    <string name="refresh_error">刷新失败</string>
 
     <!-- Strings related to Settings -->
 

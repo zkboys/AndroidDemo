@@ -35,8 +35,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private int mBackKeyPressedTimes = 0;
 
+    private List<Fragment> mFragments;
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.tv_tool_bar_title)
+    TextView mToolBarTitle;
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawer;
@@ -49,7 +53,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Bind(R.id.vp_main_pager)
     ViewPager mPager;
-
+//    @Bind(R.id.srl_tables)
+//    SwipeRefreshLayout mSwipeRefreshWidget;
 
     /**
      * 启动当前Activity
@@ -172,13 +177,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     public void initFragmentPages(List<TablesInfo> tablesInfoList) {
         List<String> mTitles = new ArrayList<>(); // tab名称列表
-        List<Fragment> mFragments = new ArrayList<>();
+        mFragments = new ArrayList<>();
         TabFragmentPagerAdapter mFragmentAdapter; // 定义以fragment为切换的adapter
 
         for (int i = 0; i < tablesInfoList.size(); i++) {
             TablesInfo tablesInfo = tablesInfoList.get(i);
             mTitles.add(tablesInfo.getTabRegionName());
-            mFragments.add(TableListFragment.newInstance(tablesInfo));
+            TableListFragment tableListFragment = TableListFragment.newInstance(tablesInfo);
+            tableListFragment.setTabRegionId(tablesInfo.getTabRegionId());
+            mFragments.add(tableListFragment);
         }
 
 
@@ -193,6 +200,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //TabLayout.MODE_SCROLLABLE     适用于多tab的，也就是有滚动条的，一行显示不下这些tab可以用这个，较少时，都会居左显示
         //                              当然了，你要是想做点特别的，像知乎里就使用的这种效果
 
+       /* if (tablesInfoList.size() == 1) {
+            mToolBarTitle.setVisibility(View.VISIBLE);
+            mTabLayout.setVisibility(View.GONE);
+        } else {
+            mToolBarTitle.setVisibility(View.GONE);
+            mTabLayout.setVisibility(View.VISIBLE);
+        }
+        */
         if (tablesInfoList.size() > 5) {
             // TODO: 这里最好能计算一下屏幕是否展示得开。
             mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);

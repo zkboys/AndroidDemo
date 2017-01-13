@@ -3,6 +3,7 @@ package com.zkboys.androiddemo.presenter;
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.IMainPresenter;
 import com.zkboys.androiddemo.view.activities.MainActivity;
+import com.zkboys.androiddemo.view.fragment.TableListFragment;
 import com.zkboys.sdk.ZKBoysSDK;
 import com.zkboys.sdk.exception.NetworkException;
 import com.zkboys.sdk.exception.ServiceException;
@@ -46,6 +47,29 @@ public class MainPresenter implements IMainPresenter {
             public void onSuccess(Results<TablesInfo> result) {
                 List<TablesInfo> tables = result.getResults();
                 view.initFragmentPages(tables);
+            }
+
+            @Override
+            public void onException(Exception exception, String message) {
+                super.onException(exception, message);
+                view.showShortToast(message);
+            }
+        });
+    }
+
+    public ServiceTicket pullRefresh(final TableListFragment tableListFragment) {
+        return tableService.getTables("1", "1", new DefaultCallback<Results<TablesInfo>>() {
+            @Override
+            public void onSuccess(Results<TablesInfo> result) {
+                List<TablesInfo> tables = result.getResults();
+//                view.refreshFragmentPages(tables);
+                tableListFragment.setTables(tables);
+            }
+
+            @Override
+            public void onException(Exception exception, String message) {
+                super.onException(exception, message);
+                tableListFragment.showRefreshError(message);
             }
         });
     }
