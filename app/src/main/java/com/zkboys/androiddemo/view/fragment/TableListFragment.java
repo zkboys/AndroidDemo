@@ -129,7 +129,7 @@ public class TableListFragment extends Fragment {
         this.tables.setTableList(new ArrayList<TableInfo>());
         if (tableInfoList != null && tableInfoList.size() > 0) {
             for (int i = 0; i < tableInfoList.size(); i++) {
-                if (this.tabRegionId == tableInfoList.get(i).getTabRegionId()) {
+                if (this.tabRegionId.equals(tableInfoList.get(i).getTabRegionId())) {
                     this.tables.setTableList(tableInfoList.get(i).getTableList());
                     break;
                 }

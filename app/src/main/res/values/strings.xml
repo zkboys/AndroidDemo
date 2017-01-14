@@ -53,6 +53,7 @@
 
     <string name="error_customer_name_required">请输入姓氏</string>
     <string name="error_mobile_required">请输入电话</string>
+    <string name="error_mobile_format">请输入正确的电话</string>
     <string name="error_people_number_required">请输入就餐人数</string>
 
     <string name="ok">确定</string>

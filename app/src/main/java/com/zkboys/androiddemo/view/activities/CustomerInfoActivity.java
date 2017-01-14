@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.zkboys.androiddemo.R;
@@ -26,18 +27,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CustomerInfoActivity extends BaseActivity {
-
-    private List<String> mTelItems;
-    private List<String> mCustomerNameItems;
-
-    private TableInfo mTable;
+    private static final String TABLE_EXTRA_NAME = "table";
+    private final String MALE = "M";
+    private final String FEMALE = "FM";
 
     private enum EditTextType {
         NAME, MOBILE, PEOPLE_NUMBER
     }
 
+    private List<String> mTelItems;
+    private List<String> mCustomerNameItems;
+    private TableInfo mTable;
     private EditTextType currentEditText = EditTextType.NAME;
-
 
     @Bind(R.id.rv_customer_keyboard)
     Keyboard mNumberKeyboardRecyclerView;
@@ -51,6 +52,9 @@ public class CustomerInfoActivity extends BaseActivity {
     @Bind(R.id.et_customer_info_customer_name)
     EditText mCustomerName;
 
+    @Bind(R.id.rg_customer_info_gender)
+    RadioGroup mCustomerGender;
+
     @Bind(R.id.et_customer_info_customer_mobile)
     EditText mCustomerMobile;
 
@@ -59,16 +63,16 @@ public class CustomerInfoActivity extends BaseActivity {
 
     @Bind(R.id.et_customer_input_name)
     EditText mCustomerInputName;
+
     @Bind(R.id.btn_customer_info_submit)
     Button mSubmit;
-
 
     /**
      * 启动当前Activity
      */
     public static void actionStart(Context context, TableInfo table) {
         Intent intent = new Intent(context, CustomerInfoActivity.class);
-        intent.putExtra("table", table);
+        intent.putExtra(TABLE_EXTRA_NAME, table);
         context.startActivity(intent);
     }
 
@@ -77,10 +81,12 @@ public class CustomerInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_info);
         ButterKnife.bind(this);
-        mTable = getIntent().getParcelableExtra("table");
+
+        mTable = getIntent().getParcelableExtra(TABLE_EXTRA_NAME);
         mTableName.setText(mTable.getName());
         mTelItems = Arrays.asList(getResources().getStringArray(R.array.telephone_keyboard));
         mCustomerNameItems = Arrays.asList(getResources().getStringArray(R.array.customer_name));
+
         showCustomerNameKeyboard();
         initEditText();
     }
@@ -89,32 +95,30 @@ public class CustomerInfoActivity extends BaseActivity {
     void onClick(View view) {
         String tableId = mTable.getId();
         String name = getNameText();
+        String gender = mCustomerGender.getCheckedRadioButtonId() == R.id.rb_customer_info_male ? MALE : FEMALE;
         String mobile = getMobileText();
         String peopleNumber = getPeopleNumberText();
+
         if (TextUtils.isEmpty(name)) {
-            mCustomerName.requestFocus();
-            currentEditText = EditTextType.NAME;
-            showCustomerNameKeyboard();
-            mCustomerName.setError(getResources().getString(R.string.error_customer_name_required));
+            showNameError(R.string.error_customer_name_required);
             return;
         }
         if (TextUtils.isEmpty(mobile)) {
-            mCustomerMobile.requestFocus();
-            currentEditText = EditTextType.MOBILE;
-            showTelephoneKeyboard();
-            mCustomerMobile.setError(getResources().getString(R.string.error_mobile_required));
+            showMobileError(R.string.error_mobile_required);
+            return;
+        }
+        if (mobile.length() != 11) {
+            // TODO: 格式校验
+            showMobileError(R.string.error_mobile_format);
             return;
         }
         if (TextUtils.isEmpty(peopleNumber)) {
-            mCustomerPeopleNumber.requestFocus();
-            currentEditText = EditTextType.PEOPLE_NUMBER;
-            showTelephoneKeyboard();
-            mCustomerPeopleNumber.setError(getResources().getString(R.string.error_people_number_required));
+            showPeopleNumberError(R.string.error_people_number_required);
             return;
         }
 
         // TODO: submit
-        showShortToast("tableId：" + tableId + "  姓氏：" + name + "  电话：" + mobile + "  人数：" + peopleNumber);
+        showShortToast("tableId：" + tableId + "  姓氏：" + name + "  性别：" + gender + "  电话：" + mobile + "  人数：" + peopleNumber);
     }
 
     public void initEditText() {
@@ -220,6 +224,13 @@ public class CustomerInfoActivity extends BaseActivity {
         mCustomerName.setText(name);
     }
 
+    public void showNameError(int stringId) {
+        mCustomerName.requestFocus();
+        currentEditText = EditTextType.NAME;
+        showCustomerNameKeyboard();
+        mCustomerName.setError(getResources().getString(stringId));
+    }
+
     public String getMobileText() {
         // TODO：反格式化
         return mCustomerMobile.getText().toString();
@@ -250,6 +261,13 @@ public class CustomerInfoActivity extends BaseActivity {
         }
     }
 
+    public void showMobileError(int stringId) {
+        mCustomerMobile.requestFocus();
+        currentEditText = EditTextType.MOBILE;
+        showTelephoneKeyboard();
+        mCustomerMobile.setError(getResources().getString(stringId));
+    }
+
     public String getPeopleNumberText() {
         return mCustomerPeopleNumber.getText().toString();
     }
@@ -273,5 +291,12 @@ public class CustomerInfoActivity extends BaseActivity {
         if (!"".equals(oldValue)) {
             setPeopleNumberText(oldValue.substring(0, oldValue.length() - 1));
         }
+    }
+
+    public void showPeopleNumberError(int stringId) {
+        mCustomerPeopleNumber.requestFocus();
+        currentEditText = EditTextType.PEOPLE_NUMBER;
+        showTelephoneKeyboard();
+        mCustomerPeopleNumber.setError(getResources().getString(stringId));
     }
 }
