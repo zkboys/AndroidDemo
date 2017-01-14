@@ -27,7 +27,7 @@ public class TablesInfo implements Parcelable {
      * ]
      */
 
-    private int tabRegionId;
+    private String tabRegionId;
     private String tabRegionName;
     private List<TableInfo> tableList;
 
@@ -36,7 +36,7 @@ public class TablesInfo implements Parcelable {
     }
 
     protected TablesInfo(Parcel in) {
-        tabRegionId = in.readInt();
+        tabRegionId = in.readString();
         tabRegionName = in.readString();
         tableList = in.createTypedArrayList(TableInfo.CREATOR);
     }
@@ -53,7 +53,7 @@ public class TablesInfo implements Parcelable {
         }
     };
 
-    public void setTabRegionId(int tabRegionId) {
+    public void setTabRegionId(String tabRegionId) {
         this.tabRegionId = tabRegionId;
     }
 
@@ -61,7 +61,7 @@ public class TablesInfo implements Parcelable {
         this.tabRegionName = tabRegionName;
     }
 
-    public int getTabRegionId() {
+    public String getTabRegionId() {
         return tabRegionId;
     }
 
@@ -93,7 +93,7 @@ public class TablesInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(tabRegionId);
+        dest.writeString(tabRegionId);
         dest.writeString(tabRegionName);
         dest.writeTypedList(tableList);
     }

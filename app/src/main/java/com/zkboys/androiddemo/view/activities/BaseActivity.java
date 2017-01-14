@@ -44,10 +44,14 @@ public class BaseActivity extends AppCompatActivity {
             /**
              * 点击空白位置 隐藏软键盘
              */
-            InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            return mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            return hideSoftInput();
         }
         return super.onTouchEvent(event);
+    }
+
+    public boolean hideSoftInput() {
+        InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        return mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     public void addServiceTicket(ServiceTicket serviceTicket) {

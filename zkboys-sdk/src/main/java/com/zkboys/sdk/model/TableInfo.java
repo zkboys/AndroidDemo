@@ -22,19 +22,22 @@ public class TableInfo implements Parcelable {
      */
 
     private String name = "";
-    private Long id = 0L;
+    private String id = "";
     private int seatNum = 0;
     private int seatedNum = 0;
     private String tabStatus = "";
-    private Long openTime;
-    private Long endTime;
+    private Long openTime = 0L;
+    private Long endTime = 0L;
     private boolean isChecked = false;
 
     protected TableInfo(Parcel in) {
+        id = in.readString();
         name = in.readString();
         seatNum = in.readInt();
         seatedNum = in.readInt();
         tabStatus = in.readString();
+        openTime = in.readLong();
+        endTime = in.readLong();
         isChecked = in.readByte() != 0;
     }
 
@@ -61,11 +64,11 @@ public class TableInfo implements Parcelable {
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -200,10 +203,13 @@ public class TableInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(name);
         dest.writeInt(seatNum);
         dest.writeInt(seatedNum);
         dest.writeString(tabStatus);
+        dest.writeLong(openTime);
+        dest.writeLong(endTime);
         dest.writeByte((byte) (isChecked ? 1 : 0));
     }
 }

@@ -46,7 +46,7 @@ public class TableListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ITableFragmentPresenter presenter;
     private SwipeRefreshLayout mSwipeRefreshWidget;
-    private int tabRegionId;
+    private String tabRegionId;
 
     public TableListFragment() {
         // Required empty public constructor
@@ -145,7 +145,7 @@ public class TableListFragment extends Fragment {
         mSwipeRefreshWidget.setRefreshing(false);
     }
 
-    public void setTabRegionId(int tabRegionId) {
+    public void setTabRegionId(String tabRegionId) {
         this.tabRegionId = tabRegionId;
     }
 

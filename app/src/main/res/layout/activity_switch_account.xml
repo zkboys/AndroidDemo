@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_below="@id/tb_switch_account_toolbar"
-        android:background="@drawable/bg_right_border"
+        android:background="@drawable/border_right"
         android:paddingEnd="20dp"
         android:paddingStart="20dp"/>
 

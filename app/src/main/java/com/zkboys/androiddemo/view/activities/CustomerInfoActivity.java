@@ -4,7 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.view.components.Keyboard;
@@ -15,17 +23,44 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CustomerInfoActivity extends BaseActivity {
 
     private List<String> mTelItems;
     private List<String> mCustomerNameItems;
 
+    private TableInfo mTable;
+
+    private enum EditTextType {
+        NAME, MOBILE, PEOPLE_NUMBER
+    }
+
+    private EditTextType currentEditText = EditTextType.NAME;
+
+
     @Bind(R.id.rv_customer_keyboard)
     Keyboard mNumberKeyboardRecyclerView;
 
     @Bind(R.id.til_customer_info_name)
-    TextInputLayout mNameInput;
+    TextInputLayout mCustomerNameInputLayout;
+
+    @Bind(R.id.tv_customer_info_table_name)
+    TextView mTableName;
+
+    @Bind(R.id.et_customer_info_customer_name)
+    EditText mCustomerName;
+
+    @Bind(R.id.et_customer_info_customer_mobile)
+    EditText mCustomerMobile;
+
+    @Bind(R.id.et_customer_info_customer_people_number)
+    EditText mCustomerPeopleNumber;
+
+    @Bind(R.id.et_customer_input_name)
+    EditText mCustomerInputName;
+    @Bind(R.id.btn_customer_info_submit)
+    Button mSubmit;
 
 
     /**
@@ -42,16 +77,102 @@ public class CustomerInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_info);
         ButterKnife.bind(this);
-        TableInfo table = getIntent().getParcelableExtra("table");
+        mTable = getIntent().getParcelableExtra("table");
+        mTableName.setText(mTable.getName());
         mTelItems = Arrays.asList(getResources().getStringArray(R.array.telephone_keyboard));
         mCustomerNameItems = Arrays.asList(getResources().getStringArray(R.array.customer_name));
-        showTelephoneKeyboard();
-//        showCustomerNameKeyboard();
+        showCustomerNameKeyboard();
+        initEditText();
+    }
+
+    @OnClick({R.id.btn_customer_info_submit})
+    void onClick(View view) {
+        String tableId = mTable.getId();
+        String name = getNameText();
+        String mobile = getMobileText();
+        String peopleNumber = getPeopleNumberText();
+        if (TextUtils.isEmpty(name)) {
+            mCustomerName.requestFocus();
+            currentEditText = EditTextType.NAME;
+            showCustomerNameKeyboard();
+            mCustomerName.setError(getResources().getString(R.string.error_customer_name_required));
+            return;
+        }
+        if (TextUtils.isEmpty(mobile)) {
+            mCustomerMobile.requestFocus();
+            currentEditText = EditTextType.MOBILE;
+            showTelephoneKeyboard();
+            mCustomerMobile.setError(getResources().getString(R.string.error_mobile_required));
+            return;
+        }
+        if (TextUtils.isEmpty(peopleNumber)) {
+            mCustomerPeopleNumber.requestFocus();
+            currentEditText = EditTextType.PEOPLE_NUMBER;
+            showTelephoneKeyboard();
+            mCustomerPeopleNumber.setError(getResources().getString(R.string.error_people_number_required));
+            return;
+        }
+
+        // TODO: submit
+        showShortToast("tableId：" + tableId + "  姓氏：" + name + "  电话：" + mobile + "  人数：" + peopleNumber);
+    }
+
+    public void initEditText() {
+        // 输入其他姓氏
+        mCustomerInputName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                setNameText(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        // 输入框点击获取焦点，但是不弹出软键盘
+        View.OnTouchListener editTextTouchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 如果软键盘已经弹起，隐藏软键盘
+                hideSoftInput();
+                switch (view.getId()) {
+                    case R.id.et_customer_info_customer_name:
+                        currentEditText = EditTextType.NAME;
+                        showCustomerNameKeyboard();
+                        break;
+                    case R.id.et_customer_info_customer_mobile:
+                        currentEditText = EditTextType.MOBILE;
+                        showTelephoneKeyboard();
+                        break;
+                    case R.id.et_customer_info_customer_people_number:
+                        currentEditText = EditTextType.PEOPLE_NUMBER;
+                        showTelephoneKeyboard();
+                        break;
+                }
+                return false;
+            }
+        };
+
+        mCustomerName.setOnTouchListener(editTextTouchListener);
+        mCustomerName.setInputType(InputType.TYPE_NULL);
+
+        mCustomerMobile.setOnTouchListener(editTextTouchListener);
+        mCustomerMobile.setInputType(InputType.TYPE_NULL);
+
+        mCustomerPeopleNumber.setOnTouchListener(editTextTouchListener);
+        mCustomerPeopleNumber.setInputType(InputType.TYPE_NULL);
 
     }
 
     public void showTelephoneKeyboard() {
-        mNameInput.setVisibility(View.GONE);
+        mCustomerNameInputLayout.setVisibility(View.GONE);
         mNumberKeyboardRecyclerView
                 .setItems(mTelItems)
                 .setSpanCount(3)
@@ -59,22 +180,25 @@ public class CustomerInfoActivity extends BaseActivity {
                 .setItemClickListener(new Keyboard.ItemClickListener() {
                     @Override
                     public void onClick(View v, String number) {
-                        // 点击 .
                         if (mTelItems.get(9).equals(number)) {
-                            showShortToast("点击了 【" + number + "】");
-                            // 动态改变键盘内容
-                            showCustomerNameKeyboard();
+                            // 左下角 清空
+                            if (currentEditText == EditTextType.MOBILE) setMobileText("");
+                            if (currentEditText == EditTextType.PEOPLE_NUMBER) setPeopleNumberText("");
                         } else if (mTelItems.get(11).equals(number)) {
-                            showShortToast("点击了 【" + number + "】");
+                            // 右下角 删除
+                            if (currentEditText == EditTextType.MOBILE) shiftMobileText();
+                            if (currentEditText == EditTextType.PEOPLE_NUMBER) shiftPeopleNumberText();
                         } else {
-                            showShortToast("点击了数字：【" + number + "】");
+                            // 点击数字
+                            if (currentEditText == EditTextType.MOBILE) appendMobileText(number);
+                            if (currentEditText == EditTextType.PEOPLE_NUMBER) appendPeopleNumberText(number);
                         }
                     }
                 });
     }
 
     public void showCustomerNameKeyboard() {
-        mNameInput.setVisibility(View.VISIBLE);
+        mCustomerNameInputLayout.setVisibility(View.VISIBLE);
         mNumberKeyboardRecyclerView
                 .setItems(mCustomerNameItems)
                 .setSpanCount(5)
@@ -82,9 +206,72 @@ public class CustomerInfoActivity extends BaseActivity {
                 .setItemClickListener(new Keyboard.ItemClickListener() {
                     @Override
                     public void onClick(View v, String name) {
-                        // 点击 .
-                        showShortToast("点击了：【" + name + "】");
+                        setNameText(name);
                     }
                 });
+    }
+
+    public String getNameText() {
+        return mCustomerName.getText().toString();
+    }
+
+    public void setNameText(String name) {
+        mCustomerName.setError(null);
+        mCustomerName.setText(name);
+    }
+
+    public String getMobileText() {
+        // TODO：反格式化
+        return mCustomerMobile.getText().toString();
+    }
+
+    public void setMobileText(String mobile) {
+        mCustomerMobile.setError(null);
+        // TODO: 格式化、限制长度为11
+        mCustomerMobile.setText(mobile);
+    }
+
+    public void appendMobileText(String mobile) {
+        String oldValue = getMobileText();
+        if ("".equals(oldValue) && !"1".equals(mobile)) {
+            setMobileText("");
+            return;
+        }
+        if (oldValue.length() >= 11) {
+            return;
+        }
+        setMobileText(oldValue + mobile);
+    }
+
+    public void shiftMobileText() {
+        String oldValue = getMobileText();
+        if (!"".equals(oldValue)) {
+            setMobileText(oldValue.substring(0, oldValue.length() - 1));
+        }
+    }
+
+    public String getPeopleNumberText() {
+        return mCustomerPeopleNumber.getText().toString();
+    }
+
+    public void setPeopleNumberText(String peopleNumber) {
+        mCustomerPeopleNumber.setError(null);
+        mCustomerPeopleNumber.setText(peopleNumber);
+    }
+
+    public void appendPeopleNumberText(String peopleNumber) {
+        String oldValue = getPeopleNumberText();
+        if ("".equals(oldValue) && "0".equals(peopleNumber)) {
+            setPeopleNumberText("");
+        } else {
+            setPeopleNumberText(oldValue + peopleNumber);
+        }
+    }
+
+    public void shiftPeopleNumberText() {
+        String oldValue = getPeopleNumberText();
+        if (!"".equals(oldValue)) {
+            setPeopleNumberText(oldValue.substring(0, oldValue.length() - 1));
+        }
     }
 }

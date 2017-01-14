@@ -43,6 +43,19 @@
 
     <string name="input_other_name">输入其他姓氏</string>
 
+    <string name="select_or_input_name">请输入姓氏</string>
+    <string name="input_mobile">请输入电话</string>
+    <string name="input_people_number">请输入就餐人数</string>
+    <string name="male">男</string>
+    <string name="male_nick">先生</string>
+    <string name="female">女</string>
+    <string name="female_nick">女士</string>
+
+    <string name="error_customer_name_required">请输入姓氏</string>
+    <string name="error_mobile_required">请输入电话</string>
+    <string name="error_people_number_required">请输入就餐人数</string>
+
+    <string name="ok">确定</string>
 
     <string-array name="number_keyboard">
         <item>1</item>
