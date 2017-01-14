@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zkboys.androiddemo.view.activities.Demo2Activity">
+
+    <com.zkboys.androiddemo.view.components.ToolBar
+        xmlns:toolbar="http://schemas.android.com/apk/res/com.zkboys.androiddemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        toolbar:title="编辑用户信息"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <RelativeLayout
+            android:id="@+id/rl_customer_info"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            >
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/rl_customer_info"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            >
+
+            <com.zkboys.androiddemo.view.components.Keyboard
+                android:id="@+id/rv_customer_keyboard"
+                android:layout_width="450dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_customer_info_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/rv_customer_keyboard"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/et_customer_info_name"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:hint="@string/input_other_name"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,6 +1,8 @@
 package com.zkboys.androiddemo.view.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,8 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zkboys.androiddemo.R;
-import com.zkboys.androiddemo.presenter.MainPresenter;
-import com.zkboys.androiddemo.view.activities.MainActivity;
+import com.zkboys.androiddemo.presenter.TableFragmentPresenter;
+import com.zkboys.androiddemo.presenter.vus.ITableFragmentPresenter;
+import com.zkboys.androiddemo.view.activities.CustomerInfoActivity;
 import com.zkboys.sdk.common.C;
 import com.zkboys.sdk.model.TableInfo;
 import com.zkboys.sdk.model.TablesInfo;
@@ -41,7 +44,7 @@ public class TableListFragment extends Fragment {
     private TableAdapter mAdapter;
     private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
-    private MainPresenter mMainPresenter;
+    private ITableFragmentPresenter presenter;
     private SwipeRefreshLayout mSwipeRefreshWidget;
     private int tabRegionId;
 
@@ -83,7 +86,7 @@ public class TableListFragment extends Fragment {
         mAdapter = new TableAdapter(tables.getTableList(), getContext());
         recyclerView.setAdapter(mAdapter);
 
-        mMainPresenter = new MainPresenter((MainActivity) getActivity());
+        presenter = new TableFragmentPresenter(this);
         mSwipeRefreshWidget = (SwipeRefreshLayout) view.findViewById(R.id.srl_tables);
         mSwipeRefreshWidget.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
 //        mSwipeRefreshWidget.setProgressViewOffset(true, 150, 300); //调整进度条距离屏幕顶部的距离
@@ -91,7 +94,7 @@ public class TableListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 mSwipeRefreshWidget.setRefreshing(true);
-                mMainPresenter.pullRefresh(TableListFragment.this);
+                presenter.pullRefresh();
             }
         });
         return view;
@@ -186,7 +189,7 @@ public class TableListFragment extends Fragment {
                     String status = table.getTabStatus();
                     switch (status) {
                         case C.TableStatus.STATU_FREE:
-                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            CustomerInfoActivity.actionStart(getActivity(), table);
                             break;
                         case C.TableStatus.STATU_OPENED:
                             Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
@@ -197,7 +200,16 @@ public class TableListFragment extends Fragment {
                             break;
 
                         case C.TableStatus.STATU_CLEANING:
-                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            new AlertDialog.Builder(context)
+                                    .setTitle("提示")
+                                    .setMessage("此桌清理完成了？")
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Toast.makeText(getActivity(), "清理完成了", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .create().show();
                             break;
 
                         case C.TableStatus.STATU_RESERVED:

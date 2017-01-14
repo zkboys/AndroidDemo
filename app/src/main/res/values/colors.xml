@@ -4,6 +4,8 @@
     <color name="colorPrimary">#F5F5F5</color>
     <!-- 主色调深色 status bar 等-->
     <color name="colorPrimaryDark">#EFEFEF</color>
+
+    <color name="colorPrimaryDarker">#eeeeee</color>
     <!-- 输入框获得焦点、单复选框选中、按钮颜色 -->
     <color name="colorAccent">#FF9A19</color>
     <!-- 按钮点击颜色 -->
