@@ -49,10 +49,6 @@
         <activity android:name=".view.activities.HomeActivity">
         </activity>
         <activity
-            android:name=".view.activities.RecyclerViewDemoActivity"
-            android:label="demo">
-        </activity>
-        <activity
             android:name=".view.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme">

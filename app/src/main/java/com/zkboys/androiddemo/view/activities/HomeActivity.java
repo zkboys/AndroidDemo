@@ -40,7 +40,6 @@ public class HomeActivity extends BaseActivity {
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btn_home_show_recycler_view:
-                RecyclerViewDemoActivity.actionStart(this);
                 break;
             case R.id.btn_home_get_user:
                 homePresenter.getUserById("111");

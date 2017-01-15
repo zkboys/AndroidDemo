@@ -29,7 +29,7 @@ import butterknife.OnClick;
 public class CustomerInfoActivity extends BaseActivity {
     private static final String TABLE_EXTRA_NAME = "table";
     private final String MALE = "M";
-    private final String FEMALE = "FM";
+    private final String FEMALE = "F";
 
     private enum EditTextType {
         NAME, MOBILE, PEOPLE_NUMBER
