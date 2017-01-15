@@ -158,7 +158,7 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
 
     @Override
     public void doNext() {
-        MainActivity.actionStart(this);
+        SelectStoreActivity.actionStart(this);
         this.finish();
     }
 

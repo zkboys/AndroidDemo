@@ -219,6 +219,7 @@ public class SwitchAccountActivity extends BaseActivity implements ILoginActivit
 
 
     class SwitchAccountAdapter extends RecyclerView.Adapter<SwitchAccountAdapter.MyViewHolder> {
+        private int nowChoosePosition = 0;
         private List<UserInfo> users;
         private SwitchAccountActivity context;
 
@@ -236,9 +237,11 @@ public class SwitchAccountActivity extends BaseActivity implements ILoginActivit
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
-                    UserInfo user = users.get(position);
-                    context.setCurrentSelectedUser(user);
-                    notifyDataSetChanged();
+                    if (position != nowChoosePosition) {
+                        UserInfo user = users.get(position);
+                        context.setCurrentSelectedUser(user);
+                        setNowChoosePosition(position);
+                    }
                 }
             });
             return holder;
@@ -247,9 +250,8 @@ public class SwitchAccountActivity extends BaseActivity implements ILoginActivit
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             UserInfo user = users.get(position);
-            UserInfo currentSelectedUser = context.getCurrentSelectedUser();
             holder.bt.setText(user.getName());
-            if (currentSelectedUser != null && currentSelectedUser.getUserId().equals(user.getUserId())) {
+            if (position == nowChoosePosition) {
                 holder.bt.setBackground(getDrawable(R.drawable.btn_ghost));
                 holder.bt.setTextColor(context.getResources().getColor(R.color.colorAccent));
             } else {
@@ -261,6 +263,13 @@ public class SwitchAccountActivity extends BaseActivity implements ILoginActivit
         @Override
         public int getItemCount() {
             return users.size();
+        }
+
+        public void setNowChoosePosition(int nowChoosePosition) {
+            int oldPosition = this.nowChoosePosition;
+            this.nowChoosePosition = nowChoosePosition;
+            notifyItemChanged(oldPosition);
+            notifyItemChanged(nowChoosePosition);
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {

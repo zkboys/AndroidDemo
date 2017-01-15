@@ -35,24 +35,6 @@ public class TablesInfo implements Parcelable {
 
     }
 
-    protected TablesInfo(Parcel in) {
-        tabRegionId = in.readString();
-        tabRegionName = in.readString();
-        tableList = in.createTypedArrayList(TableInfo.CREATOR);
-    }
-
-    public static final Creator<TablesInfo> CREATOR = new Creator<TablesInfo>() {
-        @Override
-        public TablesInfo createFromParcel(Parcel in) {
-            return new TablesInfo(in);
-        }
-
-        @Override
-        public TablesInfo[] newArray(int size) {
-            return new TablesInfo[size];
-        }
-    };
-
     public void setTabRegionId(String tabRegionId) {
         this.tabRegionId = tabRegionId;
     }
@@ -85,6 +67,24 @@ public class TablesInfo implements Parcelable {
                 ", tableList=" + tableList +
                 '}';
     }
+
+    protected TablesInfo(Parcel in) {
+        tabRegionId = in.readString();
+        tabRegionName = in.readString();
+        tableList = in.createTypedArrayList(TableInfo.CREATOR);
+    }
+
+    public static final Creator<TablesInfo> CREATOR = new Creator<TablesInfo>() {
+        @Override
+        public TablesInfo createFromParcel(Parcel in) {
+            return new TablesInfo(in);
+        }
+
+        @Override
+        public TablesInfo[] newArray(int size) {
+            return new TablesInfo[size];
+        }
+    };
 
     @Override
     public int describeContents() {

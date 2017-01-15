@@ -30,31 +30,8 @@ public class TableInfo implements Parcelable {
     private Long endTime = 0L;
     private boolean isChecked = false;
 
-    protected TableInfo(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-        seatNum = in.readInt();
-        seatedNum = in.readInt();
-        tabStatus = in.readString();
-        openTime = in.readLong();
-        endTime = in.readLong();
-        isChecked = in.readByte() != 0;
-    }
-
     public TableInfo() {
     }
-
-    public static final Creator<TableInfo> CREATOR = new Creator<TableInfo>() {
-        @Override
-        public TableInfo createFromParcel(Parcel in) {
-            return new TableInfo(in);
-        }
-
-        @Override
-        public TableInfo[] newArray(int size) {
-            return new TableInfo[size];
-        }
-    };
 
     public String getName() {
         return name;
@@ -195,6 +172,29 @@ public class TableInfo implements Parcelable {
                 ", isChecked=" + isChecked +
                 '}';
     }
+
+    protected TableInfo(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        seatNum = in.readInt();
+        seatedNum = in.readInt();
+        tabStatus = in.readString();
+        openTime = in.readLong();
+        endTime = in.readLong();
+        isChecked = in.readByte() != 0;
+    }
+
+    public static final Creator<TableInfo> CREATOR = new Creator<TableInfo>() {
+        @Override
+        public TableInfo createFromParcel(Parcel in) {
+            return new TableInfo(in);
+        }
+
+        @Override
+        public TableInfo[] newArray(int size) {
+            return new TableInfo[size];
+        }
+    };
 
     @Override
     public int describeContents() {

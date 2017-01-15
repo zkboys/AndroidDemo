@@ -23,9 +23,8 @@ public class PreferenceUtil {
     }
 
     public static PreferenceUtil getInstance(Context ctx) {
-        if (instance == null) {
-            if (ctx != null)
-                instance = new PreferenceUtil(ctx);
+        if (instance == null && ctx != null) {
+            instance = new PreferenceUtil(ctx);
         }
         return instance;
     }
@@ -46,6 +45,24 @@ public class PreferenceUtil {
 
     public String getLoginName() {
         return mSharedPref.getString(C.USER.LOGIN_NAME, "");
+    }
+
+    public void setMerchantId(String mchId) {
+        mEditor.putString(C.MERCHANT_ID, mchId);
+        mEditor.commit();
+    }
+
+    public String getMerchantId() {
+        return mSharedPref.getString(C.MERCHANT_ID, "");
+    }
+
+    public void setStoreId(String mchId) {
+        mEditor.putString(C.STORE_ID, mchId);
+        mEditor.commit();
+    }
+
+    public String getStoreId() {
+        return mSharedPref.getString(C.STORE_ID, "");
     }
 
     public void setApplicationLogin(boolean login) {

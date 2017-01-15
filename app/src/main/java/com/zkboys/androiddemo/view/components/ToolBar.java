@@ -2,6 +2,7 @@ package com.zkboys.androiddemo.view.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +35,10 @@ public class ToolBar extends AppBarLayout {
 
         //这边要留意的是setNavigationIcon需要放在 setSupportActionBar之后才会生效。
         toolbar.setNavigationIcon(R.drawable.ic_back);
+        Drawable navigationIcon = toolbar.getNavigationIcon();
+        if (navigationIcon != null) {
+            navigationIcon.setAlpha(150); // 设置透明度，改成灰色图标
+        }
         toolbar.setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

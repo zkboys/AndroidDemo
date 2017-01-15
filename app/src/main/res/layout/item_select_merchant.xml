@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/ll_item_merchant_container"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_item_merchant_logo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        fresco:failureImage="@drawable/ic_camera"
+        fresco:failureImageScaleType="centerInside"
+        fresco:roundAsCircle="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_item_merchant_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="品牌"
+        android:textColor="@color/textColorPrimary"
+        />
+
+    <ImageView
+        android:id="@+id/iv_item_merchant_enter"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_right"
+        />
+</LinearLayout>

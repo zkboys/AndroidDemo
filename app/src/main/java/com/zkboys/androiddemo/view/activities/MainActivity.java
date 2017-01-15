@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.MainPresenter;
 import com.zkboys.androiddemo.utils.PreferenceUtil;
@@ -164,9 +165,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         TextView mUserNameView = (TextView) headerView.findViewById(R.id.tv_nav_header_main_user_name);
         TextView mLoginNameView = (TextView) headerView.findViewById(R.id.tv_nav_header_main_login_name);
+        SimpleDraweeView mUserAvatar = (SimpleDraweeView) headerView.findViewById(R.id.sdv_item_merchant_logo);
         PreferenceUtil preUtil = PreferenceUtil.getInstance(this);
         String userName = preUtil.getUserName();
         String loginName = preUtil.getLoginName();
+        mUserAvatar.setImageURI("http://www.33lc.com/article/UploadPic/2012-8/201282413335761587.jpg");
 
         mUserNameView.setText(userName);
         mLoginNameView.setText(loginName);
