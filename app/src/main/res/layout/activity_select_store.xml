@@ -33,5 +33,5 @@
         android:layout_below="@id/tb_select_store_toolbar"
         android:layout_toEndOf="@id/rv_select_store_merchants"
         android:paddingEnd="20dp"
-        android:paddingStart="20dp"/>
+        android:paddingStart="0dp"/>
 </RelativeLayout>

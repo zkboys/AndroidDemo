@@ -146,33 +146,43 @@ public class CustomerInfoActivity extends BaseActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 // 如果软键盘已经弹起，隐藏软键盘
                 hideSoftInput();
-                switch (view.getId()) {
-                    case R.id.et_customer_info_customer_name:
-                        currentEditText = EditTextType.NAME;
-                        showCustomerNameKeyboard();
-                        break;
-                    case R.id.et_customer_info_customer_mobile:
-                        currentEditText = EditTextType.MOBILE;
-                        showTelephoneKeyboard();
-                        break;
-                    case R.id.et_customer_info_customer_people_number:
-                        currentEditText = EditTextType.PEOPLE_NUMBER;
-                        showTelephoneKeyboard();
-                        break;
-                }
                 return false;
             }
         };
 
+        View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    switch (view.getId()) {
+                        case R.id.et_customer_info_customer_name:
+                            currentEditText = EditTextType.NAME;
+                            showCustomerNameKeyboard();
+                            break;
+                        case R.id.et_customer_info_customer_mobile:
+                            currentEditText = EditTextType.MOBILE;
+                            showTelephoneKeyboard();
+                            break;
+                        case R.id.et_customer_info_customer_people_number:
+                            currentEditText = EditTextType.PEOPLE_NUMBER;
+                            showTelephoneKeyboard();
+                            break;
+                    }
+                }
+            }
+        };
+
         mCustomerName.setOnTouchListener(editTextTouchListener);
+        mCustomerName.setOnFocusChangeListener(focusChangeListener);
         mCustomerName.setInputType(InputType.TYPE_NULL);
 
         mCustomerMobile.setOnTouchListener(editTextTouchListener);
+        mCustomerMobile.setOnFocusChangeListener(focusChangeListener);
         mCustomerMobile.setInputType(InputType.TYPE_NULL);
 
         mCustomerPeopleNumber.setOnTouchListener(editTextTouchListener);
+        mCustomerPeopleNumber.setOnFocusChangeListener(focusChangeListener);
         mCustomerPeopleNumber.setInputType(InputType.TYPE_NULL);
-
     }
 
     public void showTelephoneKeyboard() {

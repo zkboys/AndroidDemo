@@ -1,6 +1,9 @@
 package com.zkboys.androiddemo.view.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -75,5 +78,20 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showLongToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
+
+
+    public void showAlertDialog(String message, DialogInterface.OnClickListener positiveButtonClickListener) {
+        showAlertDialog("提示", message, "确定", positiveButtonClickListener);
+    }
+
+
+    public void showAlertDialog(String title, String message, String positiveButtonText, DialogInterface.OnClickListener positiveButtonClickListener) {
+        Dialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(positiveButtonText, positiveButtonClickListener)
+                .create();
+        alertDialog.show();
     }
 }

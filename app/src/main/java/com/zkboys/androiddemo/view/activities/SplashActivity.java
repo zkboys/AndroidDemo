@@ -1,7 +1,6 @@
 package com.zkboys.androiddemo.view.activities;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.application.ZKBoysApplication;
@@ -16,6 +16,7 @@ import com.zkboys.androiddemo.common.C;
 import com.zkboys.androiddemo.presenter.SplashPresenter;
 import com.zkboys.androiddemo.presenter.vus.ISplashPresenter;
 import com.zkboys.androiddemo.utils.LogUtil;
+import com.zkboys.androiddemo.utils.PreferenceUtil;
 import com.zkboys.sdk.httpjson.ServiceTicket;
 import com.zkboys.sdk.model.ClientVersionInfo;
 import com.zkboys.sdk.oauth.model.OAuthToken;
@@ -45,27 +46,22 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void checkVisionFail(String failMassage) {
-        Dialog alertDialog = new AlertDialog.Builder(this)
-                .setTitle("提示")
-                .setMessage(failMassage)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        showAlertDialog(failMassage, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Thread(new Runnable() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(C.SPLASH_SHOW_TIME);
-                                    finish();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }).start();
+                    public void run() {
+                        try {
+                            Thread.sleep(C.SPLASH_SHOW_TIME);
+                            finish();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                })
-                .create();
-        alertDialog.show();
+                }).start();
+            }
+        });
     }
 
     public void needUpdate(ClientVersionInfo clientVersionInfo) {
@@ -108,35 +104,49 @@ public class SplashActivity extends BaseActivity {
     public void doNext() {
         OAuthToken oAuthToken = ((ZKBoysApplication) getApplication()).getOAuthContext().load();
         if (oAuthToken != null) {
-            LogUtil.d("SplashActivity", "可以进行一些需要认证的查询， 比如根据token查询用户");
-            // 跳转到首页 TODO 如果首页需要用户登录，这里要验证 oAuthToken 是否有效
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(C.SPLASH_SHOW_TIME); // 一段时间之后跳转到首页
-                        MainActivity.actionStart(SplashActivity.this);
-                        finish();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        } else {
-            // 跳转到登录页面
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(C.SPLASH_SHOW_TIME); // 一段时间之后跳转到登录
-                        LoginActivity.actionStart(SplashActivity.this);
-                        finish();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(this);
+            String mchId = preferenceUtil.getMerchantId();
+            String storeId = preferenceUtil.getStoreId();
+            if (TextUtils.isEmpty(mchId) || TextUtils.isEmpty(storeId)) {
+                toLogin();
+                return;
+            }
+
+            toMain();
+            return;
         }
+
+        toLogin();
+    }
+
+    public void toMain() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(C.SPLASH_SHOW_TIME);
+                    MainActivity.actionStart(SplashActivity.this);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void toLogin() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(C.SPLASH_SHOW_TIME);
+                    LoginActivity.actionStart(SplashActivity.this);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     /**

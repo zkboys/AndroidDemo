@@ -1,7 +1,9 @@
 package com.zkboys.androiddemo.view.activities;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.zkboys.androiddemo.utils.AnimateUtil;
 import com.zkboys.androiddemo.utils.PreferenceUtil;
 import com.zkboys.androiddemo.view.activities.vus.ILoginActivity;
 import com.zkboys.sdk.httpjson.ServiceTicket;
+import com.zkboys.sdk.model.MerchantInfo;
 import com.zkboys.sdk.model.UserInfo;
 
 import java.util.ArrayList;
@@ -215,6 +218,34 @@ public class SwitchAccountActivity extends BaseActivity implements ILoginActivit
     @Override
     public void clearFailedError() {
         mLoginFailedError.setText(null);
+    }
+
+    @Override
+    public void toMain() {
+        MainActivity.actionStart(this);
+    }
+
+    @Override
+    public void toSelectStore(List<MerchantInfo> merchants) {
+        SelectStoreActivity.actionStart(this, merchants);
+    }
+
+    @Override
+    public void showNoStoreError() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder
+                .setTitle("提示")
+                .setMessage("您尚未加入任何门店，当前系统不可用")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCancelable(false)
+                .create()
+                .show();
+        finish();
     }
 
 

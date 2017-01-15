@@ -12,10 +12,12 @@ import com.zkboys.sdk.oauth.impl.DefaultOAuthProvider;
 import com.zkboys.sdk.oauth.model.OAuthClient;
 import com.zkboys.sdk.service.AppService;
 import com.zkboys.sdk.service.AuthorizeService;
+import com.zkboys.sdk.service.MerchantService;
 import com.zkboys.sdk.service.TableService;
 import com.zkboys.sdk.service.UserService;
 import com.zkboys.sdk.service.impl.AppServiceImpl;
 import com.zkboys.sdk.service.impl.AuthorizeServiceImpl;
+import com.zkboys.sdk.service.impl.MerchantServiceImpl;
 import com.zkboys.sdk.service.impl.TableServiceImpl;
 import com.zkboys.sdk.service.impl.UserServiceImpl;
 
@@ -112,5 +114,9 @@ public class ZKBoysSDK {
 
     public TableService getTableService() {
         return getService(TableServiceImpl.class);
+    }
+
+    public MerchantService getMerchantService() {
+        return getService(MerchantServiceImpl.class);
     }
 }

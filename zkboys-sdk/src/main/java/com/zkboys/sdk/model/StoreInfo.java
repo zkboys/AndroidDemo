@@ -12,6 +12,7 @@ public class StoreInfo implements Parcelable {
     private String merchantId;
     private String name;
     private String address;
+    private String logo;
 
     public StoreInfo() {
     }
@@ -48,6 +49,14 @@ public class StoreInfo implements Parcelable {
         this.address = address;
     }
 
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
     @Override
     public String toString() {
         return "StoreInfo{" +
@@ -55,6 +64,7 @@ public class StoreInfo implements Parcelable {
                 ", merchantId='" + merchantId + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
+                ", logo='" + logo + '\'' +
                 '}';
     }
 
@@ -63,6 +73,7 @@ public class StoreInfo implements Parcelable {
         merchantId = in.readString();
         name = in.readString();
         address = in.readString();
+        logo = in.readString();
     }
 
     public static final Creator<StoreInfo> CREATOR = new Creator<StoreInfo>() {
@@ -88,5 +99,6 @@ public class StoreInfo implements Parcelable {
         dest.writeString(merchantId);
         dest.writeString(name);
         dest.writeString(address);
+        dest.writeString(logo);
     }
 }

@@ -13,6 +13,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 
     private static final String GET_USER_INFO = "/v1/user.json";
     private static final String GET_ALL_USERS = "/v1/users.json";
+    private static final String GET_CURRENT_LOGIN_USER = "/v1/current_user.json";
 
     public UserServiceImpl(ServiceClient serviceClient) {
         super(serviceClient);
@@ -42,4 +43,15 @@ public class UserServiceImpl extends BaseService implements UserService {
                 null, callback
         );
     }
+
+    @Override
+    public ServiceTicket getCurrentLoginUser(Callback<UserInfo> callback) {
+        return serviceClient.get(
+                true,
+                GET_CURRENT_LOGIN_USER,
+                null,
+                null, callback
+        );
+    }
+
 }

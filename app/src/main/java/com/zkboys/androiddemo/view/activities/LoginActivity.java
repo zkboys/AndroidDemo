@@ -1,7 +1,9 @@
 package com.zkboys.androiddemo.view.activities;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +20,9 @@ import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.LoginPresenter;
 import com.zkboys.androiddemo.utils.AnimateUtil;
 import com.zkboys.androiddemo.view.activities.vus.ILoginActivity;
+import com.zkboys.sdk.model.MerchantInfo;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -158,8 +163,7 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
 
     @Override
     public void doNext() {
-        SelectStoreActivity.actionStart(this);
-        this.finish();
+        loginPresenter.getCurrentLoginUser();
     }
 
     @Override
@@ -170,6 +174,37 @@ public class LoginActivity extends BaseActivity implements ILoginActivity {
     @Override
     public void clearFailedError() {
         mLoginFailedError.setText(null);
+    }
+
+    @Override
+    public void toMain() {
+        MainActivity.actionStart(this);
+        this.finish();
+    }
+
+    @Override
+    public void toSelectStore(List<MerchantInfo> merchants) {
+        SelectStoreActivity.actionStart(this, merchants);
+        this.finish();
+    }
+
+    @Override
+    public void showNoStoreError() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder
+                .setTitle("提示")
+                .setMessage("您尚未加入任何门店，当前系统不可用")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                })
+                .setCancelable(false)
+                .create()
+                .show();
+
     }
 }
 

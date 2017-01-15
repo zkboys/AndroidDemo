@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zkboys.androiddemo.R;
-import com.zkboys.androiddemo.utils.LogUtil;
 import com.zkboys.sdk.model.MerchantInfo;
 
 import java.util.ArrayList;
@@ -41,7 +40,6 @@ public class SelectStoreMerchantAdapter extends RecyclerView.Adapter<SelectStore
 
     @Override
     public MerchantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LogUtil.d("SelectStoreActivity", "onCreateViewHolder");
         final MerchantViewHolder holder = new MerchantViewHolder(mLayoutInflater.inflate(R.layout.item_select_merchant, parent, false));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +57,6 @@ public class SelectStoreMerchantAdapter extends RecyclerView.Adapter<SelectStore
 
     @Override
     public void onBindViewHolder(MerchantViewHolder holder, final int position) {
-        LogUtil.d("SelectStoreActivity", "onBindViewHolder");
         final MerchantInfo merchantInfo = merchantInfoList.get(position);
 
         holder.mName.setText(merchantInfo.getName());

@@ -144,6 +144,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             SwitchAccountActivity.actionStart(this);
         } else if (id == R.id.nav_logout) {
             presenter.logout();
+            PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(this);
+            preferenceUtil.setMerchantId("");
+            preferenceUtil.setStoreId("");
             this.finish();
             LoginActivity.actionStart(this);
         }

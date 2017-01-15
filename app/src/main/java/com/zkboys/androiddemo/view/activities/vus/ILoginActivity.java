@@ -3,6 +3,9 @@ package com.zkboys.androiddemo.view.activities.vus;
 import android.app.Application;
 
 import com.zkboys.sdk.httpjson.ServiceTicket;
+import com.zkboys.sdk.model.MerchantInfo;
+
+import java.util.List;
 
 public interface ILoginActivity {
 
@@ -39,4 +42,10 @@ public interface ILoginActivity {
     void showFailedError(String msg);
 
     void clearFailedError();
+
+    void toMain();
+
+    void toSelectStore(List<MerchantInfo> merchants);
+
+    void showNoStoreError();
 }
