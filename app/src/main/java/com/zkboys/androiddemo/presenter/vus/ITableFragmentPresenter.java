@@ -5,4 +5,6 @@ import com.zkboys.sdk.httpjson.ServiceTicket;
 public interface ITableFragmentPresenter {
 
     ServiceTicket pullRefresh();
+
+    ServiceTicket cleanTable(String tableId);
 }

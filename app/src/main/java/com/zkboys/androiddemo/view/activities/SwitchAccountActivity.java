@@ -250,7 +250,7 @@ public class SwitchAccountActivity extends BaseActivity implements ILoginActivit
 
 
     class SwitchAccountAdapter extends RecyclerView.Adapter<SwitchAccountAdapter.MyViewHolder> {
-        private int nowChoosePosition = 0;
+        private int nowChoosePosition = -1;
         private List<UserInfo> users;
         private SwitchAccountActivity context;
 

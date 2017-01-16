@@ -2,6 +2,7 @@ package com.zkboys.androiddemo.presenter;
 
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.ISwitchAccountPresenter;
+import com.zkboys.androiddemo.utils.PreferenceUtil;
 import com.zkboys.androiddemo.view.activities.SwitchAccountActivity;
 import com.zkboys.sdk.httpjson.ServiceTicket;
 import com.zkboys.sdk.model.Results;
@@ -26,7 +27,10 @@ public class SwitchAccountPresenter implements ISwitchAccountPresenter {
 
     @Override
     public ServiceTicket getAllUsers() {
-        return userService.getAllUsers("", "", new DefaultCallback<Results<UserInfo>>() {
+        PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(view);
+        String mchId = preferenceUtil.getMerchantId();
+        String storeId = preferenceUtil.getStoreId();
+        return userService.getAllUsers(mchId, storeId, new DefaultCallback<Results<UserInfo>>() {
             @Override
             public boolean onPreExecute(ServiceTicket ticket, Object object, Map<String, String> headers) {
                 return super.onPreExecute(ticket, object, headers);
@@ -40,6 +44,7 @@ public class SwitchAccountPresenter implements ISwitchAccountPresenter {
 
             @Override
             public void onException(Exception exception, String message) {
+                view.showFailedError(message);
             }
 
         });

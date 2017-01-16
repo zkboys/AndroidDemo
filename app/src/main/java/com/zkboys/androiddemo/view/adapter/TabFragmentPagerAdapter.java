@@ -43,4 +43,5 @@ public class TabFragmentPagerAdapter extends android.support.v4.app.FragmentPage
     public CharSequence getPageTitle(int position) {
         return mTitles.get(position % mTitles.size());
     }
+
 }

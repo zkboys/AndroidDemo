@@ -42,7 +42,13 @@
     <color name="tableGrayLight">#ffffff</color>
 
 
-    <color name="tableOrange">#f2794c</color>
+    <color name="tableOrange">#f2a24c</color>
     <color name="tableOrangeLight">#fff8f5</color>
+
+    <color name="tableYellow">#dada25</color>
+    <color name="tableYellowLight">#f9f9de</color>
+
+    <color name="tableRed">#f95a5a</color>
+    <color name="tableRedLight">#faeaea</color>
 
 </resources>

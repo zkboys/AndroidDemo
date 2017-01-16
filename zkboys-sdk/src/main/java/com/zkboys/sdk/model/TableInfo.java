@@ -93,62 +93,38 @@ public class TableInfo implements Parcelable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof FreeTableInfo) {
-            if (this.seatNum == ((FreeTableInfo) obj).getSeatNum()) {
-                return true;
-            } else {
-                return false;
-            }
+            return this.seatNum == ((FreeTableInfo) obj).getSeatNum();
         } else if (obj instanceof TableInfo) {
-            if (this.id == ((TableInfo) obj).getId()) {
-                return true;
-            } else {
-                return false;
-            }
+            return this.id.equals(((TableInfo) obj).getId());
         }
         return false;
     }
 
     public boolean isFree() {
-        if ((C.TableStatus.STATU_FREE.equals(tabStatus)) && null != tabStatus) {
-            return true;
-        } else {
-            return false;
-        }
+        return C.TableStatus.FREE.equals(tabStatus);
     }
 
 
     public boolean isReserved() {
-        if (C.TableStatus.STATU_RESERVED.equals(tabStatus) && null != tabStatus) {
-            return true;
-        } else {
-            return false;
-        }
+        return C.TableStatus.RESERVED.equals(tabStatus);
     }
 
     public boolean isCleaning() {
-        if (C.TableStatus.STATU_CLEANING.equals(tabStatus) && null != tabStatus) {
-            return true;
-        } else {
-            return false;
-        }
+        return C.TableStatus.NEED_CLEAN.equals(tabStatus);
     }
 
 
     public boolean isDining() {
-        if (C.TableStatus.STATU_DINING.equals(tabStatus) && null != tabStatus) {
-            return true;
-        } else {
-            return false;
-        }
+        return C.TableStatus.DINING.equals(tabStatus);
     }
 
 
     public boolean isOpened() {
-        if (C.TableStatus.STATU_OPENED.equals(tabStatus) && null != tabStatus) {
-            return true;
-        } else {
-            return false;
-        }
+        return C.TableStatus.OPENED.equals(tabStatus);
+    }
+
+    public boolean isLocked() {
+        return C.TableStatus.LOCKED.equals(tabStatus);
     }
 
     public boolean isChecked() {

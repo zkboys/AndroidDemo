@@ -9,11 +9,11 @@ public class C {
     public static final String UNKNOWN_SERVER_ERROR = "未知系统错误";
 
     public class TableStatus {
-        public static final String STATU_FREE = "free";             // 空闲
-        public static final String STATU_OPENED = "opened";         // 已开桌
-        public static final String STATU_DINING = "dining";         // 就餐
-        public static final String STATU_CLEANING = "cleaning";     // 待清理
-        public static final String STATU_RESERVED = "reserved";     // 预定
-        public static final String STATU_LOCKING = "locking";       // 锁定
+        public static final String FREE = "free";             // 空闲
+        public static final String OPENED = "opened";         // 已开桌
+        public static final String DINING = "dining";         // 就餐
+        public static final String NEED_CLEAN = "need_clean";     // 待清理
+        public static final String RESERVED = "reserved";     // 预定
+        public static final String LOCKED = "locked";       // 锁定
     }
 }

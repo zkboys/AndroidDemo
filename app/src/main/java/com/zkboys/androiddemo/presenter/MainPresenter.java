@@ -2,13 +2,14 @@ package com.zkboys.androiddemo.presenter;
 
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.IMainPresenter;
+import com.zkboys.androiddemo.utils.PreferenceUtil;
 import com.zkboys.androiddemo.view.activities.MainActivity;
 import com.zkboys.sdk.ZKBoysSDK;
 import com.zkboys.sdk.exception.NetworkException;
 import com.zkboys.sdk.exception.ServiceException;
 import com.zkboys.sdk.httpjson.ServiceTicket;
 import com.zkboys.sdk.model.Results;
-import com.zkboys.sdk.model.TablesInfo;
+import com.zkboys.sdk.model.TableRegionInfo;
 import com.zkboys.sdk.service.AuthorizeService;
 import com.zkboys.sdk.service.DefaultCallback;
 import com.zkboys.sdk.service.TableService;
@@ -41,10 +42,13 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public ServiceTicket getTables() {
-        return tableService.getTables("1", "1", new DefaultCallback<Results<TablesInfo>>() {
+        PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(view);
+        String mchId = preferenceUtil.getMerchantId();
+        String storeId = preferenceUtil.getStoreId();
+        return tableService.getRegions(mchId, storeId, new DefaultCallback<Results<TableRegionInfo>>() {
             @Override
-            public void onSuccess(Results<TablesInfo> result) {
-                List<TablesInfo> tables = result.getResults();
+            public void onSuccess(Results<TableRegionInfo> result) {
+                List<TableRegionInfo> tables = result.getResults();
                 view.initFragmentPages(tables);
             }
 

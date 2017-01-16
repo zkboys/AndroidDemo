@@ -97,12 +97,7 @@ public class SelectStoreActivity extends BaseActivity {
                                 finish();
                             }
                         })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        })
+                        .setNegativeButton("取消", null)
                         .create()
                         .show();
             }

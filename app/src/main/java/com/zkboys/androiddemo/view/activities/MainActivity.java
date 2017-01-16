@@ -23,7 +23,7 @@ import com.zkboys.androiddemo.presenter.MainPresenter;
 import com.zkboys.androiddemo.utils.PreferenceUtil;
 import com.zkboys.androiddemo.view.adapter.TabFragmentPagerAdapter;
 import com.zkboys.androiddemo.view.fragment.TableListFragment;
-import com.zkboys.sdk.model.TablesInfo;
+import com.zkboys.sdk.model.TableRegionInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private int mBackKeyPressedTimes = 0;
 
     private List<Fragment> mFragments;
+
+    private TableListFragment currentFragment;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -76,6 +78,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initNavigation();
 
         presenter.getTables();
+
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                currentFragment = (TableListFragment) mFragments.get(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // 刷新当前tab页下的数据数据
+        if (currentFragment != null) {
+            currentFragment.refresh();
+        }
     }
 
     @Override
@@ -181,16 +209,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     /**
      * 采用viewpager中切换fragment
      */
-    public void initFragmentPages(List<TablesInfo> tablesInfoList) {
+    public void initFragmentPages(List<TableRegionInfo> tablesInfoList) {
         List<String> mTitles = new ArrayList<>(); // tab名称列表
         mFragments = new ArrayList<>();
         TabFragmentPagerAdapter mFragmentAdapter; // 定义以fragment为切换的adapter
 
         for (int i = 0; i < tablesInfoList.size(); i++) {
-            TablesInfo tablesInfo = tablesInfoList.get(i);
-            mTitles.add(tablesInfo.getTabRegionName());
+            TableRegionInfo tablesInfo = tablesInfoList.get(i);
+            mTitles.add(tablesInfo.getName());
             TableListFragment tableListFragment = TableListFragment.newInstance(tablesInfo);
-            tableListFragment.setTabRegionId(tablesInfo.getTabRegionId());
+            tableListFragment.setTabRegionId(tablesInfo.getId());
             mFragments.add(tableListFragment);
         }
 
@@ -225,6 +253,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 }
