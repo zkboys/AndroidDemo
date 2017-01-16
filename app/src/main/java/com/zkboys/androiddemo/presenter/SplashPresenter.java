@@ -1,7 +1,7 @@
 package com.zkboys.androiddemo.presenter;
 
 import com.zkboys.androiddemo.application.ZKBoysApplication;
-import com.zkboys.androiddemo.common.C;
+import com.zkboys.sdk.common.C;
 import com.zkboys.androiddemo.presenter.vus.ISplashPresenter;
 import com.zkboys.androiddemo.view.activities.SplashActivity;
 import com.zkboys.sdk.httpjson.ServiceTicket;

@@ -12,7 +12,7 @@ import android.text.TextUtils;
 
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.application.ZKBoysApplication;
-import com.zkboys.androiddemo.common.C;
+import com.zkboys.sdk.common.C;
 import com.zkboys.androiddemo.presenter.SplashPresenter;
 import com.zkboys.androiddemo.presenter.vus.ISplashPresenter;
 import com.zkboys.androiddemo.utils.LogUtil;

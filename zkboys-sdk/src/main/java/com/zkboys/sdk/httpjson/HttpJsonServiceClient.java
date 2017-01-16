@@ -1,10 +1,13 @@
 package com.zkboys.sdk.httpjson;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zkboys.sdk.common.C;
 import com.zkboys.sdk.common.CallbackUtil;
 import com.zkboys.sdk.common.MD5Util;
 import com.zkboys.sdk.common.TypeInfo;
@@ -467,7 +470,24 @@ public class HttpJsonServiceClient extends AbstractHttpJsonServiceClient {
     }
 
     private Request getRequest(boolean authenticated, String url, Map<String, Object> params, Map<String, String> headers, REQUEST_TYPE requestType) throws ServiceException, NetworkException {
-        String paramsJsonString = params == null ? "{}" : JSONObject.toJSONString(params);
+        // 加入公共参数
+        SharedPreferences mSharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String mchId = mSharedPref.getString(C.MERCHANT_ID, "");
+        String storeId = mSharedPref.getString(C.STORE_ID, "");
+
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        if (params.get("mchId") == null) {
+            params.put("mchId", mchId);
+        }
+
+        if (params.get("storeId") == null) {
+            params.put("storeId", storeId);
+        }
+
+
+        String paramsJsonString = JSONObject.toJSONString(params);
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, paramsJsonString);
         Request.Builder builder = new Request.Builder();
 

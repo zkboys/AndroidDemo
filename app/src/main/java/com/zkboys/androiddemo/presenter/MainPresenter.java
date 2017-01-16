@@ -2,7 +2,6 @@ package com.zkboys.androiddemo.presenter;
 
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.IMainPresenter;
-import com.zkboys.androiddemo.utils.PreferenceUtil;
 import com.zkboys.androiddemo.view.activities.MainActivity;
 import com.zkboys.sdk.ZKBoysSDK;
 import com.zkboys.sdk.exception.NetworkException;
@@ -42,10 +41,7 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public ServiceTicket getTables() {
-        PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(view);
-        String mchId = preferenceUtil.getMerchantId();
-        String storeId = preferenceUtil.getStoreId();
-        return tableService.getRegions(mchId, storeId, new DefaultCallback<Results<TableRegionInfo>>() {
+        return tableService.getRegions(new DefaultCallback<Results<TableRegionInfo>>() {
             @Override
             public void onSuccess(Results<TableRegionInfo> result) {
                 List<TableRegionInfo> tables = result.getResults();

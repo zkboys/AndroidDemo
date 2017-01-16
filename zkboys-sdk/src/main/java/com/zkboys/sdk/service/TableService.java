@@ -7,7 +7,7 @@ import com.zkboys.sdk.model.TableRegionInfo;
 
 public interface TableService {
 
-    ServiceTicket getRegions(String mchId, String storeId, Callback<Results<TableRegionInfo>> callback);
+    ServiceTicket getRegions(Callback<Results<TableRegionInfo>> callback);
 
     ServiceTicket cleanTable(String tableId, Callback<Boolean> callback);
 }

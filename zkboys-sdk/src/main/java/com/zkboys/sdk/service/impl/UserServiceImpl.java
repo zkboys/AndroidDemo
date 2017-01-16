@@ -32,14 +32,11 @@ public class UserServiceImpl extends BaseService implements UserService {
     }
 
     @Override
-    public ServiceTicket getAllUsers(String mchId, String storeId, Callback<Results<UserInfo>> callback) {
+    public ServiceTicket getAllUsers(Callback<Results<UserInfo>> callback) {
         return serviceClient.get(
                 true,
                 GET_ALL_USERS,
-                MapTool.create()
-                        .put("mchId", mchId)
-                        .put("storeId", storeId)
-                        .value(),
+                null,
                 null, callback
         );
     }

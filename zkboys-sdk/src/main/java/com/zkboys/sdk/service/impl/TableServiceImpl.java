@@ -21,14 +21,11 @@ public class TableServiceImpl extends BaseService implements TableService {
 
 
     @Override
-    public ServiceTicket getRegions(String mchId, String storeId, Callback<Results<TableRegionInfo>> callback) {
+    public ServiceTicket getRegions(Callback<Results<TableRegionInfo>> callback) {
         return serviceClient.get(
                 true,
                 GET_TABLE_REGIONS,
-                MapTool.create()
-                        .put("mchId", mchId)
-                        .put("storeId", storeId)
-                        .value(),
+                null,
                 null, callback
         );
     }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.zkboys.androiddemo.common.C;
+import com.zkboys.sdk.common.C;
 
 /**
  * SharedPreferences 方式,本地存储数据

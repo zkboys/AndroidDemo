@@ -2,7 +2,6 @@ package com.zkboys.androiddemo.presenter;
 
 import com.zkboys.androiddemo.application.ZKBoysApplication;
 import com.zkboys.androiddemo.presenter.vus.ITableFragmentPresenter;
-import com.zkboys.androiddemo.utils.PreferenceUtil;
 import com.zkboys.androiddemo.view.fragment.TableListFragment;
 import com.zkboys.sdk.ZKBoysSDK;
 import com.zkboys.sdk.common.C;
@@ -27,10 +26,7 @@ public class TableFragmentPresenter implements ITableFragmentPresenter {
 
     @Override
     public ServiceTicket pullRefresh() {
-        PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(view.getActivity());
-        String mchId = preferenceUtil.getMerchantId();
-        String storeId = preferenceUtil.getStoreId();
-        return tableService.getRegions(mchId, storeId, new DefaultCallback<Results<TableRegionInfo>>() {
+        return tableService.getRegions(new DefaultCallback<Results<TableRegionInfo>>() {
             @Override
             public void onSuccess(Results<TableRegionInfo> result) {
                 List<TableRegionInfo> tables = result.getResults();
