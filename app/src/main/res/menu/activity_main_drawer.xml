@@ -5,15 +5,19 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="demo2"/>
+            android:title="正餐点餐"/>
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="组件"/>
+            android:title="正餐预定"/>
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="登录"/>
+            android:title="快餐点餐"/>
+        <item
+            android:id="@+id/nav_slideshow2"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="快餐订单"/>
     </group>
     <item android:title="@string/system">
         <menu>
