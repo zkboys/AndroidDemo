@@ -95,6 +95,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             }
         });
+
+        // TODO: 根据当前登录用户 mchId storeId 获取当前用户可用业务模块（正餐点餐、正餐预定、快餐点餐、快餐订单）
     }
 
     @Override
