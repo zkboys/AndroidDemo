@@ -18,6 +18,7 @@ import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.TableFragmentPresenter;
 import com.zkboys.androiddemo.presenter.vus.ITableFragmentPresenter;
 import com.zkboys.androiddemo.view.activities.CustomerInfoActivity;
+import com.zkboys.androiddemo.view.activities.OrderActivity;
 import com.zkboys.androiddemo.view.adapter.TableListAdapter;
 import com.zkboys.sdk.common.C;
 import com.zkboys.sdk.model.TableInfo;
@@ -118,9 +119,9 @@ public class TableListFragment extends Fragment {
             case C.TableStatus.FREE:
                 CustomerInfoActivity.actionStart(getActivity(), table);
                 break;
+
             case C.TableStatus.OPENED:
-                //TODO：点击已开桌逻辑
-                Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                OrderActivity.actionStart(getActivity(), table.getId());
                 break;
 
             case C.TableStatus.DINING:

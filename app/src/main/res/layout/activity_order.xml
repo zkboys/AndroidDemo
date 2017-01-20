@@ -40,6 +40,8 @@
         android:layout_toEndOf="@id/rv_order_dish_category"
         android:layout_toStartOf="@id/rl_order_ordered_dish"
         android:background="@drawable/border_right"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
         />
 
 

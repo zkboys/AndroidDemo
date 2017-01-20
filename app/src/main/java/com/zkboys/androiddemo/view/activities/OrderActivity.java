@@ -3,12 +3,14 @@ package com.zkboys.androiddemo.view.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.zkboys.androiddemo.R;
 import com.zkboys.androiddemo.presenter.DishPresenter;
 import com.zkboys.androiddemo.presenter.vus.IDishPresenter;
+import com.zkboys.androiddemo.view.adapter.DishAdapter;
 import com.zkboys.androiddemo.view.adapter.DishCategoryAdapter;
 import com.zkboys.sdk.httpjson.ServiceTicket;
 import com.zkboys.sdk.model.DishCategoryInfo;
@@ -22,10 +24,14 @@ public class OrderActivity extends BaseActivity {
 
     private String tableId;
     private DishCategoryAdapter mCategoryAdapter;
+    private DishAdapter mDishAdapter;
     private IDishPresenter presenter;
     private ServiceTicket mCategoryTicket;
     @Bind(R.id.rv_order_dish_category)
     RecyclerView mCategoryRecyclerView;
+
+    @Bind(R.id.rv_order_dishes)
+    RecyclerView mDishRecyclerView;
 
     /**
      * 启动当前Activity
@@ -47,6 +53,7 @@ public class OrderActivity extends BaseActivity {
 
         presenter = new DishPresenter(this);
         initCategoryView();
+        initDishView();
 
         mCategoryTicket = presenter.getAllDishes();
     }
@@ -72,7 +79,24 @@ public class OrderActivity extends BaseActivity {
         });
     }
 
+    public void initDishView() {
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (mDishAdapter.isCategory(position)) {
+                    return gridLayoutManager.getSpanCount();
+                }
+                return 1;
+            }
+        });
+        mDishAdapter = new DishAdapter(this);
+        mDishRecyclerView.setLayoutManager(gridLayoutManager);
+        mDishRecyclerView.setAdapter(mDishAdapter);
+    }
+
     public void setInitCategoryData(List<DishCategoryInfo> data) {
         mCategoryAdapter.initData(data);
+        mDishAdapter.initData(data);
     }
 }
