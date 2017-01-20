@@ -105,7 +105,10 @@ public static void actionStart(Context context) {
 ```
 
 ## icon 图标库
+
 [http://joanzapata.com/android-iconify/](http://joanzapata.com/android-iconify/)
+
+使用自定义字体图标方法 [http://www.iconfont.cn/plus/help/detail?helptype=code](http://www.iconfont.cn/plus/help/detail?helptype=code)
 
 ## 自定义按钮背景颜色
 [可绘制对象资源](https://developer.android.com/guide/topics/resources/drawable-resource.html#StateList)
@@ -135,3 +138,4 @@ HttpJsonServiceClient 中统一为所有的请求添加了mchId 和 storeId参�
 1.[ ] 点餐页面有可能给顾客用，这个页面添加用户锁功能，用户返回需要输入提前设置的密码，才能返回，界面按钮权限限制，防止用户乱操作。
 1.[ ] 点餐页面添加菜品图片，点击弹出详情，这个页面有可能给客户用。
 1.[ ] 正餐的电话号码没用，预订才有用。正餐点餐电话号码去掉。
+1.[ ] 自定义dialog组件样式，对系统dialog进行封装

@@ -12,11 +12,13 @@ import com.zkboys.sdk.oauth.impl.DefaultOAuthProvider;
 import com.zkboys.sdk.oauth.model.OAuthClient;
 import com.zkboys.sdk.service.AppService;
 import com.zkboys.sdk.service.AuthorizeService;
+import com.zkboys.sdk.service.DishService;
 import com.zkboys.sdk.service.MerchantService;
 import com.zkboys.sdk.service.TableService;
 import com.zkboys.sdk.service.UserService;
 import com.zkboys.sdk.service.impl.AppServiceImpl;
 import com.zkboys.sdk.service.impl.AuthorizeServiceImpl;
+import com.zkboys.sdk.service.impl.DishServiceImpl;
 import com.zkboys.sdk.service.impl.MerchantServiceImpl;
 import com.zkboys.sdk.service.impl.TableServiceImpl;
 import com.zkboys.sdk.service.impl.UserServiceImpl;
@@ -45,11 +47,11 @@ public class ZKBoysSDK {
     private static final Logger logger = LoggerFactory.getLogger(HttpJsonServiceClient.class);
     private ServiceClient serviceClient;
 
-    private static final String BASE_URL = "http://192.168.1.101:3002";
-    private static final String TEST_BASE_URL = "http://192.168.0.237:8001";
+    //    private static final String BASE_URL = "http://192.168.1.101:3002";
+//    private static final String TEST_BASE_URL = "http://192.168.0.237:8001";
 //
-//    private static final String BASE_URL = "http://192.168.0.237:3002";
-//    private static final String TEST_BASE_URL = "http://192.168.0.237:3002";
+    private static final String BASE_URL = "http://192.168.0.237:3002";
+    private static final String TEST_BASE_URL = "http://192.168.0.237:3002";
 
 //    private static final String BASE_URL = "http://192.168.0.239:3002";
 //    private static final String TEST_BASE_URL = "http://192.168.0.239:3002";
@@ -118,5 +120,9 @@ public class ZKBoysSDK {
 
     public MerchantService getMerchantService() {
         return getService(MerchantServiceImpl.class);
+    }
+
+    public DishService getDishService() {
+        return getService(DishServiceImpl.class);
     }
 }

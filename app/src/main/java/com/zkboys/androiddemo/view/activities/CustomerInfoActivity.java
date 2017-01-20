@@ -99,19 +99,19 @@ public class CustomerInfoActivity extends BaseActivity {
         String mobile = getMobileText();
         String peopleNumber = getPeopleNumberText();
 
-        if (TextUtils.isEmpty(name)) {
-            showNameError(R.string.error_customer_name_required);
-            return;
-        }
-        if (TextUtils.isEmpty(mobile)) {
-            showMobileError(R.string.error_mobile_required);
-            return;
-        }
-        if (mobile.length() != 11) {
-            // TODO: 格式校验
-            showMobileError(R.string.error_mobile_format);
-            return;
-        }
+//        if (TextUtils.isEmpty(name)) {
+//            showNameError(R.string.error_customer_name_required);
+//            return;
+//        }
+//        if (TextUtils.isEmpty(mobile)) {
+//            showMobileError(R.string.error_mobile_required);
+//            return;
+//        }
+//        if (mobile.length() != 11) {
+//            // TODO: 格式校验
+//            showMobileError(R.string.error_mobile_format);
+//            return;
+//        }
         if (TextUtils.isEmpty(peopleNumber)) {
             showPeopleNumberError(R.string.error_people_number_required);
             return;
@@ -119,6 +119,8 @@ public class CustomerInfoActivity extends BaseActivity {
 
         // TODO: submit
         showShortToast("tableId：" + tableId + "  姓氏：" + name + "  性别：" + gender + "  电话：" + mobile + "  人数：" + peopleNumber);
+        finish();
+        OrderActivity.actionStart(this, tableId);
     }
 
     public void initEditText() {

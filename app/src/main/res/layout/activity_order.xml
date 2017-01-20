@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_order"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zkboys.androiddemo.view.activities.OrderActivity">
+
+    <com.zkboys.androiddemo.view.components.ToolBar
+        xmlns:toolbar="http://schemas.android.com/apk/res/com.zkboys.androiddemo"
+        android:id="@+id/tb_order_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        toolbar:title="正餐点餐"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_order_dish_category"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tb_order_toolbar"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_order_ordered_dish"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tb_order_toolbar"
+        android:background="@color/colorPrimary"
+        >
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_order_dishes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tb_order_toolbar"
+        android:layout_toEndOf="@id/rv_order_dish_category"
+        android:layout_toStartOf="@id/rl_order_ordered_dish"
+        android:background="@drawable/border_right"
+        />
+
+
+</RelativeLayout>

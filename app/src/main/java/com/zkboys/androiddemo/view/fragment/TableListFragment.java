@@ -64,7 +64,6 @@ public class TableListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new TableListAdapter(getContext());
         recyclerView.setAdapter(mAdapter);
-        System.out.println(tableRegion.getTableList());
         mAdapter.initData(tableRegion.getTableList());
 
         mAdapter.setOnClickListener(new TableListAdapter.OnTableClickListener() {
