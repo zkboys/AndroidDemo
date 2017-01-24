@@ -39,41 +39,41 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.SplashActivity">
+        <activity android:name=".view.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.HomeActivity">
+        <activity android:name=".view.demo.HomeActivity">
         </activity>
         <activity
-            android:name=".view.activities.MainActivity"
+            android:name=".view.main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".view.activities.DemoActivity">
+        <activity android:name=".view.demo.DemoActivity">
         </activity>
         <activity
-            android:name=".view.activities.LoginActivity"
+            android:name=".view.login.LoginActivity"
             android:label="@string/title_activity_login">
         </activity>
         <activity
-            android:name=".view.activities.SettingsActivity"
+            android:name=".view.settings.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
-        <activity android:name=".view.activities.SwitchAccountActivity">
+        <activity android:name=".view.switch_account.SwitchAccountActivity">
         </activity>
-        <activity android:name=".view.activities.Demo2Activity">
+        <activity android:name=".view.demo.Demo2Activity">
         </activity>
         <activity
-            android:name=".view.activities.CustomerInfoActivity"
+            android:name=".view.customer.CustomerInfoActivity"
             android:windowSoftInputMode="adjustNothing">
         </activity>
-        <activity android:name=".view.activities.SelectStoreActivity">
+        <activity android:name=".view.select_store.SelectStoreActivity">
         </activity>
-        <activity android:name=".view.activities.OrderActivity">
+        <activity android:name=".view.order.OrderActivity">
         </activity>
     </application>
 

@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.zkboys.androiddemo.view.activities.Demo2Activity">
+    tools:context="com.zkboys.androiddemo.view.demo.Demo2Activity">
 
-    <com.zkboys.androiddemo.view.components.ToolBar
+    <com.zkboys.androiddemo.widget.ToolBar
         xmlns:toolbar="http://schemas.android.com/apk/res/com.zkboys.androiddemo"
         android:id="@+id/tb_customer_info_toolbar"
         android:layout_width="match_parent"
@@ -158,7 +158,7 @@
         android:focusableInTouchMode="true"
         >
 
-        <com.zkboys.androiddemo.view.components.Keyboard
+        <com.zkboys.androiddemo.widget.Keyboard
             android:id="@+id/rv_customer_keyboard"
             android:layout_width="450dp"
             android:layout_height="wrap_content"

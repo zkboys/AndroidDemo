@@ -9,7 +9,7 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.zkboys.androiddemo.view.activities.LoginActivity;
+import com.zkboys.androiddemo.view.login.LoginActivity;
 import com.zkboys.sdk.ZKBoysSDK;
 import com.zkboys.sdk.oauth.OAuthContext;
 import com.zkboys.sdk.oauth.OAuthLifeCycleListener;

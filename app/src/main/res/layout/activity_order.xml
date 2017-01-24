@@ -5,9 +5,9 @@
     android:id="@+id/activity_order"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zkboys.androiddemo.view.activities.OrderActivity">
+    tools:context="com.zkboys.androiddemo.view.order.OrderActivity">
 
-    <com.zkboys.androiddemo.view.components.ToolBar
+    <com.zkboys.androiddemo.widget.ToolBar
         xmlns:toolbar="http://schemas.android.com/apk/res/com.zkboys.androiddemo"
         android:id="@+id/tb_order_toolbar"
         android:layout_width="match_parent"

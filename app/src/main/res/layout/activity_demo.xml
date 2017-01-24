@@ -9,9 +9,9 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="com.zkboys.androiddemo.view.activities.DemoActivity">
+    tools:context="com.zkboys.androiddemo.view.demo.DemoActivity">
 
-    <com.zkboys.androiddemo.view.components.ToolBar
+    <com.zkboys.androiddemo.widget.ToolBar
         xmlns:toolbar="http://schemas.android.com/apk/res/com.zkboys.androiddemo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
